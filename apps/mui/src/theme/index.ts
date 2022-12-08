@@ -162,5 +162,60 @@ export const getDesignTokens = (mode: PaletteMode) => ({
 				600: "#9B51E0"
 			}
 		})
-	}
+	},
+  typography: {
+    fontFamily: ["Poppins", 'sans-serif'].join(','),
+    h1: {
+      fontSize: '2.625rem',
+      fontWeight: 700,
+      lineHeight: 2.5
+    },
+    h2: {
+      fontSize: '2rem',
+      fontWeight: 600,
+      lineHeight: 2.5,
+    },
+    h3: {
+      fontSize: '2rem',
+      fontWeight: 500,
+      lineHeight: 2.5,
+    },
+    h4: {
+      fontSize: '1.125rem',
+      fontWeight: 600,
+      lineHesubtitleWrapperight: 1.375,
+    },
+    h5: {
+      fontSize: '1rem',
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+    subtitle1: {
+      fontWeight: 700,
+      lineHeight: 1.5,
+    },
+    subtitle2: {
+      fontWeight: 700,
+      fontSize: '0.75rem',
+      lineHeight: 1.5,
+    },
+    body1: {
+      fontSize: '0.875rem',
+      lineHeight: 1.2,
+    },
+    body2: {
+      fontSize: '0.875rem',
+      lineHeight: 1,
+    },
+    button: {
+      fontWeight: 600,
+      fontSize: '0.875rem',
+      lineHeight: 1,
+    },
+    caption: {
+      fontSize: '0.75rem',
+      fontWeight: 400,
+      lineHeight: 1,
+    }
+  }
 });

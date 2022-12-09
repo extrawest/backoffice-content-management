@@ -1,6 +1,6 @@
 import { lazy } from "react";
-import { AppRouteEnum, PrivateRoutes } from "@mono-redux-starter/tamplateapp";
-import { RoleEnum } from "@mono-redux-starter/shared/types";
+import { AppRouteEnum, PrivateRoutes } from "@lib/tamplateapp";
+import { RoleEnum } from "@lib/shared/types";
 
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
 const Units = lazy(() => import("../pages/Units/Units"));

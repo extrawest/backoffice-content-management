@@ -4,8 +4,10 @@
   "projects": {
     "ant": "apps/ant",
     "ant-e2e": "apps/ant-e2e",
+    "antapp": "libs/antapp",
     "mui": "apps/mui",
     "mui-e2e": "apps/mui-e2e",
+    "muilib": "libs/muilib",
     "primefaces": "apps/primefaces",
     "primefaces-e2e": "apps/primefaces-e2e",
     "redux": "libs/redux",

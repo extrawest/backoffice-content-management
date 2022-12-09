@@ -116,36 +116,6 @@
 						"SwitchCase": 1
 					}
 				],
-				"indent": [
-					"error",
-					"tab",
-					{
-						"VariableDeclarator": {
-							"var": 2,
-							"let": 2,
-							"const": 3
-						},
-						"MemberExpression": 1,
-						"FunctionExpression": {
-							"parameters": "first"
-						},
-						"FunctionDeclaration": {
-							"body": 2,
-							"parameters": "first"
-						},
-						"ArrayExpression": 1,
-						"ObjectExpression": 1,
-						"ImportDeclaration": 1,
-						"ignoreComments": true,
-						"ignoredNodes": [
-							"JSXElement *",
-							"JSXElement",
-							"JSXSpreadAttribute",
-							"JSXAttribute"
-						],
-						"SwitchCase": 1
-					}
-				],
 				"function-call-argument-newline": [
 					"error",
 					"always"

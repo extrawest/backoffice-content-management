@@ -5,6 +5,7 @@
   "scripts": {
     "update": "nx migrate latest",
     "start:mui": "nx serve mui",
+    "build:mui": "nx build mui --skip-nx-cache --prod",
     "start:template": "nx serve template",
     "build:template": "nx build template --skip-nx-cache --prod",
     "run:many": "nx run-many --target=build --projects=template --prod",

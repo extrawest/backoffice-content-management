@@ -3,7 +3,8 @@ import { ReactNode } from "react";
 export enum AppRoutesEnum {
 	MAIN = "/",
 	REGISTRATION = "/registration",
-	LOGIN = "/login"
+	LOGIN = "/login",
+  TEAM = "/clients"
 }
 
 export enum LayoutEnum {

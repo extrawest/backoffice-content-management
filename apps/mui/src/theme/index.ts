@@ -43,7 +43,8 @@ export const getDesignTokens = (mode: PaletteMode) => ({
 		mode,
 		...(mode === "light" ? {
 			primary: {
-				main: "#FFD85A",
+				main: "#1D2992",
+        light: "#237DBF"
 			},
 			primaryColors: {
 				900: "#E0AB00",
@@ -217,5 +218,5 @@ export const getDesignTokens = (mode: PaletteMode) => ({
       fontWeight: 400,
       lineHeight: 1,
     }
-  }
+  },
 });

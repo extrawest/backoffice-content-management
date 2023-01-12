@@ -1,13 +1,14 @@
 import { FC, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Box, CssBaseline } from "@mui/material";
+import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute, useAuth } from "@lib/muiapp";
 import { privateRoutes } from "./privateRotes";
 import { commonRoutes } from "./commonRotes";
-import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute } from "@lib/muiapp";
 import { LayoutEnum } from "@lib/shared/types";
 
 export const AppRoutes: FC = () => {
-  const isAuthed = true
+  const me = useAuth();
+  const token = localStorage.getItem('token');
 
   return (
     <Suspense
@@ -31,7 +32,7 @@ export const AppRoutes: FC = () => {
             key={`r_${index}_${route.path}`}
             element={
               route.isAuth ? (
-                <PrivateRoute isAuthed={isAuthed}>{route.layout}
+                <PrivateRoute isAuthed={!!token || !!me.user}>
                   {route.layout === LayoutEnum.AUTH && (
                     <AuthLayout>
                       {route.element}
@@ -44,7 +45,7 @@ export const AppRoutes: FC = () => {
                   )}
                 </PrivateRoute>
               ) : (
-                <PublicRoute isAuthed={isAuthed}>
+                <PublicRoute isAuthed={!!token || !!me.user}>
                   {route.layout === LayoutEnum.AUTH && (
                     <AuthLayout>
                       {route.element}

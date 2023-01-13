@@ -1,7 +1,6 @@
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-// import process from "process";
 
 const firebaseConfig = {
   apiKey: process.env["NX_FIREBASE_API_KEY"],

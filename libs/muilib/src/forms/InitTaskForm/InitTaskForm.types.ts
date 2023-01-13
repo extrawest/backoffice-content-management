@@ -1,5 +1,9 @@
-import { BacklogType } from "../../types";
+import { BacklogType, TaskType } from "@lib/shared/types";
 
 export type InitTaskFormProps = {
-  backlog: BacklogType[]
-}
+	backlog: BacklogType[],
+	tasks: TaskType[],
+	getTasks: () => void,
+	getBacklog: () => void,
+	closeModal: () => void
+};

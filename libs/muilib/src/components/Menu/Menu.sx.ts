@@ -26,12 +26,17 @@ export const menuStackSx: SxProps<Theme> = {
 	alignItems: "flex-start"
 };
 export const wrapperSx: SxProps<Theme> = {
+	position: "fixed",
+	top: 0,
+	left: 0,
+	bottom: 0,
 	display: "flex",
 	flexDirection: "column",
-	width: (theme: Theme) => theme.spacing(462/8),
+	width: (theme: Theme) => theme.spacing(362/8),
 	boxShadow: (theme: Theme) => `${theme.spacing(4/8)} 0 ${theme.spacing(36/8)} ${theme.spacing(36/8)} rgba(96,94,94,0.08)`,
 	m: 0,
-	height: "100vh",
+	minHeight: "100vh",
+	height: "100%",
 	py: 10,
 	pl: 10,
 	pr: 5

@@ -18,3 +18,13 @@ export type BacklogResponse = {
 export type TasksResponse = {
 	tasks: TaskType[]
 };
+
+export interface StatisticType {
+	date: any,
+	backlog: number,
+	tasks: number
+}
+
+export type StatisticResponse = {
+	data: StatisticType[]
+};

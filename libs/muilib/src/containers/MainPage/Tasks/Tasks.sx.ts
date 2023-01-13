@@ -17,6 +17,9 @@ export const addSx:SxProps<Theme> = {
 	height: (theme: Theme) => theme.spacing(30/8)
 };
 export const taskRowSx = (notLast: boolean):SxProps<Theme> => ({
+	display: "flex",
+	justifyContent: "space-between",
+	alignItems: "center",
 	borderBottom: (theme: Theme) => notLast ?
 		`${theme.spacing(1/8)} solid ${theme.palette.grey[400]}` :
 		"none",

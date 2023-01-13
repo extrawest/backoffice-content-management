@@ -7,39 +7,73 @@ import {
 import {
   Autocomplete,
   Box,
-  Button, FormControl, FormLabel, Grid, TextField, Typography
+  Button, FormControl, FormLabel, Grid, MenuItem, Select, TextField, Typography
 } from "@mui/material";
 import { autocompleteSx, footerSx, formLabel } from "./InitTaskForm.sx";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import dayjs from "dayjs";
-import { TaskTypeEnum } from "../../types";
 import { InitTaskFormProps } from "./InitTaskForm.types";
+import { TaskTypeEnum } from "@lib/shared/types";
+import { StatusTag } from "../../components/StatusTag";
+import { useAuth } from "@lib/muiapp";
 
-export const InitTaskForm:FC<InitTaskFormProps> = ({backlog}) => {
+export const InitTaskForm:FC<InitTaskFormProps> = ({
+  backlog,
+  tasks,
+  getTasks,
+  getBacklog,
+  closeModal
+}) => {
+  const me = useAuth();
 	const [activeTask, setActiveTask] = useState("");
 	const handleSubmit = () => async (values: {name: string, type: TaskTypeEnum}) => {
 		try {
-			await setDoc(
-				doc(
-					db,
-					"tasks",
-					dayjs().valueOf().toString()
-				),
-				{
-					id: dayjs().valueOf().toString(),
-					name: values.name
-				}
-			);
+      if (me.user?.uid) {
+        await setDoc(
+          doc(
+            db,
+            "tasks",
+            me.user?.uid
+          ),
+          {
+            tasks: [...tasks, {
+              id: dayjs().valueOf().toString(),
+              name: backlog.find(task => task.id === activeTask)?.name,
+              type: values.type
+            }]
+          }
+        );
+        await setDoc(
+          doc(
+            db,
+            "backlog",
+            me.user?.uid
+          ),
+          {
+            tasks: backlog.filter(task => task.id !== activeTask)
+          }
+        );
+      }
 		} catch (error) {
 			console.error(error);
-		}
+		} finally {
+      getTasks();
+      getBacklog()
+      closeModal()
+    }
 	};
 
 	const processedTasks = backlog?.map(task => ({
 		id: task.id,
 		label: task.name
 	}));
+
+  const processedStatuses = Object.values(TaskTypeEnum).map(item => ({
+    id: item,
+    name: item,
+    value: item
+  }))
 
 	const handleChangeTask = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
 		(
@@ -116,7 +150,37 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({backlog}) => {
               xs={12}
               item
             >
-
+              <FormControl
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                error={!!errors["name"]}
+              >
+                <FormLabel sx={formLabel}>
+                  <Typography variant="caption">
+                    Status
+                  </Typography>
+                </FormLabel>
+                <Select
+                  name='type'
+                  onChange={handleChange}
+                  defaultValue={processedStatuses[0].value}
+                  value={values['type']}
+                >
+                  {processedStatuses.map((
+                    item
+                  ) => {
+                    return (
+                      <MenuItem
+                        key={item.id}
+                        value={item.value}
+                        onClick={handleChange}
+                      >
+                        <StatusTag type={item.name}/>
+                      </MenuItem>
+                    )})}
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
           <ErrorMessage

@@ -1,6 +1,4 @@
-import {
-	FC, useState
-} from "react";
+import {FC, useState} from "react";
 import {
 	Box, IconButton, Stack, Typography
 } from "@mui/material";
@@ -11,7 +9,7 @@ import { Modal } from "../../../common/Modal";
 import { CreateTaskForm } from "../../../forms/CreateTaskForm";
 import { BacklogProps } from "./Backlog.types";
 
-export const Backlog:FC<BacklogProps> = ({backlog}) => {
+export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
 	const [showModal, setShowModal] = useState(false);
 
 	const handleShowModal = (status: boolean) => () => {
@@ -67,7 +65,11 @@ export const Backlog:FC<BacklogProps> = ({backlog}) => {
         title='Create new task'
         type='lg'
       >
-        <CreateTaskForm/>
+        <CreateTaskForm
+          backlog={backlog}
+          getBacklogData={getBacklogData}
+          closeModal={handleShowModal(false)}
+        />
       </Modal>
     </Box>
 	);

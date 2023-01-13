@@ -1,5 +1,6 @@
-import { BacklogType } from "../../../types";
+import { BacklogType } from "@lib/shared/types";
 
 export type BacklogProps = {
-	backlog: BacklogType[]
+	backlog: BacklogType[],
+	getBacklogData: () => void
 };

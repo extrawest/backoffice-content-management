@@ -10,18 +10,32 @@ import { footerSx } from "./CreateTaskForm.sx";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import dayjs from "dayjs";
+import { useAuth } from "@lib/muiapp";
+import { CreateTaskFormProps } from "./CreateTaskForm.types";
 
-export const CreateTaskForm:FC = () => {
+export const CreateTaskForm:FC<CreateTaskFormProps> = ({
+  getBacklogData,
+  closeModal,
+  backlog
+}) => {
+  const me = useAuth()
 	const handleSubmit = () => async (values: {name: string}) => {
     try {
-      await setDoc(doc(
-        db, 'backlog', dayjs().valueOf().toString()
-      ), {
-        id: dayjs().valueOf().toString(),
-        name: values.name
-      })
+      if (me?.user?.uid) {
+        await setDoc(doc(
+          db, 'backlog', me?.user?.uid
+        ), {
+          tasks: [...backlog, {
+            id: dayjs().valueOf().toString(),
+            name: values.name
+          }]
+        })
+      }
     } catch (error) {
       console.error(error)
+    } finally {
+      getBacklogData();
+      closeModal()
     }
 	};
 

@@ -56,8 +56,6 @@ export const Menu:FC = () => {
     localStorage.removeItem("token");
   };
 
-  console.log(me?.user)
-
 	return (
     <Box sx={wrapperSx}>
       <Avatar

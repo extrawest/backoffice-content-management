@@ -5,11 +5,13 @@ import { Backlog } from "./Backlog";
 import { Tasks } from "./Tasks";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
-import { BacklogResponse, BacklogType } from "@lib/shared/types";
+import { BacklogResponse, BacklogType, TasksResponse, TaskType } from "@lib/shared/types";
+import { Chart } from "./Chart";
 
 export const MainPage:FC = () => {
   const me = useAuth();
   const [backlog, setBacklog] = useState<BacklogType[]>([]);
+  const [tasks, setTasks] = useState<TaskType[]>([]);
 
   const getBacklogData = async () => {
     try {
@@ -30,9 +32,28 @@ export const MainPage:FC = () => {
     }
   };
 
+  const getTasksData = async () => {
+    try {
+      if (me?.user?.uid) {
+        const tasksRef = await getDocs(collection(
+          db,
+          "tasks"
+        ));
+        const data: TasksResponse[] = [];
+        tasksRef.forEach(it => {
+          data.push(it.data() as TasksResponse);
+          setTasks(data?.[0]?.tasks);
+        });
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  };
+
   useEffect(
     () => {
       getBacklogData();
+      getTasksData();
     },
     []
   );
@@ -42,6 +63,10 @@ export const MainPage:FC = () => {
       <Typography variant="h2">
         Dashboard
       </Typography>
+      <Chart
+        tasks={tasks}
+        backlog={backlog}
+      />
       <Grid
         container
         spacing={3}
@@ -63,7 +88,9 @@ export const MainPage:FC = () => {
         >
           <Tasks
             backlog={backlog}
+            tasks={tasks}
             getBacklog={getBacklogData}
+            getTasks={getTasksData}
           />
         </Grid>
       </Grid>

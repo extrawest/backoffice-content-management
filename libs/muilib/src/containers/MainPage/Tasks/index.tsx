@@ -1,14 +1,11 @@
 import {
-	FC, useEffect, useState
+	FC, useState
 } from "react";
 import {
 	Box,
 	IconButton, Stack, Typography
 } from "@mui/material";
 import { Modal, useAuth } from "@lib/muiapp";
-import { TasksResponse, TaskType } from "@lib/shared/types";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../../../../shared/firebaseconfig";
 import { InitTaskForm } from "../../../forms/InitTaskForm";
 import { StatusTag } from "../../../components/StatusTag";
 import { TasksProps } from "./Tasks.types";
@@ -18,38 +15,15 @@ import {
 
 export const Tasks:FC<TasksProps> = ({
   backlog,
-  getBacklog
+  tasks,
+  getBacklog,
+  getTasks
 }) => {
-	const me = useAuth();
-	const [tasks, setTasks] = useState<TaskType[]>([]);
 	const [showModal, setShowModal] = useState(false);
 
 	const handleShowModal = (status: boolean) => () => {
 		setShowModal(status);
 	};
-
-	const getData = async () => {
-		if (me?.user?.uid) {
-			const tasksRef = await getDocs(collection(
-				db,
-				"tasks"
-			));
-			const data: TasksResponse[] = [];
-			tasksRef.forEach(it => {
-				data.push(it.data() as TasksResponse);
-				setTasks(data?.[0]?.tasks);
-			});
-		}
-	};
-
-	useEffect(
-		() => {
-			getData();
-		},
-		[me]
-	);
-
-  console.log(tasks, 'tasks')
 
 	return (
     <Box sx={boxSx}>
@@ -104,7 +78,7 @@ export const Tasks:FC<TasksProps> = ({
         <InitTaskForm
           backlog={backlog}
           tasks={tasks}
-          getTasks={getData}
+          getTasks={getTasks}
           getBacklog={getBacklog}
           closeModal={handleShowModal(false)}
         />

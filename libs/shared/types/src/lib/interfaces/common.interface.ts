@@ -28,3 +28,15 @@ export interface StatisticType {
 export type StatisticResponse = {
 	data: StatisticType[]
 };
+
+export interface TicketType {
+	id: string,
+	task: string,
+	firstName: string,
+	lastName: string,
+	status: TaskTypeEnum
+}
+
+export type TicketsResponse = {
+	data: TicketType[]
+};

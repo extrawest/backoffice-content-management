@@ -44,7 +44,7 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
               ) => (
             <Box
               key={i}
-              sx={taskRowSx(i < backlog.length - 1)}
+              sx={taskRowSx(i < backlog?.length - 1)}
             >
               <Typography variant='h6'>
                 {task?.name}

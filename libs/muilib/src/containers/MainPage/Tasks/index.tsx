@@ -53,7 +53,7 @@ export const Tasks:FC<TasksProps> = ({
           ) => (
             <Box
               key={i}
-              sx={taskRowSx(i < tasks.length - 1)}
+              sx={taskRowSx(i < tasks?.length - 1)}
             >
               <Typography variant='h6'>
                 {task?.name}

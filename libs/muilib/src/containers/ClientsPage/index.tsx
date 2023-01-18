@@ -1,21 +1,22 @@
 import { FC, useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
-	Box, IconButton, Stack, Typography
+  Avatar,
+  Box, IconButton, Stack, Typography
 } from "@mui/material";
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { Delete } from "@mui/icons-material";
 import { Modal, Table } from "../../common";
-import {
-	addSx, headerStackSx, subTextSx
-} from "../MainPage/Backlog/Backlog.sx";
-import { titleSx } from "./ClientsPage.sx";
 import { CreateTicketForm } from "../../forms/CreateTicketForm";
 import { TasksResponse, TaskType, TicketsResponse, TicketType } from "@lib/shared/types";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import { useAuth } from "../../contexts";
-import dayjs from "dayjs";
 import { StatusTag } from "../../components/StatusTag";
+import {
+  addSx, headerStackSx, subTextSx
+} from "../MainPage/Backlog/Backlog.sx";
+import { nameSx, photoSx, titleSx } from "./ClientsPage.sx";
 
 export const ClientsPage:FC = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -98,6 +99,7 @@ export const ClientsPage:FC = () => {
     name: `${ticket.firstName} ${ticket.lastName}`,
     date: dayjs(ticket.id).format('DD/MM/YY'),
     status: ticket.status,
+    image: ticket.image ?? ''
   }))
 
 	const columns: GridColDef[] = [
@@ -109,6 +111,17 @@ export const ClientsPage:FC = () => {
 		{
       field: "name",
       headerName: "Customer name",
+      renderCell: (params) => (
+        <Box sx={nameSx}>
+          <Avatar
+            src={params.row.image}
+            sx={photoSx}
+          />
+          <Typography>
+            {params.row.name}
+          </Typography>
+        </Box>
+      ),
       flex: 1
     },
 		{

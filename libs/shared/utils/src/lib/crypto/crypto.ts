@@ -1,15 +1,14 @@
 import AES from "crypto-js/aes";
 import CryptoJS from "crypto-js";
-import { AuthResponse } from "@mono-redux-starter/shared/types";
 
 export const KEY = process.env["NX_CRYPTO_JS_KEY"] ?? "crypto";
 
 /**
  * Encrypt auth data and set to cookie
- * @param authData 
+ * @param authData
  * @return encrypted token
  */
-export const encryptUserInfo = (authData: AuthResponse) => {
+export const encryptUserInfo = (authData: any) => {
 	if (authData) {
 		const authDataForLocalStorage = AES.encrypt(
 			JSON.stringify(authData),
@@ -24,10 +23,10 @@ export const encryptUserInfo = (authData: AuthResponse) => {
 
 /**
  * Decrypt auth data
- * @param authData 
+ * @param authData
  * @returns decrypted auth data or null
  */
-export const decryptUserInfo = (authData: string): AuthResponse | null => {
+export const decryptUserInfo = (authData: string): any | null => {
 	if (authData) {
 		const decryptedAuthData = AES.decrypt(
 			authData,

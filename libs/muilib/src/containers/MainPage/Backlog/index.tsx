@@ -5,8 +5,8 @@ import {
 import {
 	addSx, boxSx, headerStackSx, subTextSx, taskRowSx
 } from "./Backlog.sx";
-import { Modal } from "../../../common/Modal";
-import { CreateTaskForm } from "../../../forms/CreateTaskForm";
+import { Modal } from "@lib/muiapp";
+import { CreateTaskForm } from "../../../forms";
 import { BacklogProps } from "./Backlog.types";
 
 export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
@@ -37,7 +37,7 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
           +
         </IconButton>
       </Stack>
-      {!!backlog.length && (
+      {!!backlog?.length && (
         <Stack>
           {backlog.map((
             task, i
@@ -53,7 +53,7 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
           ))}
         </Stack>
       )}
-      {!backlog.length &&
+      {!backlog?.length &&
         <Typography variant="h4">
           No tasks yet...
         </Typography>

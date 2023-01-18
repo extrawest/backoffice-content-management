@@ -3,9 +3,9 @@ import { Grid, Typography } from "@mui/material";
 import { useAuth } from "@lib/muiapp";
 import { Backlog } from "./Backlog";
 import { Tasks } from "./Tasks";
-import { collection, getDocs } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
-import { BacklogResponse, BacklogType, TasksResponse, TaskType } from "@lib/shared/types";
+import { BacklogType, TaskType } from "@lib/shared/types";
 import { Chart } from "./Chart";
 
 export const MainPage:FC = () => {
@@ -16,16 +16,10 @@ export const MainPage:FC = () => {
   const getBacklogData = async () => {
     try {
       if (me?.user?.uid) {
-        const backlogRef = await getDocs(collection(
-          db,
-          "backlog"
-        ));
-
-        const data: BacklogResponse[] = [];
-        backlogRef.forEach(it => {
-          data.push(it.data() as BacklogResponse);
-          setBacklog(data?.[0]?.tasks);
-        });
+        const docRef = doc(db, "backlog", me?.user?.uid);
+        const docSnap = await getDoc(docRef);
+        const data = docSnap.data();
+        setBacklog(data?.["tasks"]);
       }
     } catch (error) {
       console.error(error)
@@ -35,15 +29,10 @@ export const MainPage:FC = () => {
   const getTasksData = async () => {
     try {
       if (me?.user?.uid) {
-        const tasksRef = await getDocs(collection(
-          db,
-          "tasks"
-        ));
-        const data: TasksResponse[] = [];
-        tasksRef.forEach(it => {
-          data.push(it.data() as TasksResponse);
-          setTasks(data?.[0]?.tasks);
-        });
+        const docRef = doc(db, "tasks", me?.user?.uid);
+        const docSnap = await getDoc(docRef);
+        const data = docSnap.data();
+        setTasks(data?.["tasks"]);
       }
     } catch (error) {
       console.error(error)

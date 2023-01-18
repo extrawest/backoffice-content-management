@@ -1,5 +1,5 @@
 import {
-	FC, FormEvent, useState
+  FC, FormEvent, useState
 } from "react";
 import {
 	Alert,
@@ -18,11 +18,9 @@ import {
 	GoogleAuthProvider,
 	signInWithEmailAndPassword,
 	signInWithPopup,
-	signInWithRedirect,
-	signOut
+	signInWithRedirect
 } from "firebase/auth";
 import { auth, googleProvider } from "../../../../shared/firebaseconfig";
-import { useAuth } from "../../contexts";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { submitBoxSx, titleSx, wrapperSx } from "./LoginPage.sx";
 import { ButtonContained } from "../../components/ButtonContained";
@@ -30,7 +28,6 @@ import { ButtonContained } from "../../components/ButtonContained";
 export const LoginPage: FC = () => {
 	const [openAlert, setOpenAlert] = useState(false);
 	const [error, setError] = useState("");
-	const me = useAuth();
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();

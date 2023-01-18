@@ -43,26 +43,12 @@ export const RegistrationPage: FC = () => {
 					values.password
 				)
 					.then(async (res) => {
-						const profileRef = collection(
-							db,
-							"profiles"
-						);
-						await Promise.all([
-							addDoc(
-								collection(
-									profileRef,
-									res.user.uid,
-									"accounts"
-								),
-								{ title: "Cash", operations: [] }
-							),
-							res.user.getIdToken().then((tokenRes) => {
+						await	res.user.getIdToken().then((tokenRes) => {
 								localStorage.setItem(
 									"token",
 									tokenRes ?? ""
 								);
 							})
-						]);
 					})
 					.then(() => {
 						navigate("/");

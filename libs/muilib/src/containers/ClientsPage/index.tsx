@@ -90,7 +90,7 @@ export const ClientsPage:FC = () => {
     date: dayjs(ticket.id).format('DD/MM/YY'),
     status: ticket.status,
     image: ticket.image ?? ''
-  }))
+  })) ?? []
 
 	const columns: GridColDef[] = [
 		{

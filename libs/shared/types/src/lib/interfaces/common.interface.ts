@@ -34,7 +34,8 @@ export interface TicketType {
 	task: string,
 	firstName: string,
 	lastName: string,
-	status: TaskTypeEnum
+	status: TaskTypeEnum,
+	image?: string,
 }
 
 export type TicketsResponse = {

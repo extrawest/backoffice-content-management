@@ -8,8 +8,8 @@ import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { Delete } from "@mui/icons-material";
 import { Modal, Table } from "../../common";
 import { CreateTicketForm } from "../../forms/CreateTicketForm";
-import { TasksResponse, TaskType, TicketsResponse, TicketType } from "@lib/shared/types";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { TaskType, TicketType } from "@lib/shared/types";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import { useAuth } from "../../contexts";
 import { StatusTag } from "../../components/StatusTag";
@@ -27,15 +27,10 @@ export const ClientsPage:FC = () => {
   const getTasksData = async () => {
     try {
       if (me?.user?.uid) {
-        const tasksRef = await getDocs(collection(
-          db,
-          "tasks"
-        ));
-        const data: TasksResponse[] = [];
-        tasksRef.forEach(it => {
-          data.push(it.data() as TasksResponse);
-          setTasks(data?.[0]?.tasks);
-        });
+        const docRef = doc(db, "tasks", me?.user?.uid);
+        const docSnap = await getDoc(docRef);
+        const data = docSnap.data();
+        setTasks(data?.["tasks"]);
       }
     } catch (error) {
       console.error(error)
@@ -45,15 +40,10 @@ export const ClientsPage:FC = () => {
   const getTicketsData = async () => {
     try {
       if (me?.user?.uid) {
-        const ticketsRef = await getDocs(collection(
-          db,
-          "tickets"
-        ));
-        const data: TicketsResponse[] = [];
-        ticketsRef.forEach(it => {
-          data.push(it.data() as TicketsResponse);
-          setTickets(data?.[0]?.data);
-        });
+        const docRef = doc(db, "tickets", me?.user?.uid);
+        const docSnap = await getDoc(docRef);
+        const data = docSnap.data();
+        setTickets(data?.["data"]);
       }
     } catch (error) {
       console.error(error)

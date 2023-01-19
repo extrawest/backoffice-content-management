@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@lib/ant": ["libs/antapp/src/index.ts"],
+      "@lib/antdapp": ["libs/antdapp/src/index.ts"],
       "@lib/muiapp": ["libs/muilib/src/index.ts"],
       "@lib/redux": ["libs/redux/src/index.ts"],
       "@lib/shared": ["libs/shared/src/index.ts"],

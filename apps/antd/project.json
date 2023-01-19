@@ -1,0 +1,72 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/antd/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/antd",
+        "index": "apps/antd/src/index.html",
+        "baseHref": "/",
+        "main": "apps/antd/src/main.tsx",
+        "polyfills": "apps/antd/src/polyfills.ts",
+        "tsConfig": "apps/antd/tsconfig.app.json",
+        "assets": ["apps/antd/src/favicon.ico", "apps/antd/src/assets"],
+        "styles": ["apps/antd/src/styles.less"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/antd/src/environments/environment.ts",
+              "with": "apps/antd/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "antd:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "antd:build:development"
+        },
+        "production": {
+          "buildTarget": "antd:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/antd/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

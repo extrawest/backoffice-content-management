@@ -2,17 +2,14 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "ant": "apps/ant",
-    "ant-e2e": "apps/ant-e2e",
     "antapp": "libs/antapp",
+    "antd": "apps/antd",
+    "antdapp": "libs/antdapp",
     "mui": "apps/mui",
-    "mui-e2e": "apps/mui-e2e",
     "muilib": "libs/muilib",
     "primefaces": "apps/primefaces",
-    "primefaces-e2e": "apps/primefaces-e2e",
     "redux": "libs/redux",
     "semantic": "apps/semantic",
-    "semantic-e2e": "apps/semantic-e2e",
     "shared": "libs/shared",
     "shared-hoks": "libs/shared/hoks",
     "shared-hooks": "libs/shared/hooks",
@@ -20,10 +17,6 @@
     "shared-types": "libs/shared/types",
     "shared-ui": "libs/shared/ui",
     "shared-utils": "libs/shared/utils",
-    "tailwind": "apps/tailwind",
-    "tailwind-e2e": "apps/tailwind-e2e",
-    "tamplateapp": "libs/tamplateapp",
-    "template": "apps/template",
-    "template-e2e": "apps/template-e2e"
+    "tailwind": "apps/tailwind"
   }
 }

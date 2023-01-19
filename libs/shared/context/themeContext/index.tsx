@@ -4,11 +4,11 @@ import {
 import { PaletteMode } from "@mui/material";
 
 type ThemeContextType = {
-	mode: PaletteMode | null,
+	mode: PaletteMode | "light",
 	setMode: Dispatch<SetStateAction<PaletteMode>> | null
 };
 
 export const ThemeContext = createContext<ThemeContextType>({
-	mode: null,
+	mode: "light",
 	setMode: null
 });

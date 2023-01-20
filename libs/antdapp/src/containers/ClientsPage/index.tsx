@@ -1,9 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import dayjs from "dayjs";
-import {
-  Avatar,
-  Box, IconButton, Stack, Typography
-} from "@mui/material";
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { Delete } from "@mui/icons-material";
 import { Modal, Table } from "../../common";
@@ -17,12 +13,15 @@ import {
 } from "../MainPage/Backlog/Backlog.sx";
 import { nameSx, photoSx, titleSx } from "./ClientsPage.sx";
 import { useAuth } from "../../../../shared/context/Auth";
+import { Avatar, Button, Layout, Space, theme, Typography } from "antd";
 
 export const ClientsPage:FC = () => {
 	const [showModal, setShowModal] = useState(false);
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [tickets, setTickets] = useState<TicketType[]>([]);
   const me = useAuth();
+  const { useToken } = theme;
+  const { token } = useToken();
 
   const getTasksData = async () => {
     try {
@@ -83,88 +82,125 @@ export const ClientsPage:FC = () => {
 		setShowModal(status);
 	};
 
-  const rows: GridRowsProp = tickets?.map(ticket => ({
-    id: ticket?.id,
+  const dataSource = tickets?.map(ticket => ({
+    key: ticket?.id,
     task: ticket.task,
-    name: `${ticket.firstName} ${ticket.lastName}`,
+    name: <Space>
+      <Avatar
+        src={ticket.image}
+        size={40}
+      />
+      {`${ticket.firstName} ${ticket.lastName}`}
+    </Space>,
     date: dayjs(ticket.id).format('DD/MM/YY'),
     status: ticket.status,
-    image: ticket.image ?? ''
+    delete: <Button
+          type="text"
+          shape="circle"
+          onClick={deleteTicket(ticket.id)}>
+          <Delete/>
+        </Button>
   })) ?? []
 
-	const columns: GridColDef[] = [
+	const columns = [
 		{
-      field: "task",
-      headerName: "Ticket details",
-      flex: 1
+      dataIndex: "task",
+      title: "Ticket details",
+      key: "title"
     },
-		{
-      field: "name",
-      headerName: "Customer name",
-      renderCell: (params) => (
-        <Box sx={nameSx}>
-          <Avatar
-            src={params.row.image}
-            sx={photoSx}
-          />
-          <Typography>
-            {params.row.name}
-          </Typography>
-        </Box>
-      ),
-      flex: 1
+    {
+      dataIndex: "name",
+      title: "Customer name",
+      key: "name"
     },
-		{
-      field: "date",
-      headerName: "Date",
-      flex: 1
+    {
+      dataIndex: "date",
+      title: "Date",
+      key: "date"
     },
-		{
-      field: "status",
-      headerName: "Priority",
-      flex: 1,
-      renderCell: (params) => <StatusTag type={params.row.status}/>
+    {
+      dataIndex: "status",
+      title: "Priority",
+      key: "status"
     },
-		{
-      field: "delete",
-      headerName: "",
-      flex: 1,
-      cellClassName: 'hoverableCell',
-      renderCell: (params) =>
-        <IconButton onClick={deleteTicket(params.row.id)}>
-          <Delete/>
-        </IconButton>
+    {
+      dataIndex: "delete",
+      title: "",
+      key: "delete"
     },
+    //
+		// {
+    //   field: "name",
+    //   headerName: "Customer name",
+    //   renderCell: (params) => (
+    //     <Space style={nameSx}>
+    //       <Avatar
+    //         src={params.row.image}
+    //         style={photoSx}
+    //       />
+    //       <Typography.Text>
+    //         {params.row.name}
+    //       </Typography.Text>
+    //     </Space>
+    //   ),
+    //   flex: 1
+    // },
+		// {
+    //   field: "date",
+    //   headerName: "Date",
+    //   flex: 1
+    // },
+		// {
+    //   field: "status",
+    //   headerName: "Priority",
+    //   flex: 1,
+    //   renderCell: (params) => <StatusTag type={params.row.status}/>
+    // },
+		// {
+    //   field: "delete",
+    //   headerName: "",
+    //   flex: 1,
+    //   cellClassName: 'hoverableCell',
+    //   renderCell: (params) =>
+    //     <Button
+    //       type="text"
+    //       shape="circle"
+    //       onClick={deleteTicket(params.row.id)}>
+    //       <Delete/>
+    //     </Button>
+    // },
 	];
 
 	return (
 		<>
-      <Typography variant="h2">
+      <Typography.Title level={1}>
         Clients
-      </Typography>
-      <Box>
-        <Box sx={titleSx}>
-          <Typography variant="h3">
+      </Typography.Title>
+      <Layout.Content>
+        <Space style={titleSx}>
+          <Typography.Title level={3}>
             All tickets
-          </Typography>
-          <Stack sx={headerStackSx}>
-            <IconButton
+          </Typography.Title>
+          <Space style={headerStackSx}>
+            <Button
+              type="text"
+              shape="circle"
               onClick={handleShowModal(true)}
-              sx={addSx}
+              style={addSx(token)}
             >
               +
-            </IconButton>
-            <Typography sx={subTextSx}>
+            </Button>
+            <Typography.Text style={subTextSx(token)}>
               Add
-            </Typography>
-          </Stack>
-        </Box>
+            </Typography.Text>
+          </Space>
+        </Space>
         <Table
-          rows={rows}
+          dataSource={dataSource}
           columns={columns}
         />
         <Modal
-          handleClose={handleShowModal(false)}
+          onCancel={handleShowModal(false)}
           open={showModal}
         >
           <CreateTicketForm
@@ -175,7 +211,7 @@ export const ClientsPage:FC = () => {
             closeModal={handleShowModal(false)}
           />
         </Modal>
-      </Box>
+      </Layout.Content>
 		</>
 	);
 };

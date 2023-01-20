@@ -1,27 +1,28 @@
 import { FC } from "react";
-import { StatusTagProps } from "./StatusTag.types";
-import { tagSx } from "./StatusTag.sx";
 import { TaskTypeEnum } from "@lib/shared/types";
 import { Typography } from "antd";
+import { StatusTagProps } from "./StatusTag.types";
+import { tagSx } from "./StatusTag.sx";
+import { useToken } from "antd/es/theme/internal";
 
 export const StatusTag: FC<StatusTagProps> = ({ type }) => {
+	const [theme, token] = useToken();
 
 	return (
-
         <Typography.Text
-          // sx={{
-          //   ...tagSx,
-          //   backgroundColor:
-          //     type === TaskTypeEnum.URGENT
-          //       ?  getDesignTokens(mode).palette.primaryColors[600]
-          //       : type === TaskTypeEnum.NEW
-          //         ? getDesignTokens(mode).palette.green[400]
-          //         : getDesignTokens(mode).palette.greyScale[500],
-          //   color:
-          //     type === TaskTypeEnum.DEFAULT
-          //       ? theme.palette.common.white
-          //       : getDesignTokens(mode).palette.greyScale[800],
-          // }}
+          style={{
+            ...tagSx,
+            backgroundColor:
+              type === TaskTypeEnum.URGENT
+                ?  token["yellow-6"]
+                : type === TaskTypeEnum.NEW
+                  ? token["green-4"]
+                  : token["colorBorder"],
+            color:
+              type === TaskTypeEnum.DEFAULT
+                ? token["colorText"]
+                : token["colorWhite"],
+          }}
         >
           {type}
         </Typography.Text>

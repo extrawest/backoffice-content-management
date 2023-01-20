@@ -1,45 +1,28 @@
-import {
-	Box, Dialog, DialogContent, DialogTitle, IconButton
-} from "@mui/material";
 import { FC } from "react";
+import { rootSx} from "./Modal.sx";
 import {
-	contentSx, headerSx, rootSx
-} from "./Modal.sx";
-import { ModalProps } from "./Modal.types";
-import { Close } from "@mui/icons-material";
+	Modal as AntModal, ModalProps, theme
+} from "antd";
 
 export const Modal:FC<ModalProps> = ({
-	handleClose,
+	onCancel,
 	open,
 	children,
-	title,
-	type,
-	fullWidth,
-	withoutPaddings = false
+	title
 }) => {
+	const { useToken } = theme;
+	const { token } = useToken();
+
 	return (
-    <Dialog
-      onClose={handleClose}
+    <AntModal
+      onCancel={onCancel}
       open={open}
-      sx={rootSx}
-      maxWidth={type ?? "lg"}
-      fullWidth={fullWidth ?? false}
+      footer={null}
+      style={rootSx(token)}
+      title={title}
+      width={900}
     >
-      {title &&
-        <Box sx={headerSx}>
-          <DialogTitle>
-            {title}
-          </DialogTitle>
-          <IconButton onClick={handleClose}>
-            <Close />
-          </IconButton>
-        </Box>
-      }
-      <DialogContent
-        sx={contentSx(withoutPaddings)}
-      >
         {children}
-      </DialogContent>
-    </Dialog>
+    </AntModal>
 	);
 };

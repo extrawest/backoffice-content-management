@@ -2,12 +2,11 @@ import {
 	FC, SyntheticEvent, useState
 } from "react";
 import {
-	ErrorMessage, Form, Formik, FormikProps
+	Form, Formik, FormikProps
 } from "formik";
 import {
   Autocomplete,
-  Box,
-  Button, FormControl, FormLabel, Grid, MenuItem, Select, TextField, Typography
+  FormControl, FormLabel, Grid, MenuItem, Select, TextField, Typography
 } from "@mui/material";
 import { autocompleteSx, footerSx, formLabel } from "./InitTaskForm.sx";
 import { setDoc, doc } from "firebase/firestore";
@@ -17,6 +16,7 @@ import { InitTaskFormProps } from "./InitTaskForm.types";
 import { TaskTypeEnum } from "@lib/shared/types";
 import { StatusTag } from "../../components/StatusTag";
 import { useAuth } from "../../../../shared/context/Auth";
+import { Button, Layout, Space } from "antd";
 
 export const InitTaskForm:FC<InitTaskFormProps> = ({
   backlog,
@@ -107,14 +107,7 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
           setFieldValue
         }) => (
         <Form>
-          <Grid
-            container
-            spacing={2}
-          >
-            <Grid
-              xs={12}
-              item
-            >
+          <Space direction="vertical">
               <FormControl
                 fullWidth
                 variant="outlined"
@@ -145,11 +138,6 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
                   onChange={handleChangeTask(setFieldValue)}
                 />
               </FormControl>
-            </Grid>
-            <Grid
-              xs={12}
-              item
-            >
               <FormControl
                 fullWidth
                 variant="outlined"
@@ -181,23 +169,16 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
                     )})}
                 </Select>
               </FormControl>
-            </Grid>
-          </Grid>
-          <ErrorMessage
-            name="name"
-            component="div"
-          />
-          <Box
-            sx={footerSx}
-          >
+          </Space>
+          <Layout.Footer style={footerSx}>
             <Button
-              type="submit"
-              variant="contained"
+              htmlType="submit"
+              type="primary"
               disabled={isSubmitting}
             >
               Submit
             </Button>
-          </Box>
+          </Layout.Footer>
         </Form>
       )}
     </Formik>

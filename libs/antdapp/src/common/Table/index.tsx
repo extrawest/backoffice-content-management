@@ -1,26 +1,12 @@
 import { FC } from "react";
-import {DataGrid} from "@mui/x-data-grid";
-import { TableProps } from "./Table.types";
-import { tableSx } from "./Table.sx";
+import { Table as AntTable, TableProps } from "antd";
 
-const Empty:FC = () => {
-	return <>No data</>;
-};
-
-export const Table: FC<TableProps> = ({ rows, columns, handleSort, ...rest}) => {
+export const Table: FC<TableProps<object>> = ({ dataSource, columns, ...rest}) => {
 	return (
-    <DataGrid
-      disableSelectionOnClick
-      rows={rows}
+    <AntTable
       columns={columns}
-      sortingMode={handleSort ? "server" : "client"}
-      onSortModelChange={handleSort}
-      disableColumnMenu
-      components={{
-        "NoRowsOverlay": Empty
-      }}
+      dataSource={dataSource}
       {...rest}
-      sx={tableSx}
     />
 	);
 };

@@ -1,28 +1,30 @@
-import { SxProps, Theme } from "@mui/material";
+import { CSSProperties } from "react";
+import { GlobalToken } from "antd/es/theme/interface";
+import { pxToRem } from "@lib/shared/utils";
 
-export const boxSx:SxProps<Theme> = {
-	mb: 3,
-	border: (theme: Theme) => `${theme.spacing(1/8)} solid ${theme.palette.grey[400]}`,
-	borderRadius: (theme: Theme) => theme.spacing(8/8)
-};
-export const dataSx:SxProps<Theme> = {
+export const boxSx = (theme: GlobalToken):CSSProperties => ({
+	marginBottom: "2rem",
+	border: `${pxToRem(1)} solid ${theme.colorBorder}`,
+	borderRadius: theme.borderRadius
+});
+export const dataSx = (theme: GlobalToken):CSSProperties => ({
 	alignItems: "center",
 	justifyContent: "center",
 	width: "100%",
-	py: 3,
-	borderBottom: (theme: Theme) => `${theme.spacing(1/8)} solid ${theme.palette.grey[400]}`
-};
-export const dataTitleSx:SxProps<Theme> = {
-	fontSize: (theme: Theme) => theme.spacing(16/8),
+	padding: "2rem 0",
+	borderBottom: `${pxToRem(1)} solid ${theme.colorBorder}`
+});
+export const dataTitleSx = (theme: GlobalToken):CSSProperties => ({
+	fontSize: theme.fontSizeLG,
 	fontWeight: 600,
-	color: (theme: Theme) => theme.palette.grey[500]
-};
-export const dataValueSx:SxProps<Theme> = {
-	fontSize: (theme: Theme) => theme.spacing(24/8),
+	color: theme.colorBgSpotlight
+});
+export const dataValueSx = (theme: GlobalToken):CSSProperties => ({
+	fontSize: theme.fontSizeHeading3,
 	fontWeight: 700,
-	color: (theme: Theme) => theme.palette.common.black
-};
-export const gridDataSx:SxProps<Theme> = {
-	py: 2,
-	borderLeft: (theme: Theme) => `${theme.spacing(1/8)} solid ${theme.palette.grey[400]}`
-};
+	color: theme.colorText
+});
+export const gridDataSx = (theme: GlobalToken):CSSProperties => ({
+	padding: "2rem 0",
+	borderLeft: `${pxToRem(1)} solid ${theme.colorBorder}`
+});

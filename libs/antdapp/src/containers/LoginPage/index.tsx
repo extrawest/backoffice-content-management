@@ -146,8 +146,7 @@ export const LoginPage: FC = () => {
         />
         <Box sx={submitBoxSx}>
           <ButtonContained
-            type="submit"
-            fullWidth
+            htmlType="submit"
           >
             Log In
           </ButtonContained>

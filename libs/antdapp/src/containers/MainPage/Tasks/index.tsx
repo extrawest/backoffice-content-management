@@ -1,24 +1,24 @@
+import {FC, useState} from "react";
 import {
-	FC, useState
-} from "react";
-import {
-	Box,
-	IconButton, Stack, Typography
-} from "@mui/material";
-import { Modal } from "@lib/muiapp";
-import { InitTaskForm } from "../../../forms/InitTaskForm";
+  Button, Layout, Row, Space, theme, Typography
+} from "antd";
+import { Modal } from "@lib/antdapp";
+import { InitTaskForm } from "@lib/antdapp";
 import { StatusTag } from "../../../components/StatusTag";
 import { TasksProps } from "./Tasks.types";
 import {
-  addSx, boxSx, headerStackSx, subTextSx, taskRowSx
+	addSx, boxSx, headerStackSx, subTextSx, taskRowSx
 } from "./Tasks.sx";
 
 export const Tasks:FC<TasksProps> = ({
-  backlog,
-  tasks,
-  getBacklog,
-  getTasks
+	backlog,
+	tasks,
+	getBacklog,
+	getTasks
 }) => {
+	const { useToken } = theme;
+	const { token } = useToken();
+
 	const [showModal, setShowModal] = useState(false);
 
 	const handleShowModal = (status: boolean) => () => {
@@ -26,54 +26,62 @@ export const Tasks:FC<TasksProps> = ({
 	};
 
 	return (
-    <Box sx={boxSx}>
-      <Stack sx={headerStackSx}>
-        <Typography variant="h4">
+    <Layout.Content
+      style={boxSx(token)}
+    >
+      <Space style={headerStackSx}>
+        <Typography.Title level={3} style={{margin: 0}}>
           Tasks
-        </Typography>
-        <Typography variant="caption">
+        </Typography.Title>
+        <Typography.Text>
           View details
-        </Typography>
-      </Stack>
-      <Stack sx={headerStackSx}>
-        <Typography sx={subTextSx}>
+        </Typography.Text>
+      </Space>
+      <Space style={headerStackSx}>
+        <Typography.Text style={subTextSx(token)}>
           Create new task
-        </Typography>
-        <IconButton
+        </Typography.Text>
+        <Button
+          shape="circle"
+          type="text"
           onClick={handleShowModal(true)}
-          sx={addSx}
+          style={addSx(token)}
         >
           +
-        </IconButton>
-      </Stack>
+        </Button>
+      </Space>
       {!!tasks?.length && (
-        <Stack>
+        <Space
+          direction="vertical"
+          style={{width: "100%"}}
+        >
           {tasks.map((
             task, i
           ) => (
-            <Box
+            <Row
               key={i}
-              sx={taskRowSx(i < tasks?.length - 1)}
+              style={taskRowSx(
+                i < tasks?.length - 1,
+                token
+              )}
             >
-              <Typography variant='h6'>
+              <Typography.Title level={4}>
                 {task?.name}
-              </Typography>
+              </Typography.Title>
               <StatusTag type={task.type} />
-            </Box>
+            </Row>
           ))}
-        </Stack>
+        </Space>
       )}
       {!tasks?.length &&
-        <Typography variant="h4">
+        <Typography.Title level={4}>
           No tasks yet...
-        </Typography>
+        </Typography.Title>
       }
       <Modal
-        handleClose={handleShowModal(false)}
+        onCancel={handleShowModal(false)}
         open={showModal}
-        fullWidth
-        title='Create new task'
-        type='lg'
+        title="Start task"
       >
         <InitTaskForm
           backlog={backlog}
@@ -83,6 +91,6 @@ export const Tasks:FC<TasksProps> = ({
           closeModal={handleShowModal(false)}
         />
       </Modal>
-    </Box>
+    </Layout.Content>
 	);
 };

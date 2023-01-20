@@ -1,43 +1,48 @@
-import { SxProps, Theme } from "@mui/material";
+import { CSSProperties } from "react";
+import { pxToRem } from "@lib/shared/utils";
 
-export const logoutSx: SxProps<Theme> = {
+export const logoutSx: CSSProperties = {
 	textTransform: "none",
+	display: "flex",
+	alignItems: "center",
+	gap: "1rem",
+	padding: "1rem"
 };
-export const menuListSx: SxProps<Theme> = {
-	pt: 5,
-	pb: 10
+export const menuListSx: CSSProperties = {
+	paddingTop: "5rem",
+	paddingBottom: "10rem"
 };
-export const menuItemSx: SxProps<Theme> = {
-	px: 0
+export const menuItemSx: CSSProperties = {
+	paddingLeft: 0,
+	paddingRight: 0
 };
-export const photoSx: SxProps<Theme> = {
-	width: (theme: Theme) => theme.spacing(150/8),
-	height: (theme: Theme) => theme.spacing(150/8),
-	mb: 3
+export const photoSx: CSSProperties = {
+	width: pxToRem(150),
+	height: pxToRem(150),
+	marginBottom: "3rem"
 };
-export const textSx: SxProps<Theme> = {
+export const textSx: CSSProperties = {
 	textDecoration: "none",
-	color: (theme: Theme) => theme.palette.common.black
+	color: "colorText"
 };
-export const menuStackSx: SxProps<Theme> = {
-	justifyContent: "space-between",
+export const menuStackSx: CSSProperties = {
+	justifyContent: "space-around",
+	flexDirection: "column",
 	maxHeight: "100%",
 	height: "100%",
-	alignItems: "flex-start"
+	alignItems: "flex-start",
 };
-export const wrapperSx: SxProps<Theme> = {
+export const wrapperSx: CSSProperties = {
 	position: "fixed",
 	top: 0,
 	left: 0,
 	bottom: 0,
 	display: "flex",
 	flexDirection: "column",
-	width: (theme: Theme) => theme.spacing(282/8),
-	boxShadow: (theme: Theme) => `${theme.spacing(4/8)} 0 ${theme.spacing(36/8)} ${theme.spacing(36/8)} rgba(96,94,94,0.08)`,
-	m: 0,
+	width: pxToRem(300),
+	boxShadow: "4px 0 36px 36px rgba(96,94,94,0.08)",
+	margin: 0,
 	minHeight: "100vh",
 	height: "100%",
-	py: 10,
-	pl: 10,
-	pr: 5
+	padding: "10rem 5rem"
 };

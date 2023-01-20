@@ -1,17 +1,21 @@
 import { FC, PropsWithChildren } from "react";
-import { Box } from "@mui/material";
+import { Layout, Space } from "antd";
 import { Menu } from "../../Menu";
-import { contentSx, menuBoxSx, pageBoxSx } from "./PageLayout.sx";
+import {
+	contentSx, menuBoxSx, pageBoxSx
+} from "./PageLayout.sx";
 
 export const PageLayout:FC<PropsWithChildren<Record<string, unknown>>> = ({children}) => {
 	return (
-    <Box sx={pageBoxSx}>
-      <Box sx={menuBoxSx}>
+    <Layout.Content style={pageBoxSx}>
+      <Space style={menuBoxSx}>
         <Menu/>
-      </Box>
-      <Box sx={contentSx}>
+      </Space>
+      <Layout.Content
+        style={contentSx}
+      >
         {children}
-      </Box>
-    </Box>
+      </Layout.Content>
+    </Layout.Content>
 	);
 };

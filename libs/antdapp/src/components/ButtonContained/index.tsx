@@ -1,19 +1,20 @@
 import { FC, PropsWithChildren } from "react";
-import {
-	Button, ButtonProps, useTheme
-} from "@mui/material";
 import { buttonSx } from "./ButtonContained.sx";
+import {
+	Button, theme, ButtonProps
+} from "antd";
 
-export const ButtonContained:FC<PropsWithChildren<ButtonProps>> = (props) => {
-	const theme = useTheme();
+export const ButtonContained:FC<PropsWithChildren<ButtonProps>> = ({children, ...rest}) => {
+	const { useToken } = theme;
+	const { token } = useToken();
 
 	return (
     <Button
-      variant="contained"
-      sx={buttonSx(theme)}
-      {...props}
+      type="primary"
+      style={buttonSx(token)}
+      {...rest}
     >
-      {props.children}
+      {children}
     </Button>
 	);
 };

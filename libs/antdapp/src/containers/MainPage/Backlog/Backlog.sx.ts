@@ -1,29 +1,41 @@
-import { SxProps, Theme } from "@mui/material";
+import { CSSProperties } from "react";
+import { GlobalToken } from "antd/lib/theme/interface";
+import { pxToRem } from "@lib/shared/utils";
 
-export const boxSx:SxProps<Theme> = {
-	p: 2,
-	border: (theme: Theme) => `${theme.spacing(1/8)} solid ${theme.palette.grey[400]}`,
-	borderRadius: (theme: Theme) => theme.spacing(8/8)
-};
-export const subTextSx:SxProps<Theme> = {
-	fontSize: (theme: Theme) => theme.spacing(14/8),
+export const boxSx = (theme: GlobalToken): CSSProperties => ({
+	padding: theme.paddingSM,
+	border: `${pxToRem(1)} solid ${theme.colorBorder}`,
+	borderRadius: theme.borderRadius
+});
+
+export const subTextSx= (theme: GlobalToken): CSSProperties => ({
+	fontSize: theme.fontSize,
 	fontWeight: 600,
-	color: (theme: Theme) => theme.palette.grey[500]
-};
-export const addSx:SxProps<Theme> = {
-	fontSize: (theme: Theme) => theme.spacing(14/8),
-	color: (theme: Theme) => theme.palette.grey[500],
-	width: (theme: Theme) => theme.spacing(30/8),
-	height: (theme: Theme) => theme.spacing(30/8)
-};
-export const taskRowSx = (notLast: boolean):SxProps<Theme> => ({
-	borderBottom: (theme: Theme) => notLast ?
-		`${theme.spacing(1/8)} solid ${theme.palette.grey[400]}` :
+	color: theme.colorInfo
+});
+
+export const addSx = (theme: GlobalToken): CSSProperties => ({
+	fontSize: theme.fontSize,
+	color: theme.colorInfo,
+	width: pxToRem(30),
+	height: pxToRem(30)
+});
+
+export const taskRowSx = (
+	notLast: boolean, theme: GlobalToken
+):CSSProperties => ({
+	display: "flex",
+	justifyContent: "space-between",
+	alignItems: "center",
+	borderBottom: notLast ?
+		`${pxToRem(1)} solid ${theme.colorBorder}` :
 		"none",
 	width: "100%",
-	py: 2
+	padding: "1rem 0"
 });
-export const headerStackSx:SxProps<Theme> = {
+
+export const headerStackSx:CSSProperties = {
+	display: "flex",
 	flexDirection: "row",
 	alignItems: "center",
 	justifyContent: "space-between"

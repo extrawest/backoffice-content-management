@@ -1,17 +1,18 @@
-import { SxProps, Theme } from "@mui/material";
+import { CSSProperties } from "react";
+import { pxToRem } from "@lib/shared/utils";
 
-export const photoSx: SxProps<Theme> = {
-	width: (theme: Theme) => theme.spacing(50/8),
-	height: (theme: Theme) => theme.spacing(50/8),
+export const photoSx: CSSProperties = {
+	width: pxToRem(50),
+	height: pxToRem(50)
 };
 
-export const nameSx: SxProps<Theme> = {
+export const nameSx: CSSProperties = {
 	display: "flex",
 	alignItems: "center",
-	gap: 2
+	gap: "1rem"
 };
 
-export const titleSx:SxProps<Theme> = {
+export const titleSx:CSSProperties = {
 	display: "flex",
 	justifyContent: "space-between",
 	alignItems: "center"

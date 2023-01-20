@@ -1,69 +1,75 @@
 import {FC, useState} from "react";
-import {
-	Box, IconButton, Stack, Typography
-} from "@mui/material";
+import { Button, Layout, Row, Space, theme, Typography } from "antd";
 import {
 	addSx, boxSx, headerStackSx, subTextSx, taskRowSx
 } from "./Backlog.sx";
-import { Modal } from "@lib/muiapp";
+import { Modal } from "@lib/antdapp";
 import { CreateTaskForm } from "../../../forms";
 import { BacklogProps } from "./Backlog.types";
 
 export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
 	const [showModal, setShowModal] = useState(false);
+  const { useToken } = theme;
+  const { token } = useToken();
 
 	const handleShowModal = (status: boolean) => () => {
 		setShowModal(status);
 	};
 
 	return (
-    <Box sx={boxSx}>
-      <Stack sx={headerStackSx}>
-        <Typography variant="h4">
+    <Layout.Content style={boxSx(token)}>
+      <Space style={headerStackSx}>
+        <Typography.Title level={3} style={{margin: 0}}>
           Unresolved tickets
-        </Typography>
-        <Typography variant="caption">
+        </Typography.Title>
+        <Typography.Text>
           View details
-        </Typography>
-      </Stack>
-      <Stack sx={headerStackSx}>
-        <Typography sx={subTextSx}>
+        </Typography.Text>
+      </Space>
+      <Space style={headerStackSx}>
+        <Typography.Text style={subTextSx(token)}>
           Create new task
-        </Typography>
-        <IconButton
+        </Typography.Text>
+        <Button
+          type="text"
+          shape="circle"
           onClick={handleShowModal(true)}
-          sx={addSx}
+          style={addSx(token)}
         >
           +
-        </IconButton>
-      </Stack>
+        </Button>
+      </Space>
       {!!backlog?.length && (
-        <Stack>
+        <Space
+          direction="vertical"
+          style={{width: "100%"}}
+        >
           {backlog.map((
             task, i
               ) => (
-            <Box
+            <Row
               key={i}
-              sx={taskRowSx(i < backlog?.length - 1)}
+              style={taskRowSx(
+                i < backlog?.length - 1,
+                token
+              )}
             >
-              <Typography variant='h6'>
+              <Typography.Title level={4}>
                 {task?.name}
-              </Typography>
-            </Box>
+              </Typography.Title>
+            </Row>
           ))}
-        </Stack>
+        </Space>
       )}
       {!backlog?.length &&
-        <Typography variant="h4">
+        <Typography.Title level={4}>
           No tasks yet...
-        </Typography>
+        </Typography.Title>
       }
       <Modal
-        handleClose={handleShowModal(false)}
+        onCancel={handleShowModal(false)}
         open={showModal}
-        fullWidth
-        title='Create new task'
-        type='lg'
+        title="New task"
       >
         <CreateTaskForm
           backlog={backlog}
@@ -71,6 +77,6 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
           closeModal={handleShowModal(false)}
         />
       </Modal>
-    </Box>
+    </Layout.Content>
 	);
 };

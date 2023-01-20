@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from "react";
-import { Grid, Typography } from "@mui/material";
 import { Backlog } from "./Backlog";
 import { Tasks } from "./Tasks";
 import { doc, getDoc } from "firebase/firestore";
@@ -7,6 +6,7 @@ import { db } from "../../../../shared/firebaseconfig";
 import { BacklogType, TaskType } from "@lib/shared/types";
 import { Chart } from "./Chart";
 import { useAuth } from "../../../../shared/context/Auth";
+import { Col, Row, Typography } from "antd";
 
 export const MainPage:FC = () => {
   const me = useAuth();
@@ -49,31 +49,26 @@ export const MainPage:FC = () => {
 
 	return (
 		<>
-      <Typography variant="h2">
+      <Typography.Title level={1}>
         Dashboard
-      </Typography>
+      </Typography.Title>
       <Chart
         tasks={tasks}
         backlog={backlog}
       />
-      <Grid
-        container
-        spacing={3}
+      <Row
+        gutter={24}
       >
-        <Grid
-          item
-          xs={12}
-          lg={6}
+        <Col
+          span={12}
         >
           <Backlog
             backlog={backlog}
             getBacklogData={getBacklogData}
           />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={6}
+        </Col>
+        <Col
+         span={12}
         >
           <Tasks
             backlog={backlog}
@@ -81,8 +76,8 @@ export const MainPage:FC = () => {
             getBacklog={getBacklogData}
             getTasks={getTasksData}
           />
-        </Grid>
-      </Grid>
+        </Col>
+      </Row>
 		</>
 	);
 };

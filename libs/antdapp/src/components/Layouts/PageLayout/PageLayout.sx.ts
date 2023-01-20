@@ -1,15 +1,14 @@
-import { SxProps, Theme } from "@mui/material";
+import { CSSProperties } from "react";
+import { pxToRem } from "@lib/shared/utils";
 
-export const contentSx: SxProps<Theme> = {
+export const contentSx: CSSProperties = {
 	width: "100%",
-	py: 10,
-	pl: 5,
-	pr: 10
+	padding: "5rem 2rem 1rem",
 };
-export const menuBoxSx: SxProps<Theme> = {
-	width: (theme: Theme) => theme.spacing(462/8),
+export const menuBoxSx: CSSProperties = {
+	width: pxToRem(462)
 };
-export const pageBoxSx: SxProps<Theme> = {
+export const pageBoxSx: CSSProperties = {
 	display: "flex",
 	width: "100%"
 };

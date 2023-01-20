@@ -1,14 +1,11 @@
 import { SxProps, Theme } from "@mui/material";
+import { CSSProperties } from "react";
 
-export const footerSx:SxProps<Theme> = {
-	py: 2,
+export const footerSx:CSSProperties = {
+	padding: "2rem 0",
 	display: "flex",
 	justifyContent: "flex-end",
-	width: "100%",
-	".MuiButton-root": {
-		py: 2,
-		px: 5
-	}
+	width: "100%"
 };
 
 export const autocompleteSx: SxProps<Theme> = {

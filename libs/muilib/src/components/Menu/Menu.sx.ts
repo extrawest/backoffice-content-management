@@ -5,7 +5,8 @@ export const logoutSx: SxProps<Theme> = {
 };
 export const menuListSx: SxProps<Theme> = {
 	pt: 5,
-	pb: 10
+	pb: 10,
+	border: "none"
 };
 export const menuItemSx: SxProps<Theme> = {
 	px: 0

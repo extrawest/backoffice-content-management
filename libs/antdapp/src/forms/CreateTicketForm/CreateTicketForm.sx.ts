@@ -2,19 +2,19 @@ import { SxProps, Theme } from "@mui/material";
 import { CSSProperties } from "react";
 import { pxToRem } from "@lib/shared/utils";
 
-export const footerSx:SxProps<Theme> = {
-	py: 2,
+export const footerSx:CSSProperties = {
+	padding: "1rem 0",
 	display: "flex",
 	justifyContent: "flex-end",
-	width: "100%",
-	".MuiButton-root": {
-		py: 2,
-		px: 5
-	}
+	width: "100%"
 };
 
-export const wrapperSx:SxProps<Theme> = {
-	display: "flex",
+export const submitBtnSx:CSSProperties = {
+	padding: "0 2rem",
+	height: pxToRem(50)
+};
+
+export const wrapperSx:CSSProperties = {
 	alignItems: "center"
 };
 
@@ -29,22 +29,10 @@ export const imgSx:CSSProperties = {
 	objectFit: "cover"
 };
 
-export const imgBoxSx:SxProps<Theme> = {
-	width: (theme: Theme) => theme.spacing(300/8)
+export const imgBoxSx:CSSProperties = {
+	width: pxToRem(200)
 };
 
-export const autocompleteSx: SxProps<Theme> = {
-	"& .MuiFormControl-root": {
-		margin: (theme: Theme) => theme.spacing(0)
-	},
-};
-
-export const formLabel: SxProps<Theme> = {
-	"& > span " :{
-		fontWeight: 600
-	},
-	"& span span": {
-		marginRight: 5,
-		color:  (theme: Theme) => theme.palette.warning.main
-	},
+export const inputSx:CSSProperties = {
+	height: pxToRem(50)
 };

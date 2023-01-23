@@ -1,24 +1,20 @@
 import {
   ChangeEvent,
-  FC, SyntheticEvent, useState
+  FC, useEffect, useState
 } from "react";
-import { Form, Formik, FormikProps
+import { Formik, FormikProps
 } from "formik";
-import {
-	Autocomplete,
-	Box,
-	Button, FormControl, FormLabel, Grid, OutlinedInput, TextField, Typography
-} from "@mui/material";
-import {
-  autocompleteSx, fileInputSx, footerSx, formLabel, imgBoxSx, imgSx, wrapperSx
-} from "./CreateTicketForm.sx";
+import dayjs from "dayjs";
+import { AutoComplete, Button, Col, Form, Input, Layout, Row, Typography } from "antd";
 import { setDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../../../shared/firebaseconfig";
-import dayjs from "dayjs";
-import { CreateTicketFormProps, FormValueProps } from "./CreateTicketForm.types";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
 import { useAuth } from "../../../../shared/context/Auth";
+import { CreateTicketFormProps, FormValueProps, OptionType } from "./CreateTicketForm.types";
+import {
+  fileInputSx, footerSx, imgBoxSx, imgSx, inputSx, submitBtnSx, wrapperSx
+} from "./CreateTicketForm.sx";
+import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
 
 export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 	tasks,
@@ -100,22 +96,31 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 		}
 	};
 
-	const processedTasks = tasks?.map(task => ({
-		id: task.id,
-		label: task.name
-	}));
+  const [processedTasks, setProcessedTasks] = useState<OptionType[]>([])
 
-	const handleChangeTask = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
-		(
-			e: SyntheticEvent, newValue: {label: string, id: string} | null
-		) => {
-			const value = newValue?.id ?? "";
-			setFieldValue(
-				"name",
-				value
-			);
-			setActiveTask(value);
-		};
+  useEffect(() => {
+    if (tasks) {
+      setProcessedTasks(tasks.map((task, index) => ({
+        value: task.name,
+        label: task.name,
+        key: index
+      })));
+    }
+  }, [tasks])
+
+  const onSelect = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
+    (val: string, option: OptionType) => {
+    setActiveTask(option.value)
+    setFieldValue('task', option.value)
+  }
+
+  const onSearch = (data: string) => {
+    setProcessedTasks(tasks.map((task, index) => ({
+      value: task.name,
+      label: task.name,
+      key: index
+    })).filter(task => task.label.includes(data)))
+  }
 
   return (
     <Formik
@@ -127,13 +132,18 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
           isSubmitting,
           values,
           handleChange,
-          errors,
           setFieldValue,
           handleSubmit,
         }:FormikProps<FormValueProps>) => (
-        <Form onSubmit={handleSubmit}>
-          <Box sx={wrapperSx}>
-            <Box sx={imgBoxSx}>
+        <Form layout="vertical" onFinish={handleSubmit}>
+          <Row
+            gutter={24}
+            style={wrapperSx}
+          >
+            <Col
+              span={6}
+              style={imgBoxSx}
+            >
               <label>
                 <img
                   style={imgSx}
@@ -148,105 +158,56 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
                   accept="image/png, image/jpeg"
                 />
               </label>
-            </Box>
-            <Grid
-              container
-              spacing={2}
+            </Col>
+            <Col
+             span={18}
             >
-              <Grid
-                xs={12}
-                item
+              <Form.Item
+                colon={false}
+                label={
+                <Typography.Text>
+                  Task
+                </Typography.Text>}
               >
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  error={!!errors["task"]}
+                <AutoComplete
+                  options={processedTasks}
+                  onSelect={onSelect(setFieldValue)}
+                  onSearch={onSearch}
                 >
-                  <FormLabel sx={formLabel}>
-                    <Typography variant="caption">
-                      Task
-                    </Typography>
-                  </FormLabel>
-                  <Autocomplete
-                    sx={autocompleteSx}
-                    options={processedTasks}
-                    selectOnFocus={false}
-                    value={processedTasks.find(item => item.id === activeTask)}
-                    getOptionLabel={(option) => option.label}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        margin="normal"
-                        color="secondary"
-                        variant="outlined"
-                        placeholder="Select task"
-                      />
-                    )}
-                    onChange={handleChangeTask(setFieldValue)}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid
-                xs={12}
-                item
+                  <Input.Search style={inputSx} size="large" enterButton />
+                </AutoComplete>
+              </Form.Item>
+              <Form.Item
+                colon={false}
+                label={
+                  <Typography.Text>
+                    First name
+                  </Typography.Text>}
               >
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  error={!!errors["firstName"]}
-                >
-                  <FormLabel sx={formLabel}>
-                    <Typography variant="caption">
-                      First Name
-                    </Typography>
-                  </FormLabel>
-                  <OutlinedInput
-                    type="text"
-                    name="firstName"
-                    value={values["firstName"]}
-                    onChange={handleChange}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid
-                xs={12}
-                item
+                <Input style={inputSx} value={values["firstName"]} onChange={handleChange} name="firstName" />
+              </Form.Item>
+              <Form.Item
+                colon={false}
+                label={
+                  <Typography.Text>
+                    Last name
+                  </Typography.Text>}
               >
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  error={!!errors["lastName"]}
-                >
-                  <FormLabel sx={formLabel}>
-                    <Typography variant="caption">
-                      Last Name
-                    </Typography>
-                  </FormLabel>
-                  <OutlinedInput
-                    type="text"
-                    name="lastName"
-                    value={values["lastName"]}
-                    onChange={handleChange}
-                  />
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Box>
-          <Box
-            sx={footerSx}
-          >
+                <Input style={inputSx} value={values["lastName"]} onChange={handleChange} name="lastName" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Layout.Footer style={footerSx}>
             <Button
-              type="submit"
-              variant="contained"
+              style={submitBtnSx}
+              htmlType="submit"
+              type="primary"
+              size="large"
               disabled={isSubmitting || disableSubmit}
             >
               Submit
             </Button>
-          </Box>
+          </Layout.Footer>
         </Form>
       )}
     </Formik>

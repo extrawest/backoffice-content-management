@@ -1,19 +1,17 @@
 import { FC, useEffect, useState } from "react";
+import { Avatar, Button, Layout, Space, theme, Typography } from "antd";
 import dayjs from "dayjs";
-import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { Delete } from "@mui/icons-material";
+import { useAuth } from "../../../../shared/context/Auth";
 import { Modal, Table } from "../../common";
 import { CreateTicketForm } from "../../forms/CreateTicketForm";
 import { TaskType, TicketType } from "@lib/shared/types";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
-import { StatusTag } from "../../components/StatusTag";
 import {
   addSx, headerStackSx, subTextSx
 } from "../MainPage/Backlog/Backlog.sx";
-import { nameSx, photoSx, titleSx } from "./ClientsPage.sx";
-import { useAuth } from "../../../../shared/context/Auth";
-import { Avatar, Button, Layout, Space, theme, Typography } from "antd";
+import { titleSx } from "./ClientsPage.sx";
 
 export const ClientsPage:FC = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -127,48 +125,7 @@ export const ClientsPage:FC = () => {
       dataIndex: "delete",
       title: "",
       key: "delete"
-    },
-    //
-		// {
-    //   field: "name",
-    //   headerName: "Customer name",
-    //   renderCell: (params) => (
-    //     <Space style={nameSx}>
-    //       <Avatar
-    //         src={params.row.image}
-    //         style={photoSx}
-    //       />
-    //       <Typography.Text>
-    //         {params.row.name}
-    //       </Typography.Text>
-    //     </Space>
-    //   ),
-    //   flex: 1
-    // },
-		// {
-    //   field: "date",
-    //   headerName: "Date",
-    //   flex: 1
-    // },
-		// {
-    //   field: "status",
-    //   headerName: "Priority",
-    //   flex: 1,
-    //   renderCell: (params) => <StatusTag type={params.row.status}/>
-    // },
-		// {
-    //   field: "delete",
-    //   headerName: "",
-    //   flex: 1,
-    //   cellClassName: 'hoverableCell',
-    //   renderCell: (params) =>
-    //     <Button
-    //       type="text"
-    //       shape="circle"
-    //       onClick={deleteTicket(params.row.id)}>
-    //       <Delete/>
-    //     </Button>
-    // },
+    }
 	];
 
 	return (
@@ -202,6 +159,7 @@ export const ClientsPage:FC = () => {
         <Modal
           onCancel={handleShowModal(false)}
           open={showModal}
+          title="Create new ticket"
         >
           <CreateTicketForm
             tasks={tasks}

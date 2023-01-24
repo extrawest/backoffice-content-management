@@ -1,7 +1,7 @@
 import { SxProps, Theme } from "@mui/material";
+import { CSSProperties } from "react";
 
 export const boxSx:SxProps<Theme> = {
-	p: 2,
 	border: (theme: Theme) => `${theme.spacing(1/8)} solid ${theme.palette.grey[400]}`,
 	borderRadius: (theme: Theme) => theme.spacing(8/8)
 };
@@ -10,9 +10,14 @@ export const subTextSx:SxProps<Theme> = {
 	fontWeight: 600,
 	color: (theme: Theme) => theme.palette.grey[500]
 };
+export const linkSx:CSSProperties = {
+	textDecoration: "none"
+};
 export const addSx:SxProps<Theme> = {
 	fontSize: (theme: Theme) => theme.spacing(14/8),
 	color: (theme: Theme) => theme.palette.grey[500],
+	backgroundColor: (theme: Theme) => theme.palette.grey[200],
+	borderRadius: (theme: Theme) => theme.spacing(8/8),
 	width: (theme: Theme) => theme.spacing(30/8),
 	height: (theme: Theme) => theme.spacing(30/8)
 };
@@ -21,10 +26,11 @@ export const taskRowSx = (notLast: boolean):SxProps<Theme> => ({
 		`${theme.spacing(1/8)} solid ${theme.palette.grey[400]}` :
 		"none",
 	width: "100%",
-	py: 2
+	p: 2
 });
 export const headerStackSx:SxProps<Theme> = {
 	flexDirection: "row",
 	alignItems: "center",
-	justifyContent: "space-between"
+	justifyContent: "space-between",
+	p: 2
 };

@@ -11,14 +11,6 @@ export interface TaskType {
 	type: TaskTypeEnum;
 }
 
-export type BacklogResponse = {
-	tasks: BacklogType[]
-};
-
-export type TasksResponse = {
-	tasks: TaskType[]
-};
-
 export interface StatisticType {
 	date: any,
 	backlog: number,
@@ -38,6 +30,8 @@ export interface TicketType {
 	image?: string,
 }
 
-export type TicketsResponse = {
-	data: TicketType[]
+export type OptionType = {
+  value: string,
+  label: string,
+  key: number
 };

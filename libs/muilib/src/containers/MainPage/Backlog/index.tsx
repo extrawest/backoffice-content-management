@@ -3,11 +3,13 @@ import {
 	Box, IconButton, Stack, Typography
 } from "@mui/material";
 import {
-	addSx, boxSx, headerStackSx, subTextSx, taskRowSx
+  addSx, boxSx, headerStackSx, linkSx, subTextSx, taskRowSx
 } from "./Backlog.sx";
 import { Modal } from "@lib/muiapp";
 import { CreateTaskForm } from "../../../forms";
 import { BacklogProps } from "./Backlog.types";
+import { Link } from "react-router-dom";
+import { AppRoutesEnum } from "@lib/shared/types";
 
 export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
 	const [showModal, setShowModal] = useState(false);
@@ -22,9 +24,11 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
         <Typography variant="h4">
           Unresolved tickets
         </Typography>
-        <Typography variant="caption">
-          View details
-        </Typography>
+        <Link to={AppRoutesEnum.TEAM} style={linkSx}>
+          <Typography variant="caption" color="primary">
+            View all
+          </Typography>
+        </Link>
       </Stack>
       <Stack sx={headerStackSx}>
         <Typography sx={subTextSx}>

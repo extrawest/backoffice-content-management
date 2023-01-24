@@ -10,11 +10,12 @@ import { setDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../../../shared/firebaseconfig";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { useAuth } from "../../../../shared/context/Auth";
-import { CreateTicketFormProps, FormValueProps, OptionType } from "./CreateTicketForm.types";
+import { CreateTicketFormProps, FormValueProps } from "./CreateTicketForm.types";
 import {
   fileInputSx, footerSx, imgBoxSx, imgSx, inputSx, submitBtnSx, wrapperSx
 } from "./CreateTicketForm.sx";
 import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
+import { createTicketFormSchema, OptionType } from "@lib/shared/types";
 
 export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 	tasks,
@@ -125,12 +126,13 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
   return (
     <Formik
       initialValues={formInit}
-      // validate={createTicketFormSchema}
+      validationSchema={createTicketFormSchema}
       onSubmit={handleSubmit()}
     >
       {({
           isSubmitting,
           values,
+          errors,
           handleChange,
           setFieldValue,
           handleSubmit,

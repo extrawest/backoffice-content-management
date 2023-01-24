@@ -1,18 +1,28 @@
-import { SxProps, Theme } from "@mui/material";
 import { maxAuthWidth } from "../../../../shared/utils/src/lib/consts";
-import { pxToRem } from "../../../../shared/utils/src/lib/helpers";
+import { CSSProperties } from "react";
 
-export const submitBoxSx: SxProps<Theme> = {
-	width: pxToRem(186),
-	mx: "auto",
-	my: 2
+export const submitBoxSx: CSSProperties = {
+	width: "100%",
+  display: "flex",
+  justifyContent: "flex-end",
+	margin: "1rem auto"
 };
-export const titleSx: SxProps<Theme> = {
+export const socialsSx: CSSProperties = {
+  display: "flex",
+  justifyContent: "center"
+}
+export const continueSx: CSSProperties = {
+  textAlign: "center",
+  display: "block",
+  margin: "1rem auto",
+};
+export const titleSx: CSSProperties = {
 	textAlign: "center",
-	mb: 4
+	marginBottom: "4rem"
 };
-export const wrapperSx: SxProps<Theme> = {
+export const wrapperSx: CSSProperties = {
 	maxWidth: maxAuthWidth,
-	mx: "auto",
-	pt: 10
+	marginLeft: "auto",
+	marginRight: "auto",
+	paddingTop: "5rem"
 };

@@ -1,4 +1,3 @@
-import { SxProps, Theme } from "@mui/material";
 import { CSSProperties } from "react";
 import { pxToRem } from "@lib/shared/utils";
 

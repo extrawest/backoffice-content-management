@@ -1,10 +1,11 @@
 import { FC, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Box, CssBaseline } from "@mui/material";
-import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute, useAuth } from "@lib/muiapp";
+import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute } from "@lib/muiapp";
 import { privateRoutes } from "./privateRotes";
 import { commonRoutes } from "./commonRotes";
 import { LayoutEnum } from "@lib/shared/types";
+import { useAuth } from "libs/shared/context/Auth";
 
 export const AppRoutes: FC = () => {
   const me = useAuth();

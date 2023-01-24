@@ -1,17 +1,14 @@
 import { FC } from "react";
 import {
-	ErrorMessage, Form, Formik
+	Formik
 } from "formik";
-import {
-	Box,
-	Button, FormControl, Grid, OutlinedInput
-} from "@mui/material";
-import { footerSx } from "./CreateTaskForm.sx";
+import { footerSx, inputSx, submitBtnSx  } from "./CreateTaskForm.sx";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import dayjs from "dayjs";
 import { CreateTaskFormProps } from "./CreateTaskForm.types";
 import { useAuth } from "../../../../shared/context/Auth";
+import { Button, Form, Input, Layout, Typography } from "antd";
 
 export const CreateTaskForm:FC<CreateTaskFormProps> = ({
   getBacklogData,
@@ -55,47 +52,29 @@ export const CreateTaskForm:FC<CreateTaskFormProps> = ({
         isSubmitting,
         values,
         handleChange,
-        errors
+        handleSubmit
       }) => (
-        <Form>
-          <Grid
-            container
-            spacing={2}
+        <Form layout="vertical" onFinish={handleSubmit}>
+          <Form.Item
+            colon={false}
+            label={
+              <Typography.Text>
+                Task
+              </Typography.Text>}
           >
-            <Grid
-              xs={12}
-              item
-            >
-            <FormControl
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              error={!!errors["name"]}
-            >
-              <OutlinedInput
-                type="text"
-                name="name"
-                value={values["name"]}
-                onChange={handleChange}
-              />
-            </FormControl>
-            </Grid>
-          </Grid>
-          <ErrorMessage
-            name="name"
-            component="div"
-          />
-          <Box
-            sx={footerSx}
-          >
+            <Input style={inputSx} value={values["name"]} onChange={handleChange} name="name" />
+          </Form.Item>
+          <Layout.Footer style={footerSx}>
             <Button
-              type="submit"
-              variant="contained"
+              style={submitBtnSx}
+              htmlType="submit"
+              type="primary"
+              size="large"
               disabled={isSubmitting}
             >
               Submit
             </Button>
-          </Box>
+          </Layout.Footer>
         </Form>
       )}
     </Formik>

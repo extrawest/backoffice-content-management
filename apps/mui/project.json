@@ -16,7 +16,6 @@
         "polyfills": "apps/mui/src/polyfills.ts",
         "tsConfig": "apps/mui/tsconfig.app.json",
         "assets": ["apps/mui/src/favicon.ico", "apps/mui/src/assets"],
-        "styles": ["apps/mui/src/styles.scss"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },

@@ -1,16 +1,9 @@
 import {
-  FC, FormEvent, useState
+  FC
 } from "react";
 import {
-	Alert,
-	Box,
-	Button,
-	Grid,
-	Link,
-	Snackbar,
-	TextField,
-	Typography
-} from "@mui/material";
+  Formik
+} from "formik";
 import { Google, Facebook } from "@mui/icons-material";
 import {
 	FacebookAuthProvider,
@@ -22,20 +15,18 @@ import {
 } from "firebase/auth";
 import { auth, googleProvider } from "../../../../shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
-import { submitBoxSx, titleSx, wrapperSx } from "./LoginPage.sx";
-import { ButtonContained } from "../../components/ButtonContained";
+import { continueSx, socialsSx, submitBoxSx, titleSx, wrapperSx } from "./LoginPage.sx";
+import { Form, Input, Typography, Button, Row, Col, message } from "antd";
+import { LoginFormTypes } from "./LoginPage.types";
+import { Link } from "react-router-dom";
 
 export const LoginPage: FC = () => {
-	const [openAlert, setOpenAlert] = useState(false);
-	const [error, setError] = useState("");
+  const [api, context] = message.useMessage()
 
-	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-
+	const handleSubmit = () => async (values: LoginFormTypes) => {
 		const value = {
-			email: data.get("email") as string,
-			password: data.get("password") as string
+			email:  values.email,
+			password: values.password
 		};
 		try {
 			await signInWithEmailAndPassword(
@@ -52,15 +43,14 @@ export const LoginPage: FC = () => {
 					"token",
 					token ?? ""
 				);
-			});
+			})
 		} catch (err) {
 			let errorMessage = "Failed to do something exceptional";
 			if (err instanceof Error) {
 				errorMessage = err.message;
 			}
-			setOpenAlert(true);
-			setError(errorMessage);
-		}
+      api.error(errorMessage)
+    }
 	};
 
 	const handleGoogleLogin = () => {
@@ -82,9 +72,8 @@ export const LoginPage: FC = () => {
 			})
 			.catch((err) => {
 				const errorMessage = err.message;
-				setOpenAlert(true);
-				setError(errorMessage);
-			});
+        api.error(errorMessage)
+      });
 	};
 
 	const handleFbLogin = () => {
@@ -105,113 +94,93 @@ export const LoginPage: FC = () => {
 			})
 			.catch((err) => {
 				const errorMessage = err.message;
-				setOpenAlert(true);
-				setError(errorMessage);
+        api.error(errorMessage)
 			});
 	};
 
 	return (
 		<>
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
-        sx={wrapperSx}
+      {context}
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        onSubmit={handleSubmit()}
       >
-        <Typography
-          variant="h2"
-          sx={titleSx}
-        >
-          Login to account
-        </Typography>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-        <Box sx={submitBoxSx}>
-          <ButtonContained
-            htmlType="submit"
-          >
-            Log In
-          </ButtonContained>
-        </Box>
-        <Grid
-          container
-          justifyContent="flex-end"
-        >
-          <Grid item>
-            <Link
-              href={AppRoutesEnum.REGISTRATION}
-              variant="body2"
+        {({
+            isSubmitting,
+            values,
+            handleChange,
+            handleSubmit
+          }) => (
+          <Form layout="vertical" onFinish={handleSubmit} style={wrapperSx}>
+            <Typography.Title
+              level={1}
+              style={titleSx}
             >
-              Don't have an account? Sign Up
-            </Link>
-          </Grid>
-        </Grid>
-        <Grid
-          sx={{ py: 2 }}
-          container
-          justifyContent="center"
-        >
-          <Grid item>
-            <Typography>- Or continue with -</Typography>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          justifyContent="center"
-          sx={{ py: 2 }}
-          spacing={2}
-        >
-          <Grid item>
-            <Button
-              sx={{ height: 50, width: 50 }}
-              onClick={handleGoogleLogin}
-              variant={"contained"}
+              Login to account
+            </Typography.Title>
+            <Form.Item
+              colon={false}
+              label={
+                <Typography.Text>
+                  Email
+                </Typography.Text>}
             >
-              <Google />
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              sx={{ height: 50, width: 50 }}
-              onClick={handleFbLogin}
-              variant={"contained"}
+              <Input name="email" value={values["email"]} onChange={handleChange} />
+            </Form.Item>
+            <Form.Item
+              colon={false}
+              label={
+                <Typography.Text>
+                  Password
+                </Typography.Text>}
             >
-              <Facebook />
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
-      <Snackbar
-        open={openAlert}
-        onClose={() => setOpenAlert(false)}
-        autoHideDuration={5000}
-      >
-        <Alert
-          onClose={() => setOpenAlert(false)}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          {`Something went wrong... ${error}`}
-        </Alert>
-      </Snackbar>
+              <Input.Password name="password" value={values["password"]} onChange={handleChange} />
+            </Form.Item>
+              <Row style={submitBoxSx}>
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  disabled={isSubmitting}
+                >
+                  Log In
+                </Button>
+              </Row>
+                <Row>
+                  <Col span={12}></Col>
+                  <Col span={12}>
+                    <Link
+                      to={AppRoutesEnum.REGISTRATION}
+                    >
+                      <Typography.Text>
+                        Don't have an account? Sign Up
+                      </Typography.Text>
+                    </Link>
+                  </Col>
+                </Row>
+                <Typography.Text style={continueSx}>- Or continue with -</Typography.Text>
+            <Row gutter={12} style={socialsSx}>
+              <Col>
+                <Button
+                  style={{ height: 50, width: 50 }}
+                  onClick={handleGoogleLogin}
+                  type="primary"
+                >
+                  <Google />
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  style={{ height: 50, width: 50 }}
+                  onClick={handleFbLogin}
+                  type="primary"
+                >
+                  <Facebook />
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        )}
+      </Formik>
 		</>
 	);
 };

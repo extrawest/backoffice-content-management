@@ -13,9 +13,3 @@ export type FormValueProps = {
 	firstName: string,
 	lastName: string
 };
-
-export type OptionType = {
-	value: string,
-	label: string,
-	key: number
-};

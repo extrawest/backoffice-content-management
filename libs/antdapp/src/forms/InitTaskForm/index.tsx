@@ -1,22 +1,18 @@
 import {
-	FC, SyntheticEvent, useState
+  FC, useEffect, useState
 } from "react";
 import {
-	Form, Formik, FormikProps
+	Formik, FormikProps
 } from "formik";
-import {
-  Autocomplete,
-  FormControl, FormLabel, Grid, MenuItem, Select, TextField, Typography
-} from "@mui/material";
-import { autocompleteSx, footerSx, formLabel } from "./InitTaskForm.sx";
+import { footerSx } from "./InitTaskForm.sx";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import dayjs from "dayjs";
 import { InitTaskFormProps } from "./InitTaskForm.types";
-import { TaskTypeEnum } from "@lib/shared/types";
+import { OptionType, TaskTypeEnum } from "@lib/shared/types";
 import { StatusTag } from "../../components/StatusTag";
 import { useAuth } from "../../../../shared/context/Auth";
-import { Button, Layout, Space } from "antd";
+import { Button, Layout, Form, AutoComplete, Input, Typography, Select, Space, theme } from "antd";
 
 export const InitTaskForm:FC<InitTaskFormProps> = ({
   backlog,
@@ -27,6 +23,7 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 }) => {
   const me = useAuth();
 	const [activeTask, setActiveTask] = useState("");
+
 	const handleSubmit = () => async (values: {name: string, type: TaskTypeEnum}) => {
 		try {
       if (me.user?.uid) {
@@ -64,28 +61,44 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
     }
 	};
 
-	const processedTasks = backlog?.map(task => ({
-		id: task.id,
-		label: task.name
-	}));
+  const [processedTasks, setProcessedTasks] = useState<OptionType[]>([])
+  const [processedStatuses, setProcessedStatuses] = useState<OptionType[]>([])
+const {useToken} = theme
+  const {token} = useToken()
+  useEffect(() => {
+    if (tasks) {
+      setProcessedTasks(tasks.map((task, index) => ({
+        value: task.name,
+        label: task.name,
+        key: index
+      })));
+    }
+    setProcessedStatuses(Object.values(TaskTypeEnum).map((item, index) => ({
+      value: item,
+      label: item,
+      key: index
+      }))
+    )
+  }, [tasks])
 
-  const processedStatuses = Object.values(TaskTypeEnum).map(item => ({
-    id: item,
-    name: item,
-    value: item
-  }))
+  const onSelectTask = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
+    (val: string, option: OptionType) => {
+      setActiveTask(option.value)
+      setFieldValue('name', option.value)
+    }
 
-	const handleChangeTask = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
-		(
-			e: SyntheticEvent, newValue: {label: string, id: string} | null
-		) => {
-			const value = newValue?.id ?? "";
-			setFieldValue(
-				"name",
-				value
-			);
-			setActiveTask(value);
-		};
+  const onSearchTask = (data: string) => {
+    setProcessedTasks(tasks.map((task, index) => ({
+      value: task.name,
+      label: task.name,
+      key: index
+    })).filter(task => task.label.includes(data)))
+  }
+
+  const changeStatus = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
+    (val: string) => {
+      setFieldValue('status', val)
+    }
 
 	return (
     <Formik
@@ -101,75 +114,44 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
     >
       {({
           isSubmitting,
-          values,
-          handleChange,
-          errors,
-          setFieldValue
+          setFieldValue,
+          handleSubmit
         }) => (
-        <Form>
-          <Space direction="vertical">
-              <FormControl
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                error={!!errors["name"]}
-              >
-                <FormLabel sx={formLabel}>
-                  <Typography variant="caption">
-                    Task
-                  </Typography>
-                </FormLabel>
-                <Autocomplete
-                  sx={autocompleteSx}
-                  options={processedTasks}
-                  selectOnFocus={false}
-                  value={processedTasks.find(item => item.id === activeTask)}
-                  getOptionLabel={(option) => option.label}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      fullWidth
-                      margin="normal"
-                      color="secondary"
-                      variant="outlined"
-                      placeholder="Select task"
-                    />
-                  )}
-                  onChange={handleChangeTask(setFieldValue)}
-                />
-              </FormControl>
-              <FormControl
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                error={!!errors["name"]}
-              >
-                <FormLabel sx={formLabel}>
-                  <Typography variant="caption">
-                    Status
-                  </Typography>
-                </FormLabel>
-                <Select
-                  name='type'
-                  onChange={handleChange}
-                  defaultValue={processedStatuses[0].value}
-                  value={values['type']}
-                >
-                  {processedStatuses.map((
-                    item
-                  ) => {
-                    return (
-                      <MenuItem
-                        key={item.id}
-                        value={item.value}
-                        onClick={handleChange}
-                      >
-                        <StatusTag type={item.name}/>
-                      </MenuItem>
-                    )})}
-                </Select>
-              </FormControl>
-          </Space>
+        <Form layout="vertical" onFinish={handleSubmit}>
+          <Form.Item
+            colon={false}
+            label={
+              <Typography.Text>
+                Task
+              </Typography.Text>}
+          >
+            <AutoComplete
+              options={processedTasks}
+              onSelect={onSelectTask(setFieldValue)}
+              onSearch={onSearchTask}
+            >
+              <Input.Search size="large" enterButton />
+            </AutoComplete>
+          </Form.Item>
+          <Form.Item
+            colon={false}
+            label={
+              <Typography.Text>
+                Status
+              </Typography.Text>}
+          >
+            <Select
+              onChange={changeStatus(setFieldValue)}
+            >
+                {processedStatuses.map(item => (
+                  <Select.Option key={item.key} value={item.value}>
+                    <Space style={{width: "fit-content"}}>
+                      <StatusTag type={item.label as TaskTypeEnum}/>
+                    </Space>
+                  </Select.Option>
+                ))}
+            </Select>
+          </Form.Item>
           <Layout.Footer style={footerSx}>
             <Button
               htmlType="submit"

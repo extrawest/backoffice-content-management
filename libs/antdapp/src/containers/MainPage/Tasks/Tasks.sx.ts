@@ -17,8 +17,11 @@ export const subTextSx= (theme: GlobalToken): CSSProperties => ({
 export const addSx = (theme: GlobalToken): CSSProperties => ({
 	fontSize: theme.fontSize,
 	color: theme.colorInfo,
+	padding: 0,
 	width: pxToRem(30),
-	height: pxToRem(30)
+	minWidth: pxToRem(30),
+	height: pxToRem(30),
+	minHeight: pxToRem(30)
 });
 
 export const taskRowSx = (

@@ -12,6 +12,9 @@ import { TasksProps } from "./Tasks.types";
 import {
   addSx, boxSx, headerStackSx, subTextSx, taskRowSx
 } from "./Tasks.sx";
+import { AppRoutesEnum } from "@lib/shared/types";
+import { linkSx } from "../Backlog/Backlog.sx";
+import { Link } from "react-router-dom";
 
 export const Tasks:FC<TasksProps> = ({
   backlog,
@@ -31,9 +34,11 @@ export const Tasks:FC<TasksProps> = ({
         <Typography variant="h4">
           Tasks
         </Typography>
-        <Typography variant="caption">
-          View details
-        </Typography>
+        <Link to={AppRoutesEnum.TEAM} style={linkSx}>
+          <Typography variant="caption" color="primary">
+            View all
+          </Typography>
+        </Link>
       </Stack>
       <Stack sx={headerStackSx}>
         <Typography sx={subTextSx}>
@@ -64,7 +69,7 @@ export const Tasks:FC<TasksProps> = ({
         </Stack>
       )}
       {!tasks?.length &&
-        <Typography variant="h4">
+        <Typography variant="h4" p={2}>
           No tasks yet...
         </Typography>
       }

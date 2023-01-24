@@ -81,10 +81,6 @@ export const CreateTaskForm:FC<CreateTaskFormProps> = ({
             </FormControl>
             </Grid>
           </Grid>
-          <ErrorMessage
-            name="name"
-            component="div"
-          />
           <Box
             sx={footerSx}
           >

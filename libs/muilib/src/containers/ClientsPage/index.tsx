@@ -5,18 +5,18 @@ import {
   Box, IconButton, Stack, Typography
 } from "@mui/material";
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import { Delete } from "@mui/icons-material";
 import { Modal, Table } from "../../common";
 import { CreateTicketForm } from "../../forms/CreateTicketForm";
 import { TaskType, TicketType } from "@lib/shared/types";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import { StatusTag } from "../../components/StatusTag";
-import {
-  addSx, headerStackSx, subTextSx
-} from "../MainPage/Backlog/Backlog.sx";
-import { nameSx, photoSx, titleSx } from "./ClientsPage.sx";
 import { useAuth } from "../../../../shared/context/Auth";
+import { RowMenu } from "./RowMenu";
+import {
+  addSx, headerStackSx
+} from "../MainPage/Backlog/Backlog.sx";
+import { nameSx, photoSx, titleSx, wrapperSx } from "./ClientsPage.sx";
 
 export const ClientsPage:FC = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -87,6 +87,8 @@ export const ClientsPage:FC = () => {
     id: ticket?.id,
     task: ticket.task,
     name: `${ticket.firstName} ${ticket.lastName}`,
+    firstName: ticket.firstName,
+    lastName: ticket.lastName,
     date: dayjs(ticket.id).format('DD/MM/YY'),
     status: ticket.status,
     image: ticket.image ?? ''
@@ -131,9 +133,12 @@ export const ClientsPage:FC = () => {
       flex: 1,
       cellClassName: 'hoverableCell',
       renderCell: (params) =>
-        <IconButton onClick={deleteTicket(params.row.id)}>
-          <Delete/>
-        </IconButton>
+        <RowMenu
+          onDelete={deleteTicket(params.row.id)}
+          tickets={tickets}
+          ticket={params.row}
+          getTickets={getTicketsData}
+        />
     },
 	];
 
@@ -142,7 +147,7 @@ export const ClientsPage:FC = () => {
       <Typography variant="h2">
         Clients
       </Typography>
-      <Box>
+      <Box sx={wrapperSx}>
         <Box sx={titleSx}>
           <Typography variant="h3">
             All tickets
@@ -154,9 +159,6 @@ export const ClientsPage:FC = () => {
             >
               +
             </IconButton>
-            <Typography sx={subTextSx}>
-              Add
-            </Typography>
           </Stack>
         </Box>
         <Table
@@ -166,6 +168,7 @@ export const ClientsPage:FC = () => {
         <Modal
           handleClose={handleShowModal(false)}
           open={showModal}
+          title="Create ticket"
         >
           <CreateTicketForm
             tasks={tasks}

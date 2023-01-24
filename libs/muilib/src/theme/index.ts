@@ -164,6 +164,22 @@ export const getDesignTokens = (mode: PaletteMode) => ({
 			}
 		})
 	},
+	components: {
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					borderRadius: "3rem"
+				}
+			}
+		},
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					borderRadius: "3rem"
+				}
+			}
+		},
+	},
 	typography: {
 		fontFamily: ["Poppins", "sans-serif"].join(","),
 		h1: {

@@ -24,8 +24,8 @@ export const StatusTag: FC<StatusTagProps> = ({ type }) => {
                   : getDesignTokens(mode).palette.greyScale[500],
             color:
               type === TaskTypeEnum.DEFAULT
-                ? theme.palette.common.white
-                : getDesignTokens(mode).palette.greyScale[800],
+                ? getDesignTokens(mode).palette.greyScale[800]
+                :  theme.palette.common.white,
           }}
         >
           {type}

@@ -19,6 +19,9 @@ import { CreateTicketFormProps, FormValueProps } from "./CreateTicketForm.types"
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
 import { useAuth } from "../../../../shared/context/Auth";
+import { createTicketFormSchema } from "@lib/shared/types";
+import { loaderSx } from "../EditTicketForm/EditTicketForm.sx";
+import { Loader } from "@lib/muiapp";
 
 export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 	tasks,
@@ -120,7 +123,7 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
   return (
     <Formik
       initialValues={formInit}
-      // validate={createTicketFormSchema}
+      validateSchema={createTicketFormSchema}
       onSubmit={handleSubmit()}
     >
       {({
@@ -134,20 +137,27 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
         <Form onSubmit={handleSubmit}>
           <Box sx={wrapperSx}>
             <Box sx={imgBoxSx}>
-              <label>
-                <img
-                  style={imgSx}
-                  src={imgUrl ? imgUrl : EmptyImage}
-                />
-                <input
-                  style={fileInputSx}
-                  onChange={getImage}
-                  type="file"
-                  id="image"
-                  name="image"
-                  accept="image/png, image/jpeg"
-                />
-              </label>
+               {disableSubmit &&
+                  <Box sx={loaderSx}>
+                    <Loader/>
+                  </Box>
+                }
+                {!disableSubmit &&
+                  <label>
+                    <img
+                      style={imgSx}
+                      src={imgUrl ? imgUrl : EmptyImage}
+                    />
+                    <input
+                      style={fileInputSx}
+                      onChange={getImage}
+                      type="file"
+                      id="image"
+                      name="image"
+                      accept="image/png, image/jpeg"
+                    />
+                  </label>
+                }
             </Box>
             <Grid
               container

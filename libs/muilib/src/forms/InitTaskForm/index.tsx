@@ -2,7 +2,7 @@ import {
 	FC, SyntheticEvent, useState
 } from "react";
 import {
-	ErrorMessage, Form, Formik, FormikProps
+	Form, Formik, FormikProps
 } from "formik";
 import {
   Autocomplete,
@@ -183,10 +183,6 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
               </FormControl>
             </Grid>
           </Grid>
-          <ErrorMessage
-            name="name"
-            component="div"
-          />
           <Box
             sx={footerSx}
           >

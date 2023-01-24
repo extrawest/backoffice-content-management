@@ -3,6 +3,13 @@ import { SxProps, Theme } from "@mui/material";
 export const tableSx:SxProps<Theme> = {
 	background: (theme: Theme) => theme.palette.background.default,
 	minHeight: (theme: Theme) => theme.spacing(600/8),
+	"& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus": {
+		outline: "none !important",
+	},
+	"& .MuiDataGrid-columnHeader:focus-within, & .MuiDataGrid-columnHeader:focus":
+    {
+    	outline: "none !important",
+    },
 	"& .MuiDataGrid-row:hover": {
 		backgroundColor: "inherit",
 		boxShadow: "0px -1.75px 4px rgba(33, 33, 52, 0.039), 0px 5.75px 10px rgba(33, 33, 52, 0.12)"

@@ -58,7 +58,7 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
         </Stack>
       )}
       {!backlog?.length &&
-        <Typography variant="h4">
+        <Typography variant="h4" p={2}>
           No tasks yet...
         </Typography>
       }

@@ -10,10 +10,9 @@ import { InitTaskForm } from "../../../forms/InitTaskForm";
 import { StatusTag } from "../../../components/StatusTag";
 import { TasksProps } from "./Tasks.types";
 import {
-  addSx, boxSx, headerStackSx, subTextSx, taskRowSx
+  addSx, boxSx, headerStackSx, subTextSx, taskRowSx, linkSx
 } from "./Tasks.sx";
 import { AppRoutesEnum } from "@lib/shared/types";
-import { linkSx } from "../Backlog/Backlog.sx";
 import { Link } from "react-router-dom";
 
 export const Tasks:FC<TasksProps> = ({

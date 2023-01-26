@@ -28,7 +28,7 @@ const menu = [
   {
     listIcon: <PercentOutlinedIcon />,
     listText: "Offers",
-    url: AppRoutesEnum.MAIN
+    url: AppRoutesEnum.OFFERS
   },
   {
     listIcon: <HandshakeOutlinedIcon />,

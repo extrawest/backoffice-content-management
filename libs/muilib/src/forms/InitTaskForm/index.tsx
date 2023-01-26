@@ -90,13 +90,6 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 	return (
     <Formik
       initialValues={{ name: "", type: TaskTypeEnum.DEFAULT }}
-      validate={values => {
-        const errors:Record<string, string> = {};
-        if (!values.name) {
-          errors["name"] = "Required";
-        }
-        return errors;
-      }}
       onSubmit={handleSubmit()}
     >
       {({
@@ -154,7 +147,7 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
                 fullWidth
                 variant="outlined"
                 margin="normal"
-                error={!!errors["name"]}
+                error={!!errors["type"]}
               >
                 <FormLabel sx={formLabel}>
                   <Typography variant="caption">

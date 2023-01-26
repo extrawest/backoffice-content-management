@@ -4,16 +4,19 @@ import {
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
-	Alert,
-	Box,
-	Button,
-	Grid,
-	Link,
-	Snackbar,
-	TextField
+  Alert,
+  Box,
+  Button,
+  Grid,
+  Link,
+  Snackbar,
+  TextField, Typography
 } from "@mui/material";
 import { auth } from "../../../../shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
+import { wrapperSx } from "./RegisterPage.sx";
+import { titleSx } from "../LoginPage/LoginPage.sx";
+import { ButtonContained } from "../../components/ButtonContained";
 
 export const RegistrationPage: FC = () => {
 	const [passwordCorrect, setPasswordCorrect] = useState(true);
@@ -71,8 +74,14 @@ export const RegistrationPage: FC = () => {
         component="form"
         noValidate
         onSubmit={handleSubmit}
-        sx={{ mt: 3 }}
+        sx={wrapperSx}
       >
+        <Typography
+          variant="h2"
+          sx={titleSx}
+        >
+          Registration
+        </Typography>
         <Grid
           container
           spacing={2}
@@ -123,15 +132,14 @@ export const RegistrationPage: FC = () => {
             />
           </Grid>
         </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          color={"primary"}
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Sign Up
-        </Button>
+        <Box my={3}>
+          <ButtonContained
+            type="submit"
+            fullWidth
+          >
+            Sign up
+          </ButtonContained>
+        </Box>
         <Grid
           container
           justifyContent="flex-end"

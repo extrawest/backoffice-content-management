@@ -10,9 +10,6 @@ export const subTextSx:SxProps<Theme> = {
 	fontWeight: 600,
 	color: (theme: Theme) => theme.palette.grey[500]
 };
-export const linkSx:CSSProperties = {
-  textDecoration: "none"
-};
 export const addSx:SxProps<Theme> = {
 	fontSize: (theme: Theme) => theme.spacing(14/8),
 	color: (theme: Theme) => theme.palette.grey[500],
@@ -36,4 +33,7 @@ export const headerStackSx:SxProps<Theme> = {
 	alignItems: "center",
 	justifyContent: "space-between",
 	p: 2
+};
+export const linkSx:CSSProperties = {
+	textDecoration: "none"
 };

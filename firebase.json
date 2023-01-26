@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/apps/mui",
+    "public": "./dist/apps/mui",
     "ignore": [
       "firebase.json",
       "**/.*",

@@ -4,7 +4,8 @@ export enum AppRoutesEnum {
 	MAIN = "/",
 	REGISTRATION = "/registration",
 	LOGIN = "/login",
-  TEAM = "/clients"
+	TEAM = "/clients",
+	OFFERS = "/offers"
 }
 
 export enum LayoutEnum {

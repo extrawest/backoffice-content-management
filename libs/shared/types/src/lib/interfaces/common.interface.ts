@@ -31,7 +31,17 @@ export interface TicketType {
 }
 
 export type OptionType = {
-  value: string,
-  label: string,
-  key: number
+	value: string,
+	label: string,
+	key: number
+};
+
+export type OfferType = {
+	userId: string,
+	title: string,
+	description: string
+};
+
+export type OfferTypeResponse = {
+	data: OfferType[]
 };

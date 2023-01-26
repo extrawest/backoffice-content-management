@@ -3,11 +3,11 @@ import {
 	FC, useState
 } from "react";
 import {
-	Form, Formik, FormikProps
+	Form, Formik, FormikProps, ErrorMessage
 } from "formik";
 import {
-	Box,
-	Button, FormControl, FormLabel, Grid, MenuItem, OutlinedInput, Select, Typography
+  Box,
+  Button, FormControl, FormHelperText, FormLabel, Grid, MenuItem, OutlinedInput, Select, Typography
 } from "@mui/material";
 import {
   fileInputSx, footerSx, formLabel, imgBoxSx, imgSx, loaderSx, wrapperSx
@@ -125,154 +125,160 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
           values,
           handleChange,
           errors,
-          setFieldValue,
           handleSubmit
-        }:FormikProps<FormValueProps>) => (
-        <Form onSubmit={handleSubmit}>
-          <Box sx={wrapperSx}>
-            <Box sx={imgBoxSx}>
-              {disableSubmit &&
-                <Box sx={loaderSx}>
-                  <Loader/>
-                </Box>
-              }
-              {!disableSubmit &&
-                <label>
-                  <img
-                    style={imgSx}
-                    src={imgUrl ? imgUrl : EmptyImage}
-                  />
-                  <input
-                    style={fileInputSx}
-                    onChange={getImage}
-                    type="file"
-                    id="image"
-                    name="image"
-                    accept="image/png, image/jpeg"
-                  />
-                </label>
-              }
-            </Box>
-            <Grid
-              container
-              spacing={2}
-            >
+        }:FormikProps<FormValueProps>) => {
+        return (
+          <Form onSubmit={handleSubmit}>
+            <Box sx={wrapperSx}>
+              <Box sx={imgBoxSx}>
+                {disableSubmit &&
+                  <Box sx={loaderSx}>
+                    <Loader/>
+                  </Box>
+                }
+                {!disableSubmit &&
+                  <label>
+                    <img
+                      style={imgSx}
+                      src={imgUrl ? imgUrl : EmptyImage}
+                    />
+                    <input
+                      style={fileInputSx}
+                      onChange={getImage}
+                      type="file"
+                      id="image"
+                      name="image"
+                      accept="image/png, image/jpeg"
+                    />
+                  </label>
+                }
+              </Box>
               <Grid
-                xs={12}
-                item
+                container
+                spacing={2}
               >
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  error={!!errors["task"]}
+                <Grid
+                  xs={12}
+                  item
                 >
-                  <FormLabel sx={formLabel}>
-                    <Typography variant="caption">
-                      Task
-                    </Typography>
-                  </FormLabel>
+                  <FormControl
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
+                    error={!!errors["task"]}
+                  >
+                    <FormLabel sx={formLabel}>
+                      <Typography variant="caption">
+                        Task
+                      </Typography>
+                    </FormLabel>
                     <OutlinedInput
                       type="text"
                       name="task"
                       value={values["task"]}
                       onChange={handleChange}
                     />
-                </FormControl>
-              </Grid>
-              <Grid
-                xs={12}
-                item
-              >
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
+                  </FormControl>
+                </Grid>
+                <Grid
+                  xs={12}
+                  item
                 >
-                  <FormLabel sx={formLabel}>
-                    <Typography variant="caption">
-                      Status
-                    </Typography>
-                  </FormLabel>
-                  <Select
-                    name='status'
-                    onChange={handleChange}
-                    value={values["status"]}
+                  <FormControl
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
+                    error={!!errors["status"]}
                   >
-                    {processedStatuses.map((item) => {
-                      return (
-                        <MenuItem
-                          key={item.id}
-                          value={item.value}
-                          onClick={handleChange}
-                        >
-                          <StatusTag type={item.name}/>
-                        </MenuItem>
-                      );})}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid
-                xs={12}
-                item
-              >
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  error={!!errors["firstName"]}
+                    <FormLabel sx={formLabel}>
+                      <Typography variant="caption">
+                        Status
+                      </Typography>
+                    </FormLabel>
+                    <Select
+                      name='status'
+                      onChange={handleChange}
+                      value={values["status"]}
+                    >
+                      {processedStatuses.map((item) => {
+                        return (
+                          <MenuItem
+                            key={item.id}
+                            value={item.value}
+                            onClick={handleChange}
+                          >
+                            <StatusTag type={item.name}/>
+                          </MenuItem>
+                        );})}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid
+                  xs={12}
+                  item
                 >
-                  <FormLabel sx={formLabel}>
-                    <Typography variant="caption">
-                      First Name
-                    </Typography>
-                  </FormLabel>
-                  <OutlinedInput
-                    type="text"
-                    name="firstName"
-                    value={values["firstName"]}
-                    onChange={handleChange}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid
-                xs={12}
-                item
-              >
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  error={!!errors["lastName"]}
+                  <FormControl
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
+                    error={!!errors["firstName"]}
+                  >
+                    <FormLabel sx={formLabel}>
+                      <Typography variant="caption">
+                        First Name
+                      </Typography>
+                    </FormLabel>
+                    <OutlinedInput
+                      type="text"
+                      name="firstName"
+                      value={values["firstName"]}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid
+                  xs={12}
+                  item
                 >
-                  <FormLabel sx={formLabel}>
-                    <Typography variant="caption">
-                      Last Name
-                    </Typography>
-                  </FormLabel>
-                  <OutlinedInput
-                    type="text"
-                    name="lastName"
-                    value={values["lastName"]}
-                    onChange={handleChange}
-                  />
-                </FormControl>
+                  <FormControl
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
+                    error={!!errors["lastName"]}
+                  >
+                    <FormLabel sx={formLabel}>
+                      <Typography variant="caption">
+                        Last Name
+                      </Typography>
+                    </FormLabel>
+                    <OutlinedInput
+                      type="text"
+                      name="lastName"
+                      value={values["lastName"]}
+                      onChange={handleChange}
+                    />
+                    <ErrorMessage
+                      name="lastName"
+                      render={(msg) => <FormHelperText>{msg}</FormHelperText>}
+                    />
+                  </FormControl>
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
-          <Box
-            sx={footerSx}
-          >
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={isSubmitting || disableSubmit}
+            </Box>
+            <Box
+              sx={footerSx}
             >
-              Update
-            </Button>
-          </Box>
-        </Form>
-      )}
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={isSubmitting || disableSubmit}
+              >
+                Update
+              </Button>
+            </Box>
+          </Form>
+        )
+      } }
     </Formik>
 	);
 };

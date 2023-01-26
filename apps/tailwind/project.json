@@ -18,7 +18,8 @@
         "assets": ["apps/tailwind/src/favicon.ico", "apps/tailwind/src/assets"],
         "styles": ["apps/tailwind/src/styles.scss"],
         "scripts": [],
-        "webpackConfig": "@nrwl/react/plugins/webpack"
+        "webpackConfig": "@nrwl/react/plugins/webpack",
+        "postcssConfig": "apps/tailwind/postcss.config.js"
       },
       "configurations": {
         "development": {
@@ -65,14 +66,6 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/tailwind/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/tailwind"],
-      "options": {
-        "jestConfig": "apps/tailwind/jest.config.ts",
-        "passWithNoTests": true
       }
     }
   },

@@ -16,9 +16,9 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@lib/ant": ["libs/antapp/src/index.ts"],
       "@lib/antdapp": ["libs/antdapp/src/index.ts"],
       "@lib/muiapp": ["libs/muilib/src/index.ts"],
+      "@lib/tailwind": ["libs/tailwindapp/src/index.ts"],
       "@lib/redux": ["libs/redux/src/index.ts"],
       "@lib/shared": ["libs/shared/src/index.ts"],
       "@lib/shared/hoks": ["libs/shared/hoks/src/index.ts"],
@@ -27,7 +27,7 @@
       "@lib/shared/types": ["libs/shared/types/src/index.ts"],
       "@lib/shared/ui": ["libs/shared/ui/src/index.ts"],
       "@lib/shared/utils": ["libs/shared/utils/src/index.ts"],
-      "@lib/tamplateapp": ["libs/tamplateapp/src/index.ts"]
+      "@mono-redux-starter/tailwindapp": ["libs/tailwindapp/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

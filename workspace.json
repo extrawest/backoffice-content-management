@@ -2,6 +2,8 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "tailwind": "apps/tailwind",
+    "tailwindapp": "libs/tailwindapp",
     "antd": "apps/antd",
     "antdapp": "libs/antdapp",
     "mui": "apps/mui",
@@ -15,8 +17,6 @@
     "shared-permissions": "libs/shared/permissions",
     "shared-types": "libs/shared/types",
     "shared-ui": "libs/shared/ui",
-    "shared-utils": "libs/shared/utils",
-    "tailwind": "apps/tailwind",
-    "tailwindapp": "libs/tailwindapp"
+    "shared-utils": "libs/shared/utils"
   }
 }

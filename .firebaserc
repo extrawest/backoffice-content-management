@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "backoffice-f6f72"
-  }
+    "default": "backoffice-f6f72",
+    "staging": "backoffice-f6f72"
+  },
+  "targets": {},
+  "etags": {}
 }

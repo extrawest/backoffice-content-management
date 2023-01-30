@@ -141,11 +141,11 @@ export const ClientsPage:FC = () => {
 
 	return (
 		<>
-      <Typography variant="h2">
+      <h1 className="header-main">
         Clients
-      </Typography>
-      <Box sx={wrapperSx}>
-        <Box sx={titleSx}>
+      </h1>
+      <div className="max-w-table w-full">
+        <div className="flex justify-between items-center">
           <h4 className="header-section">
             All tickets
           </h4>
@@ -157,7 +157,7 @@ export const ClientsPage:FC = () => {
               +
             </button>
           </div>
-        </Box>
+        </div>
         <Table
           rows={rows}
           columns={columns}
@@ -175,7 +175,7 @@ export const ClientsPage:FC = () => {
             closeModal={handleShowModal(false)}
           />
         </Modal>
-      </Box>
+      </div>
 		</>
 	);
 };

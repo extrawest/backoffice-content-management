@@ -53,6 +53,12 @@ module.exports = {
         '28px': '1.75rem',
         '30px': '1.875rem',
       },
+      maxWidth: {
+        "table": "75rem"
+      },
+      "minWidth": {
+        modal: "35rem"
+      },
       width: {
         30: "1.875rem",
         150: "9.375rem",

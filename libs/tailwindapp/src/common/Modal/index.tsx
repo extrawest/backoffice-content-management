@@ -1,10 +1,4 @@
-import {
-	Box, Dialog, DialogContent, DialogTitle, IconButton
-} from "@mui/material";
 import { FC } from "react";
-import {
-	contentSx, headerSx, rootSx
-} from "./Modal.sx";
 import { ModalProps } from "./Modal.types";
 import { Close } from "@mui/icons-material";
 
@@ -12,34 +6,45 @@ export const Modal:FC<ModalProps> = ({
 	handleClose,
 	open,
 	children,
-	title,
-	type,
-	fullWidth,
-	withoutPaddings = false
+	title
 }) => {
 	return (
-    <Dialog
-      onClose={handleClose}
-      open={open}
-      sx={rootSx}
-      maxWidth={type ?? "lg"}
-      fullWidth={fullWidth ?? false}
+    <div
+      className={`${open ? "fixed" : "hidden"} -top-1 -right-1 -bottom-1 -left-1`}
+      role="dialog"
+      aria-modal="true"
     >
-      {title &&
-        <Box sx={headerSx}>
-          <DialogTitle>
-            {title}
-          </DialogTitle>
-          <IconButton onClick={handleClose}>
-            <Close />
-          </IconButton>
-        </Box>
-      }
-      <DialogContent
-        sx={contentSx(withoutPaddings)}
+      <div
+        className="fixed -top-1 -right-1 -bottom-1 -left-1 bg-gray-500 opacity-40"
+        role="dialog"
+        aria-modal="true"
+        onClick={() => handleClose()}
       >
-        {children}
-      </DialogContent>
-    </Dialog>
+      </div>
+      <div
+        id="modal-backdrop"
+        className="fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex justify-center items-start overflow-y-auto"
+      >
+        <div
+          className="align-middle h-full my-auto bg-white rounded-1 text-left overflow-hidden shadow-xl p-2 min-w-modal"
+        >
+          <div className="flex justify-between">
+            <h3 className="task-title semi-bold">
+              {title}
+            </h3>
+            <div
+              className="close-btn cursor-pointer"
+              role="button"
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              <Close/>
+            </div>
+          </div>
+          <div className="mx-auto h-full">{children}</div>
+        </div>
+      </div>
+    </div>
 	);
 };

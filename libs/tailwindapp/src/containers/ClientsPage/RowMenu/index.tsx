@@ -1,11 +1,9 @@
 import {
-	FC, useState, MouseEvent
+  FC, useState, useEffect, useRef
 } from "react";
-import { Button, IconButton, MenuItem } from "@mui/material";
 import {
 	Delete, Edit, MoreVert
 } from "@mui/icons-material";
-import { StyledMenu } from "./StyledMenu";
 import { RowMenuProps } from "./RowMenu.types";
 import { Modal } from "@lib/tailwind";
 import { EditTicketForm } from "../../../forms/EditTicketForm";
@@ -16,51 +14,63 @@ export const RowMenu:FC<RowMenuProps> = ({
   ticket,
   getTickets
 }) => {
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const open = Boolean(anchorEl);
+	const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const node = useRef<HTMLDivElement>(null);
 
   const handleShowModal = (status: boolean) => () => {
     setShowModal(status)
   }
 
-	const handleClick = (event: MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
+  const handleShowMenu = (status: boolean) => () => {
+    setOpen(status);
+  }
 
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+  const handleClickOutside = (e: any) => {
+    if (node?.current?.contains(e.target as Node)) {
+      return;
+    }
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (open) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [open]);
 
 	return (
-		<>
-    <IconButton
-      onClick={handleClick}
+		<div className="relative">
+    <button
+      onClick={handleShowMenu(true)}
     >
       <MoreVert/>
-    </IconButton>
-      <StyledMenu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
+    </button>
+      <div
+        ref={node}
+        className={`${open ? "absolute" : "hidden"} top-2 -left-4 bg-white rounded-1 z-10 shadow-xl w-150`}
       >
-        <MenuItem
-          onClick={handleClose}
-          disableRipple
-        >
-          <Button variant="text" onClick={handleShowModal(true)} style={{width: "100%"}}>
-            <Edit/>
-          </Button>
-        </MenuItem>
-        <MenuItem
-          onClick={handleClose}
-          disableRipple
-        >
-          <Button variant="text" onClick={onDelete} style={{width: "100%"}}>
-            <Delete/>
-          </Button>
-        </MenuItem>
-      </StyledMenu>
+        <ul>
+          <li className="hover:bg-gray-50">
+            <button
+              className="w-full p-1"
+              onClick={handleShowModal(true)}
+            >
+              <Edit/>
+            </button>
+          </li>
+          <li className="hover:bg-gray-50">
+            <button
+              className="w-full p-1"
+              onClick={onDelete}
+            >
+              <Delete/>
+            </button>
+          </li>
+        </ul>
+      </div>
       <Modal
         handleClose={handleShowModal(false)}
         open={showModal}
@@ -73,6 +83,6 @@ export const RowMenu:FC<RowMenuProps> = ({
           getTickets={getTickets}
         />
       </Modal>
-		</>
+		</div>
 	);
 };

@@ -13,7 +13,7 @@ import { db } from "../../../../shared/firebaseconfig";
 import { StatusTag } from "../../components/StatusTag";
 import { useAuth } from "../../../../shared/context/Auth";
 import { RowMenu } from "./RowMenu";
-import { nameSx, photoSx, titleSx, wrapperSx } from "./ClientsPage.sx";
+import { RowType } from "../../common/Table/Table.types";
 
 export const ClientsPage:FC = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -80,64 +80,51 @@ export const ClientsPage:FC = () => {
 		setShowModal(status);
 	};
 
-  const rows: GridRowsProp = tickets?.map(ticket => ({
-    id: ticket?.id,
-    task: ticket.task,
-    name: `${ticket.firstName} ${ticket.lastName}`,
-    firstName: ticket.firstName,
-    lastName: ticket.lastName,
-    date: dayjs(ticket.id).format('DD/MM/YY'),
-    status: ticket.status,
-    image: ticket.image ?? ''
-  })) ?? []
-
-	const columns: GridColDef[] = [
-		{
-      field: "task",
-      headerName: "Ticket details",
-      flex: 1
+  const rows:RowType[] = [
+    {
+      title: "Task",
+      id: "task",
+      items: tickets?.map(item => item.task) ?? []
     },
-		{
-      field: "name",
-      headerName: "Customer name",
-      renderCell: (params) => (
-        <Box sx={nameSx}>
-          <Avatar
-            src={params.row.image}
-            sx={photoSx}
+    {
+      title: "Name",
+      id: "name",
+      items: tickets?.map(item => (
+        <div className="flex gap-1">
+          <img
+            src={item.image}
+            className="rounded-full w-3 h-3 object-cover"
           />
-          <Typography>
-            {params.row.name}
-          </Typography>
-        </Box>
-      ),
-      flex: 1
+          <p>
+            {`${item.firstName} ${item.lastName}`}
+          </p>
+        </div> ?? []
+      ))
     },
-		{
-      field: "date",
-      headerName: "Date",
-      flex: 1
+    {
+      title: "Date",
+      id: "date",
+      items: tickets?.map(item => dayjs(item.id).format('DD/MM/YY')) ?? []
     },
-		{
-      field: "status",
-      headerName: "Priority",
-      flex: 1,
-      renderCell: (params) => <StatusTag type={params.row.status}/>
+    {
+      title: "Status",
+      id: "status",
+      items: tickets?.map(item => <StatusTag type={item.status}/>) ?? []
     },
-		{
-      field: "delete",
-      headerName: "",
-      flex: 1,
-      cellClassName: 'hoverableCell',
-      renderCell: (params) =>
+    {
+      title: "",
+      id: "actions",
+      items: tickets?.map(item => (
         <RowMenu
-          onDelete={deleteTicket(params.row.id)}
+          onDelete={deleteTicket(item.id)}
           tickets={tickets}
-          ticket={params.row}
+          ticket={item}
           getTickets={getTicketsData}
         />
-    },
-	];
+      )) ?? []
+    }
+  ]
+
 
 	return (
 		<>
@@ -160,7 +147,6 @@ export const ClientsPage:FC = () => {
         </div>
         <Table
           rows={rows}
-          columns={columns}
         />
         <Modal
           handleClose={handleShowModal(false)}

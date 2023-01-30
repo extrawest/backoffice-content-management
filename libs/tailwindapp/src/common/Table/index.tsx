@@ -1,23 +1,40 @@
 import { FC } from "react";
-import {DataGrid} from "@mui/x-data-grid";
-import { Empty } from "./Empty";
 import { TableProps } from "./Table.types";
-import { tableSx } from "./Table.sx";
+import { Empty } from "./Empty";
 
-export const Table: FC<TableProps> = ({ rows, columns, handleSort, ...rest}) => {
+export const Table: FC<TableProps> = ({ rows}) => {
 	return (
-    <DataGrid
-      disableSelectionOnClick
-      rows={rows}
-      columns={columns}
-      sortingMode={handleSort ? "server" : "client"}
-      onSortModelChange={handleSort}
-      disableColumnMenu
-      components={{
-        "NoRowsOverlay": Empty
-      }}
-      {...rest}
-      sx={tableSx}
-    />
+		<>
+      <div className="flex justify-between border">
+        {rows.map(row => (
+            <div
+              key={row.id}
+              className="p-1 flex-1"
+            >
+              <h3 className="sub-header">{row.title}</h3>
+            </div>
+        ))}
+      </div>
+      <div className="flex pt-2 border border-t-0">
+        {!rows?.[0]?.items?.length && <Empty/>}
+        {rows.map(row => (
+          <div
+            key={row.id}
+            className="flex flex-col flex-1"
+          >
+            {row.items.map((
+              item, i
+            ) => (
+              <div
+                key={i}
+                className="p-1 flex-1"
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+		</>
 	);
 };

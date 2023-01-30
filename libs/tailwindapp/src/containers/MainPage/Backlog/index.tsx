@@ -59,9 +59,7 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
       <Modal
         handleClose={handleShowModal(false)}
         open={showModal}
-        fullWidth
         title='Create new task'
-        type='lg'
       >
         <CreateTaskForm
           backlog={backlog}

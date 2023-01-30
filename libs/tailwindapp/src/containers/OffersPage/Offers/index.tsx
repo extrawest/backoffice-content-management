@@ -112,9 +112,7 @@ export const Offers:FC = () => {
       <Modal
         handleClose={handleShowModal(false)}
         open={showModal}
-        fullWidth
         title='Create new offer'
-        type='lg'
       >
         <AddOfferForm
           getOffers={getOffersData}

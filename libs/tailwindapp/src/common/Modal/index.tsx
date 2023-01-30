@@ -18,7 +18,7 @@ export const Modal:FC<ModalProps> = ({
         className="fixed -top-1 -right-1 -bottom-1 -left-1 bg-gray-500 opacity-40"
         role="dialog"
         aria-modal="true"
-        onClick={() => handleClose()}
+        onClick={handleClose}
       >
       </div>
       <div
@@ -35,9 +35,7 @@ export const Modal:FC<ModalProps> = ({
             <div
               className="close-btn cursor-pointer"
               role="button"
-              onClick={() => {
-                handleClose();
-              }}
+              onClick={handleClose}
             >
               <Close/>
             </div>

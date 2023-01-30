@@ -68,9 +68,7 @@ export const Tasks:FC<TasksProps> = ({
       <Modal
         handleClose={handleShowModal(false)}
         open={showModal}
-        fullWidth
         title='Create new task'
-        type='lg'
       >
         <InitTaskForm
           backlog={backlog}

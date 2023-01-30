@@ -22,11 +22,10 @@ export const Modal:FC<ModalProps> = ({
       >
       </div>
       <div
-        id="modal-backdrop"
         className="fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex justify-center items-start overflow-y-auto"
       >
         <div
-          className="align-middle h-full my-auto bg-white rounded-1 text-left overflow-hidden shadow-xl p-2 min-w-modal"
+          className="align-middle h-full my-auto bg-white rounded-1 text-left overflow-hidden shadow-xl p-4 min-w-modal"
         >
           <div className="flex justify-between">
             <h3 className="task-title semi-bold">

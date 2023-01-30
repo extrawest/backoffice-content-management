@@ -41,6 +41,16 @@ export const RowMenu:FC<RowMenuProps> = ({
     }
   }, [open]);
 
+  const onEdit = () => {
+    handleShowModal(true)();
+    handleShowMenu(false)();
+  }
+
+  const handleDelete = () => {
+    onDelete();
+    handleShowMenu(false)();
+  }
+
 	return (
 		<div className="relative">
     <button
@@ -56,7 +66,7 @@ export const RowMenu:FC<RowMenuProps> = ({
           <li className="hover:bg-gray-50">
             <button
               className="w-full p-1"
-              onClick={handleShowModal(true)}
+              onClick={onEdit}
             >
               <Edit/>
             </button>
@@ -64,7 +74,7 @@ export const RowMenu:FC<RowMenuProps> = ({
           <li className="hover:bg-gray-50">
             <button
               className="w-full p-1"
-              onClick={onDelete}
+              onClick={handleDelete}
             >
               <Delete/>
             </button>

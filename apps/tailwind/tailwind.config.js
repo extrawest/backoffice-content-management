@@ -62,11 +62,15 @@ module.exports = {
       width: {
         30: "1.875rem",
         150: "9.375rem",
-        "menu": "28.875rem"
+        300: "18.75rem",
+        "form": "35rem",
+        "menu": "28.875rem",
+        "img": "12,5rem"
       },
       height: {
         30: "1.875rem",
-        150: "9.375rem"
+        150: "9.375rem",
+        "img": "12,5rem"
       },
       colors: {
         primary: {

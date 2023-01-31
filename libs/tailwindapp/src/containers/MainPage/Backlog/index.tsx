@@ -37,7 +37,7 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
       </div>
       {!!backlog?.length && (
         <ul>
-          {backlog.map((
+          {backlog?.map((
             task, i
               ) => (
                 <li
@@ -52,7 +52,7 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
         </ul>
       )}
       {!backlog?.length &&
-        <h4 className="header-section">
+        <h4 className="sub-header p-2">
           No tasks yet...
         </h4>
       }
@@ -62,7 +62,7 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
         title='Create new task'
       >
         <CreateTaskForm
-          backlog={backlog}
+          backlog={backlog ?? []}
           getBacklogData={getBacklogData}
           closeModal={handleShowModal(false)}
         />

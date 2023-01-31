@@ -64,7 +64,7 @@ export const MainPage:FC = () => {
         </div>
         <div className="flex-1 w-1/2">
           <Tasks
-            backlog={backlog}
+            backlog={backlog ?? []}
             tasks={tasks}
             getBacklog={getBacklogData}
             getTasks={getTasksData}

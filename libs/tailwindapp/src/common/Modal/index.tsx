@@ -10,7 +10,7 @@ export const Modal:FC<ModalProps> = ({
 }) => {
 	return (
     <div
-      className={`${open ? "fixed" : "hidden"} -top-1 -right-1 -bottom-1 -left-1`}
+      className={`${open ? "fixed" : "hidden"} -top-1 -right-1 -bottom-1 -left-1 z-10`}
       role="dialog"
       aria-modal="true"
     >

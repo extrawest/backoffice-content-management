@@ -1,12 +1,7 @@
 import { FC } from "react";
 import {
-	ErrorMessage, Form, Formik
+  Form, Formik, FormikHelpers
 } from "formik";
-import {
-	Box,
-	Button, FormControl, Grid, OutlinedInput
-} from "@mui/material";
-import { footerSx } from "./CreateTaskForm.sx";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import dayjs from "dayjs";
@@ -19,7 +14,7 @@ export const CreateTaskForm:FC<CreateTaskFormProps> = ({
   backlog
 }) => {
   const me = useAuth()
-	const handleSubmit = () => async (values: {name: string}) => {
+	const handleSubmit = () => async (values: {name: string}, helpers: FormikHelpers<{name: string}>) => {
     try {
       if (me?.user?.uid) {
         await setDoc(doc(
@@ -35,63 +30,46 @@ export const CreateTaskForm:FC<CreateTaskFormProps> = ({
       console.error(error)
     } finally {
       getBacklogData();
-      closeModal()
+      closeModal();
+      helpers.resetForm();
     }
 	};
 
 	return (
     <Formik
       initialValues={{ name: "" }}
-      validate={values => {
-        const errors:Record<string, string> = {};
-        if (!values.name) {
-          errors["name"] = "Required";
-        }
-        return errors;
-      }}
       onSubmit={handleSubmit()}
     >
       {({
         isSubmitting,
         values,
-        handleChange,
-        errors
+        handleChange
       }) => (
         <Form>
-          <Grid
-            container
-            spacing={2}
-          >
-            <Grid
-              xs={12}
-              item
-            >
-            <FormControl
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              error={!!errors["name"]}
-            >
-              <OutlinedInput
-                type="text"
+          <div className="flex flex-col items-center w-form pt-3">
+            <div className="mb-3 w-full">
+              <label>
+                <h4 className="sub-header mb-1">
+                  Task
+                </h4>
+              </label>
+              <input
+                className="input"
                 name="name"
                 value={values["name"]}
                 onChange={handleChange}
               />
-            </FormControl>
-            </Grid>
-          </Grid>
-          <Box
-            sx={footerSx}
-          >
-            <Button
+            </div>
+          </div>
+          <div className="py-2 flex justify-end">
+            <button
+              className="btn-primary"
               type="submit"
-              variant="contained"
               disabled={isSubmitting}
             >
               Submit
-            </Button>
-          </Box>
+            </button>
+          </div>
         </Form>
       )}
     </Formik>

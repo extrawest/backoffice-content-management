@@ -1,15 +1,9 @@
 import {
-  FC, FormEvent, useState
+  FC, useState
 } from "react";
 import {
 	Alert,
-	Box,
-	Button,
-	Grid,
-	Link,
-	Snackbar,
-	TextField,
-	Typography
+	Snackbar
 } from "@mui/material";
 import { Google, Facebook } from "@mui/icons-material";
 import {
@@ -22,21 +16,14 @@ import {
 } from "firebase/auth";
 import { auth, googleProvider } from "../../../../shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
-import { submitBoxSx, titleSx, wrapperSx } from "./LoginPage.sx";
-import { ButtonContained } from "../../components/ButtonContained";
+import { Form, Formik } from "formik";
+import { Link } from "react-router-dom";
 
 export const LoginPage: FC = () => {
 	const [openAlert, setOpenAlert] = useState(false);
 	const [error, setError] = useState("");
 
-	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-
-		const value = {
-			email: data.get("email") as string,
-			password: data.get("password") as string
-		};
+	const handleSubmit = () => async (value: {email: string, password: string}) => {
 		try {
 			await signInWithEmailAndPassword(
 				auth,
@@ -111,95 +98,71 @@ export const LoginPage: FC = () => {
 	};
 
 	return (
-		<>
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
-        sx={wrapperSx}
-      >
-        <Typography
-          variant="h2"
-          sx={titleSx}
-        >
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      onSubmit={handleSubmit()}
+    >
+      {({
+          isSubmitting,
+          values,
+          handleChange
+        }) => (
+        <Form>
+      <div className="mx-auto pt-10 w-auth">
+        <h1 className="header-main text-center">
           Login to account
-        </Typography>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-        <Box sx={submitBoxSx}>
-          <ButtonContained
-            type="submit"
-            fullWidth
+        </h1>
+        <div className="mb-3 w-full">
+          <input
+            className="input"
+            placeholder="Email address"
+            name="email"
+            type="email"
+            value={values["email"]}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3 w-full">
+          <input
+            className="input"
+            placeholder="Password"
+            name="password"
+            type="password"
+            value={values["password"]}
+            onChange={handleChange}
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="btn-primary flex mx-auto"
+        >
+          Log In
+        </button>
+        <div className="flex justify-end my-2">
+          <Link
+            to={AppRoutesEnum.REGISTRATION}
+            className="underline text-primary-main"
           >
-            Log In
-          </ButtonContained>
-        </Box>
-        <Grid
-          container
-          justifyContent="flex-end"
-        >
-          <Grid item>
-            <Link
-              href={AppRoutesEnum.REGISTRATION}
-              variant="body2"
-            >
-              Don't have an account? Sign Up
-            </Link>
-          </Grid>
-        </Grid>
-        <Grid
-          sx={{ py: 2 }}
-          container
-          justifyContent="center"
-        >
-          <Grid item>
-            <Typography>- Or continue with -</Typography>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          justifyContent="center"
-          sx={{ py: 2 }}
-          spacing={2}
-        >
-          <Grid item>
-            <Button
-              sx={{ height: 50, width: 50 }}
-              onClick={handleGoogleLogin}
-              variant={"contained"}
-            >
-              <Google />
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              sx={{ height: 50, width: 50 }}
-              onClick={handleFbLogin}
-              variant={"contained"}
-            >
-              <Facebook />
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
+            Don't have an account? Sign Up
+          </Link>
+        </div>
+        <p className="text-center mb-4">- Or continue with -</p>
+        <div className="flex justify-center gap-3">
+          <button
+            className="btn-primary-icon"
+            onClick={handleGoogleLogin}
+          >
+            <Google />
+          </button>
+          <button
+            className="btn-primary-icon"
+            onClick={handleFbLogin}
+          >
+            <Facebook />
+          </button>
+        </div>
+      </div>
       <Snackbar
         open={openAlert}
         onClose={() => setOpenAlert(false)}
@@ -213,6 +176,7 @@ export const LoginPage: FC = () => {
           {`Something went wrong... ${error}`}
         </Alert>
       </Snackbar>
-		</>
+        </Form>)}
+      </Formik>
 	);
 };

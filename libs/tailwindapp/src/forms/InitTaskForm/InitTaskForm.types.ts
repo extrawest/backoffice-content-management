@@ -1,4 +1,6 @@
-import { BacklogType, TaskType } from "@lib/shared/types";
+import {
+	BacklogType, TaskType, TaskTypeEnum
+} from "@lib/shared/types";
 
 export type InitTaskFormProps = {
 	backlog: BacklogType[],
@@ -6,4 +8,9 @@ export type InitTaskFormProps = {
 	getTasks: () => void,
 	getBacklog: () => void,
 	closeModal: () => void
+};
+
+export type FormType = {
+	name: string,
+	type: TaskTypeEnum
 };

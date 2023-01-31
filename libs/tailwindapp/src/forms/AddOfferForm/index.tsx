@@ -1,11 +1,6 @@
 import { FC } from "react";
-import { Form, Formik } from "formik";
-import {
-	Box, Button, FormControl, FormLabel, Grid, OutlinedInput, Typography
-} from "@mui/material";
-import { footerSx } from "../CreateTaskForm/CreateTaskForm.sx";
+import { Form, Formik, FormikHelpers } from "formik";
 import { AddOfferFormProps, AddOfferValues } from "./AddOfferForm.types";
-import { formLabel } from "../CreateTicketForm/CreateTicketForm.sx";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import { useAuth } from "../../../../shared/context/Auth";
@@ -16,7 +11,7 @@ export const AddOfferForm:FC<AddOfferFormProps> = ({
 }) => {
 	const me = useAuth();
 
-	const handleSubmit = () => async (values: AddOfferValues) => {
+	const handleSubmit = () => async (values: AddOfferValues, helper: FormikHelpers<AddOfferValues>) => {
 		try {
 			if (me?.user?.uid) {
 				await addDoc(
@@ -36,6 +31,7 @@ export const AddOfferForm:FC<AddOfferFormProps> = ({
 		} finally {
 			getOffers();
 			closeModal();
+      helper.resetForm();
 		}
 	};
 
@@ -47,72 +43,46 @@ export const AddOfferForm:FC<AddOfferFormProps> = ({
       {({
           isSubmitting,
           values,
-          handleChange,
-          errors
+          handleChange
         }) => (
         <Form>
-          <Grid
-            container
-            spacing={2}
-          >
-            <Grid
-              xs={12}
-              item
-            >
-              <FormControl
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                error={!!errors["title"]}
-              >
-                <FormLabel sx={formLabel}>
-                  <Typography variant="caption">
-                    Title
-                  </Typography>
-                </FormLabel>
-                <OutlinedInput
-                  type="text"
-                  name="title"
-                  value={values["title"]}
-                  onChange={handleChange}
-                />
-              </FormControl>
-            </Grid>
-            <Grid
-              xs={12}
-              item
-            >
-              <FormControl
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                error={!!errors["description"]}
-              >
-                <FormLabel sx={formLabel}>
-                  <Typography variant="caption">
-                    Description
-                  </Typography>
-                </FormLabel>
-                <OutlinedInput
-                  type="text"
-                  name="description"
-                  value={values["description"]}
-                  onChange={handleChange}
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Box
-            sx={footerSx}
-          >
-            <Button
+          <div className="flex flex-col items-center w-form pt-3">
+            <div className="mb-3 w-full">
+              <label>
+                <h4 className="sub-header mb-1">
+                  Title
+                </h4>
+              </label>
+              <input
+                className="input"
+                name="title"
+                value={values["title"]}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3 w-full">
+              <label>
+                <h4 className="sub-header mb-1">
+                  Description
+                </h4>
+              </label>
+              <input
+                className="input"
+                name="description"
+                value={values["description"]}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="py-2 flex justify-end">
+            <button
+              className="btn-primary"
               type="submit"
-              variant="contained"
               disabled={isSubmitting}
             >
               Submit
-            </Button>
-          </Box>
+            </button>
+          </div>
         </Form>
       )}
     </Formik>

@@ -45,7 +45,7 @@ export const Tasks:FC<TasksProps> = ({
       </div>
       {!!tasks?.length && (
         <ul>
-          {tasks.map((
+          {tasks?.map((
             task, i
           ) => (
             <li
@@ -61,7 +61,7 @@ export const Tasks:FC<TasksProps> = ({
         </ul>
       )}
       {!tasks?.length &&
-        <h4 className="header-section">
+        <h4 className="sub-header p-2">
           No tasks yet...
         </h4>
       }
@@ -72,7 +72,7 @@ export const Tasks:FC<TasksProps> = ({
       >
         <InitTaskForm
           backlog={backlog}
-          tasks={tasks}
+          tasks={tasks ?? []}
           getTasks={getTasks}
           getBacklog={getBacklog}
           closeModal={handleShowModal(false)}

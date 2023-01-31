@@ -60,7 +60,7 @@ export const Menu:FC = () => {
         src={avatar}
         className="h-150 w-150 rounded-full mb-4"
       />
-      <h3 className="header-section">
+      <h3 className="header-section text-20px">
           {me?.user?.displayName ?? me?.user?.email}
       </h3>
       <div className="flex flex-col justify-between h-full items-start">

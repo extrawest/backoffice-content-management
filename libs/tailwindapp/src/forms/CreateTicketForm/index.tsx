@@ -3,7 +3,8 @@ import {
   FC,
   useState
 } from "react";
-import { Form, Formik, FormikProps
+import {
+  Form, Formik, FormikHelpers, FormikProps
 } from "formik";
 import { setDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../../../shared/firebaseconfig";
@@ -55,7 +56,7 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
       })
   }
 
-  const handleSubmit = () => async (values: FormValueProps) => {
+  const handleSubmit = () => async (values: FormValueProps, helpers: FormikHelpers<FormValueProps>) => {
     try {
       if (me.user?.uid) {
         await setDoc(
@@ -92,6 +93,8 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 			getTasks();
       getTickets();
 			closeModal();
+      helpers.resetForm();
+      setImgUrl('')
 		}
 	};
 

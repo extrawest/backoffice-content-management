@@ -1,12 +1,6 @@
 import {
 	FC, useEffect, useState
 } from "react";
-import {
-	addSx, boxSx, headerStackSx, subTextSx, taskRowSx, linkSx
-} from "./Offers.sx";
-import {
-	Box, IconButton, Stack, Typography
-} from "@mui/material";
 import { Link } from "react-router-dom";
 import {
 	AppRoutesEnum, OfferType
@@ -54,60 +48,51 @@ export const Offers:FC = () => {
 	);
 
 	return (
-    <Box sx={boxSx}>
-      <Stack sx={headerStackSx}>
-        <Typography variant="h4">
+    <div className="border rounded-1">
+      <div className="flex justify-between align-middle p-2">
+        <h4 className="header-section">
           Offers
-        </Typography>
-        <Link
-          to={AppRoutesEnum.TEAM}
-          style={linkSx}
-        >
-          <Typography
-            variant="caption"
-            color="primary"
-          >
-            View all
-          </Typography>
+        </h4>
+        <Link to={AppRoutesEnum.TEAM} className="flex items-center no-underline">
+              <span className="flex items-center">
+                View all
+              </span>
         </Link>
-      </Stack>
-      <Stack sx={headerStackSx}>
-        <Typography sx={subTextSx}>
-          Create new task
-        </Typography>
-        <IconButton
+      </div>
+      <div className="flex justify-between align-middle p-2">
+        <h5 className="sub-header">
+          Create new offer
+        </h5>
+        <button
           onClick={handleShowModal(true)}
-          sx={addSx}
+          className="icon-btn"
         >
           +
-        </IconButton>
-      </Stack>
+        </button>
+      </div>
       {!!offers?.length && (
-        <Stack>
+        <ul>
           {offers.map((
             offer, i
           ) => (
-            <Box
+            <li
               key={i}
-              sx={taskRowSx(i < offers?.length - 1)}
+              className="flex justify-between items-center w-full p-2 border-b border-colorBorder border-solid last:border-0"
             >
-              <Typography variant='h6'>
+              <h6 className="task-title">
                 {offer?.title}
-              </Typography>
-              <Typography variant='h6'>
+              </h6>
+              <h6 className="task-title">
                 {offer?.description}
-              </Typography>
-            </Box>
+              </h6>
+            </li>
           ))}
-        </Stack>
+        </ul>
       )}
       {!offers?.length &&
-        <Typography
-          variant="h4"
-          p={2}
-        >
+        <h4 className="sub-header p-2">
           No offers yet...
-        </Typography>
+        </h4>
       }
       <Modal
         handleClose={handleShowModal(false)}
@@ -119,6 +104,6 @@ export const Offers:FC = () => {
           closeModal={handleShowModal(false)}
         />
       </Modal>
-    </Box>
+    </div>
 	);
 };

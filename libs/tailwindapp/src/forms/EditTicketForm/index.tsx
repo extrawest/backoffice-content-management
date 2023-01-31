@@ -3,15 +3,8 @@ import {
 	FC, useState
 } from "react";
 import {
-	Form, Formik, FormikProps, ErrorMessage
+  Form, Formik, FormikProps, ErrorMessage, FormikHelpers
 } from "formik";
-import {
-  Box,
-  Button, FormControl, FormHelperText, FormLabel, Grid, MenuItem, OutlinedInput, Select, Typography
-} from "@mui/material";
-import {
-  fileInputSx, footerSx, formLabel, imgBoxSx, imgSx, loaderSx, wrapperSx
-} from "./EditTicketForm.sx";
 import { setDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../../../shared/firebaseconfig";
 import { EditTicketFormProps, FormValueProps } from "./EditTicketForm.types";
@@ -114,6 +107,17 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
 		value: item
 	}));
 
+  const handleChangeStatus = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
+    (
+      e:  ChangeEvent<HTMLSelectElement>
+    ) => {
+      const value = e.target?.value ?? "";
+      setFieldValue(
+        "status",
+        value
+      );
+    };
+
 	return (
     <Formik
       initialValues={formInit}
@@ -125,25 +129,26 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
           values,
           handleChange,
           errors,
-          handleSubmit
+          handleSubmit,
+          setFieldValue
         }:FormikProps<FormValueProps>) => {
         return (
           <Form onSubmit={handleSubmit}>
-            <Box sx={wrapperSx}>
-              <Box sx={imgBoxSx}>
+            <div className="flex justify-center items-center">
+              <div className="w-300">
                 {disableSubmit &&
-                  <Box sx={loaderSx}>
+                  <div className="flex justify-center">
                     <Loader/>
-                  </Box>
+                  </div>
                 }
                 {!disableSubmit &&
                   <label>
                     <img
-                      style={imgSx}
+                      className="w-img h-img block object-cover"
                       src={imgUrl ? imgUrl : EmptyImage}
                     />
                     <input
-                      style={fileInputSx}
+                      className="hidden"
                       onChange={getImage}
                       type="file"
                       id="image"
@@ -152,130 +157,77 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
                     />
                   </label>
                 }
-              </Box>
-              <Grid
-                container
-                spacing={2}
-              >
-                <Grid
-                  xs={12}
-                  item
-                >
-                  <FormControl
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    error={!!errors["task"]}
-                  >
-                    <FormLabel sx={formLabel}>
-                      <Typography variant="caption">
-                        Task
-                      </Typography>
-                    </FormLabel>
-                    <OutlinedInput
-                      type="text"
+              </div>
+              <div className="w-form">
+                <div className="mb-3">
+                  <label>
+                    <h4 className="sub-header mb-1">
+                      Task
+                    </h4>
+                    <input
+                      className="input"
                       name="task"
                       value={values["task"]}
                       onChange={handleChange}
                     />
-                  </FormControl>
-                </Grid>
-                <Grid
-                  xs={12}
-                  item
-                >
-                  <FormControl
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    error={!!errors["status"]}
-                  >
-                    <FormLabel sx={formLabel}>
-                      <Typography variant="caption">
-                        Status
-                      </Typography>
-                    </FormLabel>
-                    <Select
-                      name='status'
-                      onChange={handleChange}
+                  </label>
+                </div>
+                <div className="mb-3 w-full">
+                  <label>
+                    <h4 className="sub-header mb-1">
+                      Status
+                    </h4>
+                    <select
+                      className="input"
+                      name="status"
                       value={values["status"]}
+                      onChange={handleChangeStatus(setFieldValue)}
                     >
-                      {processedStatuses.map((item) => {
-                        return (
-                          <MenuItem
-                            key={item.id}
-                            value={item.value}
-                            onClick={handleChange}
-                          >
-                            <StatusTag type={item.name}/>
-                          </MenuItem>
-                        );})}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid
-                  xs={12}
-                  item
-                >
-                  <FormControl
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    error={!!errors["firstName"]}
-                  >
-                    <FormLabel sx={formLabel}>
-                      <Typography variant="caption">
-                        First Name
-                      </Typography>
-                    </FormLabel>
-                    <OutlinedInput
-                      type="text"
+                      {processedStatuses.map(item => (
+                        <option key={item.id} value={item.id}>
+                          <StatusTag type={item.name}/>
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <div className="mb-3">
+                  <label>
+                    <h4 className="sub-header mb-1">
+                      First Name
+                    </h4>
+                    <input
+                      className="input"
                       name="firstName"
                       value={values["firstName"]}
                       onChange={handleChange}
                     />
-                  </FormControl>
-                </Grid>
-                <Grid
-                  xs={12}
-                  item
-                >
-                  <FormControl
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    error={!!errors["lastName"]}
-                  >
-                    <FormLabel sx={formLabel}>
-                      <Typography variant="caption">
-                        Last Name
-                      </Typography>
-                    </FormLabel>
-                    <OutlinedInput
-                      type="text"
+                  </label>
+                </div>
+                <div className="mb-3">
+                  <label>
+                    <h4 className="sub-header mb-1">
+                      Last Name
+                    </h4>
+                    <input
+                      className="input"
                       name="lastName"
                       value={values["lastName"]}
                       onChange={handleChange}
                     />
-                    <ErrorMessage
-                      name="lastName"
-                      render={(msg) => <FormHelperText>{msg}</FormHelperText>}
-                    />
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </Box>
-            <Box
-              sx={footerSx}
-            >
-              <Button
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="py-2 flex justify-end">
+              <button
+                className="btn-primary"
                 type="submit"
-                variant="contained"
                 disabled={isSubmitting || disableSubmit}
               >
-                Update
-              </Button>
-            </Box>
+                Submit
+              </button>
+            </div>
           </Form>
         )
       } }

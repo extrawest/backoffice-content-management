@@ -1,22 +1,15 @@
 import {
-	FC, FormEvent, useState
+	FC, useState
 } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
   Alert,
-  Box,
-  Button,
-  Grid,
-  Link,
-  Snackbar,
-  TextField, Typography
+  Snackbar
 } from "@mui/material";
 import { auth } from "../../../../shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
-import { wrapperSx } from "./RegisterPage.sx";
-import { titleSx } from "../LoginPage/LoginPage.sx";
-import { ButtonContained } from "../../components/ButtonContained";
+import { Form, Formik } from "formik";
 
 export const RegistrationPage: FC = () => {
 	const [passwordCorrect, setPasswordCorrect] = useState(true);
@@ -24,16 +17,7 @@ export const RegistrationPage: FC = () => {
 	const [openAlert, settOpenAlert] = useState(false);
 	const [error, setError] = useState("");
 
-	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-
-		const values = {
-			email: data.get("email") as string,
-			password: data.get("password") as string,
-			confirm_password: data.get("confirm_password")
-		};
-
+	const handleSubmit = () => async (values: {email: string, password: string, confirm_password: string}) => {
 		if (
 			values.password === values.confirm_password &&
       values?.email?.length
@@ -69,91 +53,66 @@ export const RegistrationPage: FC = () => {
 	};
 
 	return (
-		<>
-      <Box
-        component="form"
-        noValidate
-        onSubmit={handleSubmit}
-        sx={wrapperSx}
-      >
-        <Typography
-          variant="h2"
-          sx={titleSx}
-        >
-          Registration
-        </Typography>
-        <Grid
-          container
-          spacing={2}
-        >
-          <Grid
-            item
-            xs={12}
-          >
-            <TextField
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-            />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-          >
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-            />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-          >
-            <TextField
-              required
-              fullWidth
-              name="confirm_password"
-              label="Confirm password"
-              type="password"
-              id="confirm_password"
-              error={!passwordCorrect}
-              helperText={
-                passwordCorrect
-                  ? ""
-                  : "Please make sure your passwords match"
-              }
-            />
-          </Grid>
-        </Grid>
-        <Box my={3}>
-          <ButtonContained
-            type="submit"
-            fullWidth
-          >
-            Sign up
-          </ButtonContained>
-        </Box>
-        <Grid
-          container
-          justifyContent="flex-end"
-        >
-          <Grid item>
-            <Link
-              href={AppRoutesEnum.LOGIN}
-              variant="body2"
+    <Formik
+      initialValues={{ email: "", password: "", confirm_password: "" }}
+      onSubmit={handleSubmit()}
+    >
+      {({
+          isSubmitting,
+          values,
+          handleChange
+        }) => (
+        <Form>
+          <div className="mx-auto pt-10 w-auth">
+            <h1 className="header-main text-center">
+              Registration
+            </h1>
+            <div className="mb-3 w-full">
+              <input
+                className="input"
+                placeholder="Email address"
+                name="email"
+                type="email"
+                value={values["email"]}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3 w-full">
+              <input
+                className="input"
+                placeholder="Password"
+                name="password"
+                type="password"
+                value={values["password"]}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3 w-full">
+              <input
+                className="input"
+                placeholder="Confirm password"
+                name="confirm_password"
+                type="password"
+                value={values["confirm_password"]}
+                onChange={handleChange}
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-primary flex mx-auto"
             >
-              Already have an account? Sign in
-            </Link>
-          </Grid>
-        </Grid>
-      </Box>
+              Sign up
+            </button>
+            <div className="flex justify-end my-2">
+              <Link
+                to={AppRoutesEnum.LOGIN}
+                className="underline text-primary-main"
+              >
+                Already have an account? Sign in
+              </Link>
+            </div>
+      </div>
       <Snackbar
         open={openAlert}
         onClose={() => settOpenAlert(false)}
@@ -167,6 +126,7 @@ export const RegistrationPage: FC = () => {
           {`Something went wrong... ${error}`}
         </Alert>
       </Snackbar>
-		</>
+        </Form>)}
+    </Formik>
 	);
 };

@@ -1,19 +1,15 @@
 import {
-	FC, SyntheticEvent, useState
+  ChangeEvent,
+  FC,
+  useState
 } from "react";
 import {
-	Form, Formik, FormikProps
+  Form, Formik, FormikHelpers, FormikProps, FormikValues
 } from "formik";
-import {
-  Autocomplete,
-  Box,
-  Button, FormControl, FormLabel, Grid, MenuItem, Select, TextField, Typography
-} from "@mui/material";
-import { autocompleteSx, footerSx, formLabel } from "./InitTaskForm.sx";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import dayjs from "dayjs";
-import { InitTaskFormProps } from "./InitTaskForm.types";
+import { FormType, InitTaskFormProps } from "./InitTaskForm.types";
 import { TaskTypeEnum } from "@lib/shared/types";
 import { StatusTag } from "../../components/StatusTag";
 import { useAuth } from "../../../../shared/context/Auth";
@@ -27,7 +23,9 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 }) => {
   const me = useAuth();
 	const [activeTask, setActiveTask] = useState("");
-	const handleSubmit = () => async (values: {name: string, type: TaskTypeEnum}) => {
+	const handleSubmit = () =>
+    async (values: FormType, formikHelpers:  FormikHelpers<FormType>) => {
+      console.log(values, backlog.find(task => task.id === activeTask)?.name, tasks)
 		try {
       if (me.user?.uid) {
         await setDoc(
@@ -59,8 +57,9 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 			console.error(error);
 		} finally {
       getTasks();
-      getBacklog()
-      closeModal()
+      getBacklog();
+      closeModal();
+      formikHelpers.resetForm();
     }
 	};
 
@@ -75,11 +74,22 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
     value: item
   }))
 
+  const handleChangeStatus = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
+    (
+      e:  ChangeEvent<HTMLSelectElement>
+    ) => {
+      const value = e.target?.value ?? "";
+      setFieldValue(
+        "type",
+        value
+      );
+    };
+
 	const handleChangeTask = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
 		(
-			e: SyntheticEvent, newValue: {label: string, id: string} | null
+      e:  ChangeEvent<HTMLSelectElement>
 		) => {
-			const value = newValue?.id ?? "";
+			const value = e.target?.value ?? "";
 			setFieldValue(
 				"name",
 				value
@@ -95,98 +105,56 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
       {({
           isSubmitting,
           values,
-          handleChange,
-          errors,
           setFieldValue
         }) => (
         <Form>
-          <Grid
-            container
-            spacing={2}
-          >
-            <Grid
-              xs={12}
-              item
-            >
-              <FormControl
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                error={!!errors["name"]}
-              >
-                <FormLabel sx={formLabel}>
-                  <Typography variant="caption">
-                    Task
-                  </Typography>
-                </FormLabel>
-                <Autocomplete
-                  sx={autocompleteSx}
-                  options={processedTasks}
-                  selectOnFocus={false}
-                  value={processedTasks.find(item => item.id === activeTask)}
-                  getOptionLabel={(option) => option.label}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      fullWidth
-                      margin="normal"
-                      color="secondary"
-                      variant="outlined"
-                      placeholder="Select task"
-                    />
-                  )}
+          <div className="flex flex-col items-center w-form pt-3">
+            <div className="mb-3 w-full">
+              <label>
+                <h4 className="sub-header mb-1">
+                  Task
+                </h4>
+                <select
+                  className="input"
+                  name="name"
+                  value={values["name"]}
                   onChange={handleChangeTask(setFieldValue)}
-                />
-              </FormControl>
-            </Grid>
-            <Grid
-              xs={12}
-              item
-            >
-              <FormControl
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                error={!!errors["type"]}
-              >
-                <FormLabel sx={formLabel}>
-                  <Typography variant="caption">
-                    Status
-                  </Typography>
-                </FormLabel>
-                <Select
-                  name='type'
-                  onChange={handleChange}
-                  defaultValue={processedStatuses[0].value}
-                  value={values['type']}
                 >
-                  {processedStatuses.map((
-                    item
-                  ) => {
-                    return (
-                      <MenuItem
-                        key={item.id}
-                        value={item.value}
-                        onClick={handleChange}
-                      >
-                        <StatusTag type={item.name}/>
-                      </MenuItem>
-                    )})}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Box
-            sx={footerSx}
-          >
-            <Button
+                  {processedTasks.map(task => (
+                    <option key={task.id} value={task.id}>{task.label}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <div className="mb-3 w-full">
+              <label>
+                <h4 className="sub-header mb-1">
+                  Status
+                </h4>
+                <select
+                  className="input"
+                  name="type"
+                  value={values["type"]}
+                  onChange={handleChangeStatus(setFieldValue)}
+                >
+                  {processedStatuses.map(item => (
+                    <option key={item.id} value={item.id}>
+                      <StatusTag type={item.name}/>
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </div>
+          <div className="py-2 flex justify-end">
+            <button
+              className="btn-primary"
               type="submit"
-              variant="contained"
               disabled={isSubmitting}
             >
               Submit
-            </Button>
-          </Box>
+            </button>
+          </div>
         </Form>
       )}
     </Formik>

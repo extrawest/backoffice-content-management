@@ -63,14 +63,17 @@ module.exports = {
         30: "1.875rem",
         150: "9.375rem",
         300: "18.75rem",
+        50: "3.125rem",
         "form": "35rem",
         "menu": "28.875rem",
-        "img": "12,5rem"
+        "img": "12.5rem",
+        "auth": "31.25rem"
       },
       height: {
         30: "1.875rem",
         150: "9.375rem",
-        "img": "12,5rem"
+        "img": "12.5rem",
+        50: "3.125rem",
       },
       colors: {
         primary: {

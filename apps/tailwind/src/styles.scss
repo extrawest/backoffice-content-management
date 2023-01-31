@@ -3,6 +3,10 @@
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
 
+[type='submit'].btn-primary {
+  @apply bg-primary-main;
+}
+
 @layer components {
   .header-main {
     @apply text-4xl font-semibold mb-7;
@@ -17,7 +21,7 @@
     @apply text-20px;
   }
   .btn-primary {
-    @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+    @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
   }
   .section-border {
     @apply rounded-1 border-solid border border-colorBorder;
@@ -33,5 +37,8 @@
   }
   .chart-list-item {
     @apply border-b border-solid border-colorBorder py-3;
+  }
+  .input {
+    @apply p-2 w-full border rounded-full outline-0;
   }
 }

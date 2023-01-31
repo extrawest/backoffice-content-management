@@ -1,13 +1,7 @@
 import { FC } from "react";
-import { CircularProgress } from "@mui/material";
-import { LoaderProps } from "./Loader.types";
 
-export const Loader: FC<LoaderProps> = ({ size, color }) => {
+export const Loader: FC = () => {
 	return (
-    <CircularProgress
-      disableShrink
-      size={size}
-      color={color}
-    />
+    <div>Loading...</div>
 	);
 };

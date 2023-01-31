@@ -1,17 +1,10 @@
 import {
   ChangeEvent,
-  FC, SyntheticEvent, useState
+  FC,
+  useState
 } from "react";
 import { Form, Formik, FormikProps
 } from "formik";
-import {
-	Autocomplete,
-	Box,
-	Button, FormControl, FormLabel, Grid, OutlinedInput, TextField, Typography
-} from "@mui/material";
-import {
-  autocompleteSx, fileInputSx, footerSx, formLabel, imgBoxSx, imgSx, wrapperSx
-} from "./CreateTicketForm.sx";
 import { setDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../../../shared/firebaseconfig";
 import dayjs from "dayjs";
@@ -20,7 +13,6 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
 import { useAuth } from "../../../../shared/context/Auth";
 import { createTicketFormSchema } from "@lib/shared/types";
-import { loaderSx } from "../EditTicketForm/EditTicketForm.sx";
 import { Loader } from "@lib/tailwind";
 
 export const CreateTicketForm:FC<CreateTicketFormProps> = ({
@@ -110,11 +102,11 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 
 	const handleChangeTask = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
 		(
-			e: SyntheticEvent, newValue: {label: string, id: string} | null
+			e:  ChangeEvent<HTMLSelectElement>
 		) => {
-			const value = newValue?.id ?? "";
+			const value = e?.target?.value ?? "";
 			setFieldValue(
-				"name",
+				"task",
 				value
 			);
 			setActiveTask(value);
@@ -135,21 +127,21 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
           handleSubmit,
         }:FormikProps<FormValueProps>) => (
         <Form onSubmit={handleSubmit}>
-          <Box sx={wrapperSx}>
-            <Box sx={imgBoxSx}>
+          <div className="flex justify-center items-center">
+            <div className="w-300">
                {disableSubmit &&
-                  <Box sx={loaderSx}>
+                  <div className="flex justify-center">
                     <Loader/>
-                  </Box>
+                  </div>
                 }
                 {!disableSubmit &&
                   <label>
                     <img
-                      style={imgSx}
+                      className="w-img h-img block object-cover"
                       src={imgUrl ? imgUrl : EmptyImage}
                     />
                     <input
-                      style={fileInputSx}
+                      className="hidden"
                       onChange={getImage}
                       type="file"
                       id="image"
@@ -158,105 +150,62 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
                     />
                   </label>
                 }
-            </Box>
-            <Grid
-              container
-              spacing={2}
-            >
-              <Grid
-                xs={12}
-                item
-              >
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  error={!!errors["task"]}
-                >
-                  <FormLabel sx={formLabel}>
-                    <Typography variant="caption">
+            </div>
+            <div className="w-form">
+              <div className="mb-3">
+                  <label>
+                    <h4 className="sub-header mb-1">
                       Task
-                    </Typography>
-                  </FormLabel>
-                  <Autocomplete
-                    sx={autocompleteSx}
-                    options={processedTasks}
-                    selectOnFocus={false}
-                    value={processedTasks.find(item => item.id === activeTask)}
-                    getOptionLabel={(option) => option.label}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        margin="normal"
-                        color="secondary"
-                        variant="outlined"
-                        placeholder="Select task"
-                      />
-                    )}
-                    onChange={handleChangeTask(setFieldValue)}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid
-                xs={12}
-                item
-              >
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  error={!!errors["firstName"]}
-                >
-                  <FormLabel sx={formLabel}>
-                    <Typography variant="caption">
-                      First Name
-                    </Typography>
-                  </FormLabel>
-                  <OutlinedInput
-                    type="text"
+                    </h4>
+                    <select
+                      className="input"
+                      name="task"
+                      value={values["task"]}
+                      onChange={handleChangeTask(setFieldValue)}
+                    >
+                      {processedTasks.map(task => (
+                        <option key={task.id} value={task.id}>{task.label}</option>
+                      ))}
+                    </select>
+                  </label>
+              </div>
+              <div className="mb-3">
+                <label>
+                  <h4 className="sub-header mb-1">
+                    First Name
+                  </h4>
+                  <input
+                    className="input"
                     name="firstName"
                     value={values["firstName"]}
                     onChange={handleChange}
                   />
-                </FormControl>
-              </Grid>
-              <Grid
-                xs={12}
-                item
-              >
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  error={!!errors["lastName"]}
-                >
-                  <FormLabel sx={formLabel}>
-                    <Typography variant="caption">
-                      Last Name
-                    </Typography>
-                  </FormLabel>
-                  <OutlinedInput
-                    type="text"
+                </label>
+              </div>
+              <div className="mb-3">
+                <label>
+                  <h4 className="sub-header mb-1">
+                    Last Name
+                  </h4>
+                  <input
+                    className="input"
                     name="lastName"
                     value={values["lastName"]}
                     onChange={handleChange}
                   />
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Box>
-          <Box
-            sx={footerSx}
-          >
-            <Button
+                </label>
+              </div>
+            </div>
+          </div>
+          <div className="py-2 flex justify-end">
+            <button
+              className="btn-primary"
               type="submit"
-              variant="contained"
               disabled={isSubmitting || disableSubmit}
             >
               Submit
-            </Button>
-          </Box>
+            </button>
+          </div>
         </Form>
       )}
     </Formik>

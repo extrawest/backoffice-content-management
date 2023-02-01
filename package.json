@@ -46,6 +46,7 @@
     "next-redux-wrapper": "^7.0.5",
     "nookies": "^2.5.2",
     "notistack": "^2.0.5",
+    "primeflex": "^3.3.0",
     "primereact": "^9.0.0-beta.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",

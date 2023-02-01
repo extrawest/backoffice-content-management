@@ -4,6 +4,9 @@ import { getDesignTokens } from '../../../../libs/muilib/src/theme';
 import { ThemeContext } from '../../../../libs/shared/context/themeContext';
 import { AppRoutes } from "../routes";
 import { AuthProvider } from "../../../../libs/shared/context/Auth";
+import "primeflex/primeflex.css";
+import "primereact/resources/themes/lara-light-blue/theme.css";
+import "./styles.scss";
 
 export function App() {
   const [mode, setMode] = useState<PaletteMode>('light');

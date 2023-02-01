@@ -1,0 +1,21 @@
+@import "./theme.scss";
+@import "primereact/resources/themes/lara-light-blue/theme.css";
+
+.p-panel .p-panel-content {
+  border: none;
+}
+.p-tag.p-component {
+  padding: 0.5rem 1rem;
+}
+.p-tag.p-component.p-tag-warning {
+  color: var(--surface-0);
+  background-color: var(--yellow-60);
+}
+.p-tag.p-component.p-tag-success {
+  color: var(--surface-0);
+  background-color: var(--green-40);
+}
+.p-tag.p-component.p-tag-info {
+  color: var(--text-grey);
+  background-color: var(--colorInfo);
+}

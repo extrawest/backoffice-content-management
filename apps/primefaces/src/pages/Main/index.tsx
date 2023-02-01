@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { MainPage } from "@lib/muiapp";
+import { MainPage } from "@lib/prime";
 
 const Main:FC = () => {
-  return <MainPage/>
-}
+	return <MainPage/>;
+};
 
-export default Main
+export default Main;

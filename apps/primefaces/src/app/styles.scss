@@ -1,6 +1,9 @@
 @import "./theme.scss";
 @import "primereact/resources/themes/lara-light-blue/theme.css";
 
+body * {
+  font-family: 'Open Sans', sans-serif;
+}
 .p-panel .p-panel-content {
   border: none;
 }
@@ -24,4 +27,10 @@
 }
 .min-w-modal {
   min-width: 35rem;
+}
+.w-menu {
+  width: 17.875rem;
+}
+.shadow-lg {
+  box-shadow: 0.5rem 0 1rem 0 rgba(0,0,0,0.2);
 }

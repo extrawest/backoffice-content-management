@@ -55,21 +55,21 @@ export const Menu:FC = () => {
   };
 
 	return (
-    <div className="fixed flex flex-col m-0 py-10 px-10 h-full shadow-lg">
+    <div className="fixed flex flex-column m-0 top-0 bottom-0 w-menu left-0 py-8 px-5 h-12 shadow-lg">
       <img
         src={avatar}
-        className="h-150 w-150 rounded-full mb-4"
+        className="h-10rem w-10rem border-circle mb-4"
       />
-      <h3 className="header-section text-20px">
+      <h3 className="text-xl">
           {me?.user?.displayName ?? me?.user?.email}
       </h3>
-      <div className="flex flex-col justify-between h-full items-start">
-        <ul className="pt-5 pb-10">
+      <div className="flex flex-column justify-content-between h-12 align-items-start">
+        <ul className="pt-5 pb-8 mb-8 px-0">
           {menu.map((listItem, index) => (
-              <li key={index}>
-                <Link to={listItem.url} className="no-underline flex gap-1 py-1 text-gray-500">
+              <li key={index} className="list-none m-0 py-2">
+                <Link to={listItem.url} className="no-underline flex gap-1 py-1 text-500">
                   {listItem.listIcon}
-                  <span className="text-gray-800">
+                  <span className="text-800">
                     {listItem.listText}
                   </span>
                 </Link>
@@ -78,7 +78,7 @@ export const Menu:FC = () => {
         </ul>
         <button
           onClick={logOut}
-          className="flex gap-1 items-center border text-gray-700 py-1 px-2 rounded-1 border-gray-500 outline-0 hover:bg-gray-100 ease-in-out"
+          className="cursor-pointer surface-0 flex gap-1 align-items-center border-1 text-700 py-2 px-4 border-round-lg border-500 outline-none hover:surface-300 ease-in-out"
         >
           <LogoutIcon/>
           Log out

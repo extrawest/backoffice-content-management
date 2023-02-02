@@ -1,9 +1,8 @@
 import { FC, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Box, CssBaseline } from "@mui/material";
-import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute } from "@lib/muiapp";
-import { privateRoutes } from "./privateRotes";
-import { commonRoutes } from "./commonRotes";
+import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute } from "@lib/prime";
+import { privateRoutes } from "./privateRoutes";
+import { commonRoutes } from "./commonRoutes";
 import { LayoutEnum } from "@lib/shared/types";
 import { useAuth } from "libs/shared/context/Auth";
 
@@ -14,18 +13,11 @@ export const AppRoutes: FC = () => {
   return (
     <Suspense
       fallback={
-        <Box
-          component="div"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100vh"
-        >
+        <div className="flex justify-content-center align-items-center h-screen">
           <Loader />
-        </Box>
+        </div>
       }
     >
-      <CssBaseline />
       <Routes>
         {[...privateRoutes, ...commonRoutes].map((route, index) => (
           <Route

@@ -1,6 +1,6 @@
 import {FC, useState} from "react";
 import { Link } from "react-router-dom";
-import { Modal } from "@lib/tailwind";
+import { Modal } from "@lib/prime";
 import { CreateTaskForm } from "../../../forms";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { BacklogProps } from "./Backlog.types";

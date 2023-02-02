@@ -1,10 +1,10 @@
 import {FC, useState} from "react";
-import { Modal } from "@lib/tailwind";
+import { Link } from "react-router-dom";
+import { AppRoutesEnum } from "@lib/shared/types";
+import { Modal } from "@lib/prime";
 import { InitTaskForm } from "../../../forms/InitTaskForm";
 import { StatusTag } from "../../../components/StatusTag";
 import { TasksProps } from "./Tasks.types";
-import { AppRoutesEnum } from "@lib/shared/types";
-import { Link } from "react-router-dom";
 
 export const Tasks:FC<TasksProps> = ({
 	backlog,

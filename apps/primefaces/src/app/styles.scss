@@ -19,3 +19,9 @@
   color: var(--text-grey);
   background-color: var(--colorInfo);
 }
+.translate-50 {
+  transform: translate(-50%, -50%);
+}
+.min-w-modal {
+  min-width: 35rem;
+}

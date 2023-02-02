@@ -8,38 +8,39 @@ export const Modal:FC<ModalProps> = ({
 	children,
 	title
 }) => {
+	console.log(open);
 	return (
     <div
-      className={`${open ? "fixed" : "hidden"} -top-1 -right-1 -bottom-1 -left-1 z-10`}
+      className={`${open ? "fixed" : "hidden"} top-0 right-0 bottom-0 left-0 z-10`}
       role="dialog"
       aria-modal="true"
     >
       <div
-        className="fixed -top-1 -right-1 -bottom-1 -left-1 bg-gray-500 opacity-40"
+        className="fixed top-0 right-0 bottom-0 left-0 surface-700 opacity-40"
         role="dialog"
         aria-modal="true"
         onClick={handleClose}
       >
       </div>
       <div
-        className="fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex justify-center items-start overflow-y-auto"
+        className="fixed left-50 translate-50 top-50 flex justify-center items-start overflow-y-auto"
       >
         <div
-          className="align-middle h-full my-auto bg-white rounded-1 text-left overflow-hidden shadow-xl p-4 min-w-modal"
+          className="align-items-center h-12 my-auto surface-0 border-round-md text-left overflow-hidden p-4 min-w-modal"
         >
-          <div className="flex justify-between">
-            <h3 className="task-title semi-bold">
+          <div className="flex justify-content-between">
+            <h3 className="text-xl semi-bold">
               {title}
             </h3>
             <div
-              className="close-btn cursor-pointer"
+              className="cursor-pointer"
               role="button"
               onClick={handleClose}
             >
               <Close/>
             </div>
           </div>
-          <div className="mx-auto h-full">{children}</div>
+          <div className="mx-auto h-12">{children}</div>
         </div>
       </div>
     </div>

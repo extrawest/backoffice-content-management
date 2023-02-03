@@ -21,7 +21,7 @@ build:
   before_script:
     - npm ci --cache .npm --prefer-offline --force
   script:
-    - npm run build
+    - npm run build:mui
   environment:
     name: 'Development'
   artifacts:

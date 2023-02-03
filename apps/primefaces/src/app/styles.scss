@@ -34,6 +34,9 @@ body img {
 .w-menu {
   width: 17.875rem;
 }
+.w-form {
+  width: 35rem;
+}
 .shadow-lg {
   box-shadow: 0.5rem 0 1rem 0 rgba(0,0,0,0.2);
 }
@@ -49,4 +52,23 @@ body img {
 }
 .w-150 {
   width: 9.375rem;
+}
+.w-300 {
+  width: 18.75rem;
+}
+.primary-btn-gradient {
+  background: linear-gradient(180deg, var(--primary-main) 0%, var(--primary-light) 100%)
+}
+.upload-img-size {
+  width: 12.5rem;
+  height: 12.5rem;
+}
+.w-auth {
+  width: 31.25rem;
+}
+.text-primary-main {
+  color: var(--primary-main);
+}
+.primary-btn {
+  background-color: var(--primary-main);
 }

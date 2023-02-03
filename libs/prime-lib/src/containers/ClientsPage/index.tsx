@@ -149,8 +149,8 @@ export const ClientsPage:FC = () => {
           title="Create ticket"
         >
           <CreateTicketForm
-            tasks={tasks}
-            tickets={tickets}
+            tasks={tasks ?? []}
+            tickets={tickets ?? []}
             getTasks={getTasksData}
             getTickets={getTicketsData}
             closeModal={handleShowModal(false)}

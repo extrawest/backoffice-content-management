@@ -46,24 +46,24 @@ export const CreateTaskForm:FC<CreateTaskFormProps> = ({
         handleChange
       }) => (
         <Form>
-          <div className="flex flex-col items-center w-form pt-3">
-            <div className="mb-3 w-full">
+          <div className="flex flex-column align-items-center w-form pt-3">
+            <div className="mb-3 w-12">
               <label>
-                <h4 className="sub-header mb-1">
+                <h4 className="text-sm font-normal mb-1">
                   Task
                 </h4>
               </label>
               <input
-                className="input"
+                className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
                 name="name"
                 value={values["name"]}
                 onChange={handleChange}
               />
             </div>
           </div>
-          <div className="py-2 flex justify-end">
+          <div className="py-2 flex justify-content-end">
             <button
-              className="btn-primary"
+              className="primary-btn-gradient py-2 px-4 cursor-pointer text-white uppercase border-none outline-none font-semibold border-round-3xl"
               type="submit"
               disabled={isSubmitting}
             >

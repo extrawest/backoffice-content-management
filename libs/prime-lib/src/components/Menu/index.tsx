@@ -11,6 +11,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { useAuth } from "../../../../shared/context/Auth";
+import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
 
 const menu = [
   {
@@ -56,10 +57,14 @@ export const Menu:FC = () => {
 
 	return (
     <div className="fixed flex flex-column m-0 top-0 bottom-0 w-menu left-0 py-8 px-5 h-12 shadow-lg">
-      <img
-        src={avatar}
-        className="h-10rem w-10rem border-circle mb-4"
-      />
+      <div
+        className="h-10rem w-10rem border-circle mb-4 surface-300"
+      >
+        <img
+          src={avatar}
+          className="h-10rem w-10rem border-circle"
+        />
+      </div>
       <h3 className="text-xl">
           {me?.user?.displayName ?? me?.user?.email}
       </h3>

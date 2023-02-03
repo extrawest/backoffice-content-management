@@ -8,10 +8,9 @@ export const Modal:FC<ModalProps> = ({
 	children,
 	title
 }) => {
-	console.log(open);
 	return (
     <div
-      className={`${open ? "fixed" : "hidden"} top-0 right-0 bottom-0 left-0 z-10`}
+      className={`${open ? "fixed" : "hidden"} top-0 right-0 bottom-0 left-0 z-5`}
       role="dialog"
       aria-modal="true"
     >
@@ -29,7 +28,7 @@ export const Modal:FC<ModalProps> = ({
           className="align-items-center h-12 my-auto surface-0 border-round-md text-left overflow-hidden p-4 min-w-modal"
         >
           <div className="flex justify-content-between">
-            <h3 className="text-xl semi-bold">
+            <h3 className="text-xl semi-bold m-0">
               {title}
             </h3>
             <div

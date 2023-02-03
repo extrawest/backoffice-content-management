@@ -62,7 +62,7 @@ export const Tasks:FC<TasksProps> = ({
         </ul>
       )}
       {!tasks?.length &&
-        <h4 className="sub-header p-2">
+        <h4 className="text-md font-semibold text-700 px-2">
           No tasks yet...
         </h4>
       }
@@ -72,7 +72,7 @@ export const Tasks:FC<TasksProps> = ({
         title='Create new task'
       >
         <InitTaskForm
-          backlog={backlog}
+          backlog={backlog ?? []}
           tasks={tasks ?? []}
           getTasks={getTasks}
           getBacklog={getBacklog}

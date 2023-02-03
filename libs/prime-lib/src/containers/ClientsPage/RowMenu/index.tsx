@@ -5,7 +5,7 @@ import {
 	Delete, Edit, MoreVert
 } from "@mui/icons-material";
 import { RowMenuProps } from "./RowMenu.types";
-import { Modal } from "@lib/tailwind";
+import { Modal } from "@lib/prime";
 import { EditTicketForm } from "../../../forms/EditTicketForm";
 
 export const RowMenu:FC<RowMenuProps> = ({
@@ -61,35 +61,37 @@ export const RowMenu:FC<RowMenuProps> = ({
 	};
 
 	return (
-		<div className="relative">
-    <button
-      className="border-none outline-none transparent cursor-pointer"
-      onClick={handleShowMenu(true)}
-    >
-      <MoreVert/>
-    </button>
-      <div
-        ref={node}
-        className={`${open ? "absolute" : "hidden"} top-2 right-4 p-2 surface-0 border-round-xl z-5 shadow-lg w-150`}
-      >
-        <ul className="m-0 p-0">
-          <li className="hover:surface-300 list-none m-0 p-0">
-            <button
-              className="w-full p-1 border-none outline-none transparent cursor-pointer"
-              onClick={onEdit}
-            >
-              <Edit/>
-            </button>
-          </li>
-          <li className="hover:surface-300 list-none m-0 p-0">
-            <button
-              className="w-full p-1 border-none outline-none transparent cursor-pointer"
-              onClick={handleDelete}
-            >
-              <Delete/>
-            </button>
-          </li>
-        </ul>
+		<>
+      <div className="relative">
+        <button
+          className="border-none outline-none transparent cursor-pointer"
+          onClick={handleShowMenu(true)}
+        >
+          <MoreVert/>
+        </button>
+        <div
+          ref={node}
+          className={`${open ? "absolute" : "hidden"} top-2 right-4 p-2 surface-0 border-round-xl z-5 shadow-lg w-150`}
+        >
+          <ul className="m-0 p-0">
+            <li className="hover:surface-300 list-none m-0 p-0">
+              <button
+                className="w-full p-1 border-none outline-none transparent cursor-pointer"
+                onClick={onEdit}
+              >
+                <Edit/>
+              </button>
+            </li>
+            <li className="hover:surface-300 list-none m-0 p-0">
+              <button
+                className="w-full p-1 border-none outline-none transparent cursor-pointer"
+                onClick={handleDelete}
+              >
+                <Delete/>
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
       <Modal
         handleClose={handleShowModal(false)}
@@ -103,6 +105,6 @@ export const RowMenu:FC<RowMenuProps> = ({
           getTickets={getTickets}
         />
       </Modal>
-		</div>
+		</>
 	);
 };

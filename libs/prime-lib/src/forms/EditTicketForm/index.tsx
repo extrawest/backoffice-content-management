@@ -134,7 +134,7 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
         }:FormikProps<FormValueProps>) => {
         return (
           <Form onSubmit={handleSubmit}>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-content-center align-items-center">
               <div className="w-300">
                 {disableSubmit &&
                   <div className="flex justify-center">
@@ -144,7 +144,7 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
                 {!disableSubmit &&
                   <label>
                     <img
-                      className="w-img h-img block object-cover"
+                      className="upload-img-size"
                       src={imgUrl ? imgUrl : EmptyImage}
                     />
                     <input
@@ -161,11 +161,11 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
               <div className="w-form">
                 <div className="mb-3">
                   <label>
-                    <h4 className="sub-header mb-1">
+                    <h4 className="text-sm font-normal mb-1">
                       Task
                     </h4>
                     <input
-                      className="input"
+                      className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
                       name="task"
                       value={values["task"]}
                       onChange={handleChange}
@@ -174,11 +174,11 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
                 </div>
                 <div className="mb-3 w-full">
                   <label>
-                    <h4 className="sub-header mb-1">
+                    <h4 className="text-sm font-normal mb-1">
                       Status
                     </h4>
                     <select
-                      className="input"
+                      className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
                       name="status"
                       value={values["status"]}
                       onChange={handleChangeStatus(setFieldValue)}
@@ -193,11 +193,11 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
                 </div>
                 <div className="mb-3">
                   <label>
-                    <h4 className="sub-header mb-1">
+                    <h4 className="text-sm font-normal mb-1">
                       First Name
                     </h4>
                     <input
-                      className="input"
+                      className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
                       name="firstName"
                       value={values["firstName"]}
                       onChange={handleChange}
@@ -206,11 +206,11 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
                 </div>
                 <div className="mb-3">
                   <label>
-                    <h4 className="sub-header mb-1">
+                    <h4 className="text-sm font-normal mb-1">
                       Last Name
                     </h4>
                     <input
-                      className="input"
+                      className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
                       name="lastName"
                       value={values["lastName"]}
                       onChange={handleChange}
@@ -219,9 +219,9 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
                 </div>
               </div>
             </div>
-            <div className="py-2 flex justify-end">
+            <div className="py-2 flex justify-content-end">
               <button
-                className="btn-primary"
+                className="primary-btn-gradient py-2 px-4 cursor-pointer text-white uppercase border-none outline-none font-semibold border-round-3xl"
                 type="submit"
                 disabled={isSubmitting || disableSubmit}
               >

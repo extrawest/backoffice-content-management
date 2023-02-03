@@ -108,13 +108,13 @@ export const LoginPage: FC = () => {
           handleChange
         }) => (
         <Form>
-      <div className="mx-auto pt-10 w-auth">
-        <h1 className="header-main text-center">
+      <div className="mx-auto pt-8 w-auth">
+        <h1 className="text-4xl text-center">
           Login to account
         </h1>
-        <div className="mb-3 w-full">
+        <div className="mb-3 w-12">
           <input
-            className="input"
+            className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
             placeholder="Email address"
             name="email"
             type="email"
@@ -124,7 +124,7 @@ export const LoginPage: FC = () => {
         </div>
         <div className="mb-3 w-full">
           <input
-            className="input"
+            className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
             placeholder="Password"
             name="password"
             type="password"
@@ -135,11 +135,11 @@ export const LoginPage: FC = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="btn-primary flex mx-auto"
+          className="flex mx-auto primary-btn-gradient py-3 px-6 cursor-pointer text-white uppercase border-none outline-none font-semibold border-round-3xl"
         >
           Log In
         </button>
-        <div className="flex justify-end my-2">
+        <div className="flex justify-content-end my-4">
           <Link
             to={AppRoutesEnum.REGISTRATION}
             className="underline text-primary-main"
@@ -148,15 +148,15 @@ export const LoginPage: FC = () => {
           </Link>
         </div>
         <p className="text-center mb-4">- Or continue with -</p>
-        <div className="flex justify-center gap-3">
+        <div className="flex justify-content-center gap-3">
           <button
-            className="btn-primary-icon"
+            className="primary-btn size-3 cursor-pointer text-white uppercase border-none outline-none font-semibold border-round-lg"
             onClick={handleGoogleLogin}
           >
             <Google />
           </button>
           <button
-            className="btn-primary-icon"
+            className="primary-btn size-3 cursor-pointer text-white uppercase border-none outline-none font-semibold border-round-lg"
             onClick={handleFbLogin}
           >
             <Facebook />

@@ -4,6 +4,9 @@
 body * {
   font-family: 'Open Sans', sans-serif;
 }
+body img {
+  object-fit: cover;
+}
 .p-panel .p-panel-content {
   border: none;
 }
@@ -33,4 +36,17 @@ body * {
 }
 .shadow-lg {
   box-shadow: 0.5rem 0 1rem 0 rgba(0,0,0,0.2);
+}
+.max-w-table {
+  max-width: 75rem;
+}
+.size-3 {
+  width: 3rem;
+  height: 3rem;
+}
+.transparent {
+  background-color: transparent;
+}
+.w-150 {
+  width: 9.375rem;
 }

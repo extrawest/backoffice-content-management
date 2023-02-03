@@ -7,7 +7,7 @@ export const PageLayout:FC<PropsWithChildren<Record<string, unknown>>> = ({child
       <div className="w-menu m-0">
         <Menu/>
       </div>
-      <div className="w-12 py-10 pl-5 pr-10">
+      <div className="w-12 p-8">
         {children}
       </div>
     </div>

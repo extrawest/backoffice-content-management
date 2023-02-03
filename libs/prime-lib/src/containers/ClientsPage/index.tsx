@@ -1,10 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import dayjs from "dayjs";
-import {
-  Avatar,
-  Box, IconButton, Stack, Typography
-} from "@mui/material";
-import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { Modal, Table } from "../../common";
 import { CreateTicketForm } from "../../forms/CreateTicketForm";
 import { TaskType, TicketType } from "@lib/shared/types";
@@ -14,6 +9,7 @@ import { StatusTag } from "../../components/StatusTag";
 import { useAuth } from "../../../../shared/context/Auth";
 import { RowMenu } from "./RowMenu";
 import { RowType } from "../../common/Table/Table.types";
+import { Panel } from "primereact/panel";
 
 export const ClientsPage:FC = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -93,7 +89,7 @@ export const ClientsPage:FC = () => {
         <div className="flex gap-1">
           <img
             src={item.image}
-            className="rounded-full w-3 h-3 object-cover"
+            className="border-circle size-3 object-cover"
           />
           <p>
             {`${item.firstName} ${item.lastName}`}
@@ -125,21 +121,20 @@ export const ClientsPage:FC = () => {
     }
   ]
 
-
 	return (
-		<>
-      <h1 className="header-main">
+    <Panel className="panel">
+      <h1 className="text-4xl font-bold mb-4">
         Clients
       </h1>
-      <div className="max-w-table w-full">
-        <div className="flex justify-between items-center">
-          <h4 className="header-section">
+      <div className="max-w-table w-12">
+        <div className="flex justify-content-between align-items-center">
+          <h4 className="text-3xl">
             All tickets
           </h4>
-          <div className="flex justify-between align-middle p-2">
+          <div className="flex justify-content-between align-items-center p-4">
             <button
               onClick={handleShowModal(true)}
-              className="icon-btn"
+              className="text-xl cursor-pointer text-700 surface-200 hover:surface-300 outline-none border-none border-round-sm"
             >
               +
             </button>
@@ -162,6 +157,6 @@ export const ClientsPage:FC = () => {
           />
         </Modal>
       </div>
-		</>
+    </Panel>
 	);
 };

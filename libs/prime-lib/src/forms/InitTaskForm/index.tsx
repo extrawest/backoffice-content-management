@@ -22,10 +22,10 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
   closeModal
 }) => {
   const me = useAuth();
-	const [activeTask, setActiveTask] = useState("");
+	const [activeTask, setActiveTask] = useState(backlog?.[0]?.id ?? "");
+
 	const handleSubmit = () =>
     async (values: FormType, formikHelpers:  FormikHelpers<FormType>) => {
-      console.log(values, backlog.find(task => task.id === activeTask)?.name, tasks)
 		try {
       if (me.user?.uid) {
         await setDoc(
@@ -49,7 +49,7 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
             me.user?.uid
           ),
           {
-            tasks: backlog.filter(task => task.id !== activeTask)
+            tasks: backlog?.filter(task => task.id !== activeTask)
           }
         );
       }
@@ -99,7 +99,7 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 
 	return (
     <Formik
-      initialValues={{ name: "", type: TaskTypeEnum.DEFAULT }}
+      initialValues={{ name: activeTask, type: TaskTypeEnum.DEFAULT }}
       onSubmit={handleSubmit()}
     >
       {({
@@ -108,14 +108,14 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
           setFieldValue
         }) => (
         <Form>
-          <div className="flex flex-col items-center w-form pt-3">
-            <div className="mb-3 w-full">
+          <div className="flex flex-column align-items-center w-form pt-3">
+            <div className="mb-3 w-12">
               <label>
-                <h4 className="sub-header mb-1">
+                <h4 className="text-sm font-normal mb-1">
                   Task
                 </h4>
                 <select
-                  className="input"
+                  className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
                   name="name"
                   value={values["name"]}
                   onChange={handleChangeTask(setFieldValue)}
@@ -128,11 +128,11 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
             </div>
             <div className="mb-3 w-full">
               <label>
-                <h4 className="sub-header mb-1">
+                <h4 className="text-sm font-normal mb-1">
                   Status
                 </h4>
                 <select
-                  className="input"
+                  className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
                   name="type"
                   value={values["type"]}
                   onChange={handleChangeStatus(setFieldValue)}
@@ -146,9 +146,9 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
               </label>
             </div>
           </div>
-          <div className="py-2 flex justify-end">
+          <div className="py-2 flex justify-content-end">
             <button
-              className="btn-primary"
+              className="primary-btn-gradient py-2 px-4 cursor-pointer text-white uppercase border-none outline-none font-semibold border-round-3xl"
               type="submit"
               disabled={isSubmitting}
             >

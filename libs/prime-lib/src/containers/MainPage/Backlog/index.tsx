@@ -7,7 +7,6 @@ import { BacklogProps } from "./Backlog.types";
 
 export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
 	const [showModal, setShowModal] = useState(false);
-
 	const handleShowModal = (status: boolean) => () => {
 		setShowModal(status);
 	};

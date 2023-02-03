@@ -166,7 +166,7 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
                       value={values["task"]}
                       onChange={handleChangeTask(setFieldValue)}
                     >
-                      {processedTasks.map(task => (
+                      {processedTasks?.map(task => (
                         <option key={task.id} value={task.id}>{task.label}</option>
                       ))}
                     </select>

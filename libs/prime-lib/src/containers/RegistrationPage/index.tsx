@@ -63,13 +63,13 @@ export const RegistrationPage: FC = () => {
           handleChange
         }) => (
         <Form>
-          <div className="mx-auto pt-10 w-auth">
-            <h1 className="header-main text-center">
+          <div className="mx-auto pt-8 w-auth">
+            <h1 className="text-4xl text-center">
               Registration
             </h1>
-            <div className="mb-3 w-full">
+            <div className="mb-3 w-12">
               <input
-                className="input"
+                className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
                 placeholder="Email address"
                 name="email"
                 type="email"
@@ -79,7 +79,7 @@ export const RegistrationPage: FC = () => {
             </div>
             <div className="mb-3 w-full">
               <input
-                className="input"
+                className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
                 placeholder="Password"
                 name="password"
                 type="password"
@@ -89,7 +89,7 @@ export const RegistrationPage: FC = () => {
             </div>
             <div className="mb-3 w-full">
               <input
-                className="input"
+                className="p-2 w-12 border-1 border-round-3xl border-300 outline-0"
                 placeholder="Confirm password"
                 name="confirm_password"
                 type="password"
@@ -100,11 +100,11 @@ export const RegistrationPage: FC = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="btn-primary flex mx-auto"
+              className="flex mx-auto primary-btn-gradient py-3 px-6 cursor-pointer text-white uppercase border-none outline-none font-semibold border-round-3xl"
             >
               Sign up
             </button>
-            <div className="flex justify-end my-2">
+            <div className="flex justify-content-end my-4">
               <Link
                 to={AppRoutesEnum.LOGIN}
                 className="underline text-primary-main"

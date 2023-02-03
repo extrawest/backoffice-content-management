@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { LoginPage } from "@lib/muiapp";
+import { LoginPage } from "@lib/prime";
 
 const Login:FC = () => {
-  return <LoginPage/>
-}
+	return <LoginPage/>;
+};
 
-export default Login
+export default Login;

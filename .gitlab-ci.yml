@@ -26,9 +26,9 @@ build-mui:
     key:
       files:
         - package-lock.json
-      paths:
-        - node_modules
-      policy: push  
+    paths:
+      - node_modules
+    policy: push  
   environment:
     name: 'Development'
   artifacts:

@@ -1,4 +1,4 @@
-image: node:14
+image: node:16
 
 stages:
   - build
@@ -13,7 +13,7 @@ variables:
     NX_FIREBASE_APP_ID: ${NX_FIREBASE_MESSAGING_SENDER_ID}
     NX_FIREBASE_MEASUREMENT_ID: ${NX_FIREBASE_MEASUREMENT_ID}
 
-build:
+build-mui:
   only:
     refs:
       - development

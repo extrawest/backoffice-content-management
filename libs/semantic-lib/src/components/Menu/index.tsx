@@ -11,6 +11,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { useAuth } from "../../../../shared/context/Auth";
+import { Button, Container, Grid, Header, Image, List } from "semantic-ui-react";
 
 const menu = [
   {
@@ -55,35 +56,55 @@ export const Menu:FC = () => {
   };
 
 	return (
-    <div className="fixed flex flex-col m-0 py-10 px-10 h-full shadow-lg">
-      <img
+    <Container className="menu-section">
+      <Image
+        size="small"
+        centered
         src={avatar}
-        className="h-150 w-150 rounded-full mb-4"
+        avatar
       />
-      <h3 className="header-section text-20px">
+      <Header as="h3" textAlign="center">
           {me?.user?.displayName ?? me?.user?.email}
-      </h3>
-      <div className="flex flex-col justify-between h-full items-start">
-        <ul className="pt-5 pb-10">
+      </Header>
+      <Container className="menu-list flex flex-col justify-between h-full items-start">
+        <List className="menu-padding">
           {menu.map((listItem, index) => (
-              <li key={index}>
+              <List.Item key={index}>
                 <Link to={listItem.url} className="no-underline flex gap-1 py-1 text-gray-500">
-                  {listItem.listIcon}
-                  <span className="text-gray-800">
-                    {listItem.listText}
-                  </span>
+                  <Grid padded>
+                    <Grid.Row verticalAlign="middle">
+                      <Grid.Column>
+                        <List.Icon color="black">{listItem.listIcon}</List.Icon>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <List.Content>
+                          <Header as="h5" color="black">
+                            {listItem.listText}
+                          </Header>
+                        </List.Content>
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
                 </Link>
-              </li>
+              </List.Item>
           ))}
-        </ul>
-        <button
+        </List>
+        <Button
           onClick={logOut}
-          className="flex gap-1 items-center border text-gray-700 py-1 px-2 rounded-1 border-gray-500 outline-0 hover:bg-gray-100 ease-in-out"
+          size="small"
         >
-          <LogoutIcon/>
-          Log out
-        </button>
-      </div>
-    </div>
+          <Grid>
+            <Grid.Row verticalAlign="middle">
+              <Grid.Column width={2}>
+                <LogoutIcon/>
+              </Grid.Column>
+              <Grid.Column width={12}>
+                Log out
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Button>
+      </Container>
+    </Container>
 	);
 };

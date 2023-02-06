@@ -108,19 +108,19 @@ export const Tasks:FC<TasksProps> = ({
           </Header.Subheader>
         </Grid>
       }
-      {/*<Modal*/}
-      {/*  handleClose={handleShowModal(false)}*/}
-      {/*  open={showModal}*/}
-      {/*  title='Create new task'*/}
-      {/*>*/}
-      {/*  <InitTaskForm*/}
-      {/*    backlog={backlog}*/}
-      {/*    tasks={tasks ?? []}*/}
-      {/*    getTasks={getTasks}*/}
-      {/*    getBacklog={getBacklog}*/}
-      {/*    closeModal={handleShowModal(false)}*/}
-      {/*  />*/}
-      {/*</Modal>*/}
+      <Modal
+        handleClose={handleShowModal(false)}
+        open={showModal}
+        title='Create new task'
+      >
+        <InitTaskForm
+          backlog={backlog}
+          tasks={tasks ?? []}
+          getTasks={getTasks}
+          getBacklog={getBacklog}
+          closeModal={handleShowModal(false)}
+        />
+      </Modal>
     </Container>
 	);
 };

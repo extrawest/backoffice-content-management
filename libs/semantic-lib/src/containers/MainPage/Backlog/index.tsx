@@ -87,17 +87,17 @@ export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
           </Header.Subheader>
         </Grid>
       }
-      {/*<Modal*/}
-      {/*  handleClose={handleShowModal(false)}*/}
-      {/*  open={showModal}*/}
-      {/*  title='Create new task'*/}
-      {/*>*/}
-      {/*  <CreateTaskForm*/}
-      {/*    backlog={backlog ?? []}*/}
-      {/*    getBacklogData={getBacklogData}*/}
-      {/*    closeModal={handleShowModal(false)}*/}
-      {/*  />*/}
-      {/*</Modal>*/}
+      <Modal
+        handleClose={handleShowModal(false)}
+        open={showModal}
+        title='Create new task'
+      >
+        <CreateTaskForm
+          backlog={backlog ?? []}
+          getBacklogData={getBacklogData}
+          closeModal={handleShowModal(false)}
+        />
+      </Modal>
     </Container>
 	);
 };

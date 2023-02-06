@@ -1,11 +1,10 @@
 import { FC, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Box, CssBaseline } from "@mui/material";
-import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute } from "@lib/muiapp";
 import { privateRoutes } from "./privateRotes";
 import { commonRoutes } from "./commonRotes";
 import { LayoutEnum } from "@lib/shared/types";
 import { useAuth } from "libs/shared/context/Auth";
+import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute } from "@libs/semantic";
 
 export const AppRoutes: FC = () => {
   const me = useAuth();
@@ -14,18 +13,9 @@ export const AppRoutes: FC = () => {
   return (
     <Suspense
       fallback={
-        <Box
-          component="div"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100vh"
-        >
           <Loader />
-        </Box>
       }
     >
-      <CssBaseline />
       <Routes>
         {[...privateRoutes, ...commonRoutes].map((route, index) => (
           <Route

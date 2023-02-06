@@ -19,7 +19,7 @@ build-mui:
       - development
   stage: build
   before_script:
-    - npm ci --cache .npm --prefer-offline --force
+    - npm i
   script:
     - npm run build:mui
   cache:

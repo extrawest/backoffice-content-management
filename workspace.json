@@ -10,6 +10,7 @@
     "primefaces": "apps/primefaces",
     "redux": "libs/redux",
     "semantic": "apps/semantic",
+    "semantic-lib": "libs/semantic-lib",
     "shared": "libs/shared",
     "shared-hoks": "libs/shared/hoks",
     "shared-hooks": "libs/shared/hooks",

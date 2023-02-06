@@ -1,0 +1,37 @@
+@import "./theme";
+
+.ui.container.section {
+  border: var(--borderWidth) solid var(--colorBorder);
+  border-radius: var(--borderRadiusSx);
+  width: 100%;
+}
+.ui.blue.header {
+  color: var(--primary-main) !important;
+}
+.border-l {
+  border-left: var(--borderWidth) solid var(--colorBorder);
+}
+.m-2, m-2.ui.header {
+  margin: 2rem !important;
+}
+.p-2 {
+  padding: 2rem !important;
+}
+.px-0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+.chart-list {
+  height: 100%;
+  & .list {
+    height: 100%;
+  }
+  & .list.ui .item {
+    & h3.ui.header {
+      margin: 1rem 0;
+    }
+    & h5.ui.header {
+      margin-bottom: 1rem;
+    }
+  }
+}

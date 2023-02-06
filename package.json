@@ -6,6 +6,8 @@
     "update": "nx migrate latest",
     "start:primefaces": "nx serve primefaces",
     "build:primefaces": "nx build primefaces --skip-nx-cache --prod",
+    "start:semantic": "nx serve semantic",
+    "build:semantic": "nx build semantic --skip-nx-cache --prod",
     "start:mui": "nx serve mui",
     "build:mui": "nx build mui --skip-nx-cache --prod",
     "start:antd": "nx serve antd",

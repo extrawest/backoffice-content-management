@@ -28,6 +28,7 @@
       "@lib/shared/ui": ["libs/shared/ui/src/index.ts"],
       "@lib/shared/utils": ["libs/shared/utils/src/index.ts"],
       "@lib/tailwind": ["libs/tailwindapp/src/index.ts"],
+      "@libs/semantic": ["libs/semantic-lib/src/index.ts"],
       "@mono-redux-starter/tailwindapp": ["libs/tailwindapp/src/index.ts"]
     }
   },

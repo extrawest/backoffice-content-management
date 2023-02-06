@@ -44,6 +44,8 @@ deploy:
   stage: deploy
   script:
     - npm i -g firebase-tools
+    - cat .firebaserc
+    - npx firebase use default
     - npx firebase deploy --token $FIREBASE_TOKEN
 
   environment:

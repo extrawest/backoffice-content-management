@@ -38,7 +38,7 @@ deploy:
   before_script:
     - npm i -g firebase-tools
   script:
-    - firebase deploy --only hosting:backoffice-f6f72 --token $FIREBASE_TOKEN
+    - firebase deploy --token $FIREBASE_TOKEN
 
   environment:
     name: 'Development'

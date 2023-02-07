@@ -1,13 +1,13 @@
 import {FC, useState} from "react";
 import { Link } from "react-router-dom";
+import {
+  Button,
+  Container, Grid, Header, List
+} from "semantic-ui-react";
 import { Modal } from "@libs/semantic";
 import { CreateTaskForm } from "../../../forms";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { BacklogProps } from "./Backlog.types";
-import {
-	Button,
-	Container, Grid, Header, List
-} from "semantic-ui-react";
 
 export const Backlog:FC<BacklogProps> = ({backlog, getBacklogData}) => {
 	const [showModal, setShowModal] = useState(false);

@@ -1,6 +1,10 @@
 {
   "hosting": {
     "public": "dist/apps/mui",
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    } ],
     "ignore": [
       "firebase.json",
       "**/.*",

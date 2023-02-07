@@ -1,14 +1,13 @@
 import {FC, useState} from "react";
-import { Modal } from "@lib/tailwind";
-import { InitTaskForm } from "../../../forms/InitTaskForm";
+import { Link } from "react-router-dom";
+import {
+  Button,
+  Container, Grid, Header, List
+} from "semantic-ui-react";
+import { Modal, InitTaskForm } from "@libs/semantic";
 import { StatusTag } from "../../../components/StatusTag";
 import { TasksProps } from "./Tasks.types";
 import { AppRoutesEnum } from "@lib/shared/types";
-import { Link } from "react-router-dom";
-import {
-	Button,
-	Container, Grid, Header, List
-} from "semantic-ui-react";
 
 export const Tasks:FC<TasksProps> = ({
 	backlog,

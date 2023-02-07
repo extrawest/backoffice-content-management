@@ -1,40 +1,57 @@
 import { FC } from "react";
 import { TableProps } from "./Table.types";
 import { Empty } from "./Empty";
+import {Table as TableComponent} from "semantic-ui-react";
 
 export const Table: FC<TableProps> = ({ rows}) => {
+	console.log(
+		rows,
+		"ROWS",
+		rows?.[0] && Object.values(rows?.[0])
+	);
+
 	return (
 		<>
-      <div className="flex justify-between border">
-        {rows.map(row => (
-            <div
-              key={row.id}
-              className="p-1 flex-1"
-            >
-              <h3 className="sub-header">{row.title}</h3>
-            </div>
-        ))}
-      </div>
-      <div className="flex pt-2 border border-t-0">
-        {!rows?.[0]?.items?.length && <Empty/>}
-        {rows.map(row => (
-          <div
-            key={row.id}
-            className="flex flex-col flex-1"
-          >
-            {row.items.map((
-              item, i
-            ) => (
-              <div
-                key={i}
-                className="p-1 flex-1"
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+			{!rows?.length && <Empty/>}
+			{
+				rows?.length &&
+			  <TableComponent
+          fixed
+			  >
+			    <TableComponent.Header>
+			      <TableComponent.Row>
+			        {Object.values(rows[0]).map((
+			          item, i
+			         ) => (
+			          <TableComponent.HeaderCell
+                  key={i}
+			          >
+                  {item.title}
+			          </TableComponent.HeaderCell>
+			        ))}
+			      </TableComponent.Row>
+			    </TableComponent.Header>
+
+			    <TableComponent.Body>
+			      {rows.map((
+			        row, index
+			      ) => (
+			        <TableComponent.Row key={index}>
+			          {Object.values(row).map((
+			            item, i
+			          ) => (
+			            <TableComponent.Cell
+width={4}
+key={i}
+			            >
+			              {item.component}
+			            </TableComponent.Cell>
+			          ))}
+			        </TableComponent.Row>
+			      ))}
+			    </TableComponent.Body>
+			  </TableComponent>
+			}
 		</>
 	);
 };

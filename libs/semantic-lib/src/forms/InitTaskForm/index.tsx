@@ -1,18 +1,18 @@
 import {
-  ChangeEvent,
   FC,
+  SyntheticEvent,
   useState
 } from "react";
 import {
-  Form, Formik, FormikHelpers, FormikProps, FormikValues
+  Form, Formik, FormikHelpers, FormikProps
 } from "formik";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import dayjs from "dayjs";
 import { FormType, InitTaskFormProps } from "./InitTaskForm.types";
 import { TaskTypeEnum } from "@lib/shared/types";
-import { StatusTag } from "../../components/StatusTag";
-import { useAuth } from "../../../../shared/context/Auth";
+import { useAuth } from "../../../../shared/context";
+import { DropdownProps, Form as SemanticForm, Grid, Header, Select } from "semantic-ui-react";
 
 export const InitTaskForm:FC<InitTaskFormProps> = ({
   backlog,
@@ -25,7 +25,6 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 	const [activeTask, setActiveTask] = useState("");
 	const handleSubmit = () =>
     async (values: FormType, formikHelpers:  FormikHelpers<FormType>) => {
-      console.log(values, backlog.find(task => task.id === activeTask)?.name, tasks)
 		try {
       if (me.user?.uid) {
         await setDoc(
@@ -64,21 +63,22 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 	};
 
 	const processedTasks = backlog?.map(task => ({
-		id: task.id,
-		label: task.name
+		key: task.id,
+    value: task.id,
+		text: task.name
 	}));
 
   const processedStatuses = Object.values(TaskTypeEnum).map(item => ({
-    id: item,
-    name: item,
+    key: item,
+    text: item,
     value: item
   }))
 
   const handleChangeStatus = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
     (
-      e:  ChangeEvent<HTMLSelectElement>
+      event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps
     ) => {
-      const value = e.target?.value ?? "";
+      const value = data?.value as string ?? "";
       setFieldValue(
         "type",
         value
@@ -87,9 +87,9 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 
 	const handleChangeTask = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
 		(
-      e:  ChangeEvent<HTMLSelectElement>
+      event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps
 		) => {
-			const value = e.target?.value ?? "";
+			const value = data?.value as string ?? "";
 			setFieldValue(
 				"name",
 				value
@@ -108,53 +108,48 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
           setFieldValue
         }) => (
         <Form>
-          <div className="flex flex-col items-center w-form pt-3">
-            <div className="mb-3 w-full">
-              <label>
-                <h4 className="sub-header mb-1">
-                  Task
-                </h4>
-                <select
-                  className="input"
-                  name="name"
-                  value={values["name"]}
-                  onChange={handleChangeTask(setFieldValue)}
+          <SemanticForm.Field width="16">
+            <label>
+              <Header as="h4">
+                Task
+              </Header>
+              <Select
+                fluid
+                name="name"
+                value={values["name"]}
+                options={processedTasks}
+                onChange={handleChangeTask(setFieldValue)}
+              />
+            </label>
+          </SemanticForm.Field>
+          <SemanticForm.Field width="16" >
+            <label>
+              <Header as="h4">
+                Status
+              </Header>
+              <Select
+                fluid
+                name="type"
+                value={values["type"]}
+                options={processedStatuses}
+                onChange={handleChangeStatus(setFieldValue)}
+              />
+            </label>
+          </SemanticForm.Field>
+          <Grid padded="vertically">
+            <Grid.Row>
+              <Grid.Column textAlign="right">
+                <SemanticForm.Button
+                  primary
+                  type="submit"
+                  size="large"
+                  disabled={isSubmitting}
                 >
-                  {processedTasks.map(task => (
-                    <option key={task.id} value={task.id}>{task.label}</option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <div className="mb-3 w-full">
-              <label>
-                <h4 className="sub-header mb-1">
-                  Status
-                </h4>
-                <select
-                  className="input"
-                  name="type"
-                  value={values["type"]}
-                  onChange={handleChangeStatus(setFieldValue)}
-                >
-                  {processedStatuses.map(item => (
-                    <option key={item.id} value={item.id}>
-                      <StatusTag type={item.name}/>
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-          </div>
-          <div className="py-2 flex justify-end">
-            <button
-              className="btn-primary"
-              type="submit"
-              disabled={isSubmitting}
-            >
-              Submit
-            </button>
-          </div>
+                  Submit
+                </SemanticForm.Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Form>
       )}
     </Formik>

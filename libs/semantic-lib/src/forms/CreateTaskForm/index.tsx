@@ -2,6 +2,7 @@ import { FC } from "react";
 import {
   Form, Formik, FormikHelpers
 } from "formik";
+import { Divider, Form as SemanticForm, Grid, Header, Input } from "semantic-ui-react";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../../../../shared/firebaseconfig";
 import dayjs from "dayjs";
@@ -46,30 +47,33 @@ export const CreateTaskForm:FC<CreateTaskFormProps> = ({
         handleChange
       }) => (
         <Form>
-          <div className="flex flex-col items-center w-form pt-3">
-            <div className="mb-3 w-full">
-              <label>
-                <h4 className="sub-header mb-1">
-                  Task
-                </h4>
-              </label>
-              <input
-                className="input"
+          <SemanticForm.Field width="16">
+            <label>
+              <Header as="h4">
+                Task
+              </Header>
+              <Input
+                fluid
                 name="name"
                 value={values["name"]}
                 onChange={handleChange}
               />
-            </div>
-          </div>
-          <div className="py-2 flex justify-end">
-            <button
-              className="btn-primary"
-              type="submit"
-              disabled={isSubmitting}
-            >
-              Submit
-            </button>
-          </div>
+            </label>
+          </SemanticForm.Field>
+          <Grid padded="vertically">
+            <Grid.Row>
+              <Grid.Column textAlign="right">
+                <SemanticForm.Button
+                  primary
+                  type="submit"
+                  size="large"
+                  disabled={isSubmitting}
+                >
+                  Submit
+                </SemanticForm.Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Form>
       )}
     </Formik>

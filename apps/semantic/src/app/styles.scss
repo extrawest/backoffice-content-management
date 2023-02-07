@@ -76,3 +76,14 @@
 .ui.fixed.table th {
   overflow: visible;
 }
+.ui.input input,
+.ui.fluid.dropdown {
+  border-radius: 20px;
+}
+.ui.primary.button {
+  border-radius: 20px;
+  background-color: var(--primary-main);
+}
+.field {
+  margin-bottom: 2rem;
+}

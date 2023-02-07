@@ -54,7 +54,7 @@ export const MainPage:FC = () => {
       </Header>
       <Grid relaxed>
         <Grid.Row>
-          <Grid.Column>
+          <Grid.Column width={14}>
             <Chart
               tasks={tasks}
               backlog={backlog}
@@ -62,13 +62,13 @@ export const MainPage:FC = () => {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={8}>
+          <Grid.Column width={7}>
             <Backlog
               backlog={backlog}
               getBacklogData={getBacklogData}
             />
           </Grid.Column>
-          <Grid.Column width={8}>
+          <Grid.Column width={7}>
             <Tasks
               backlog={backlog ?? []}
               tasks={tasks}

@@ -1,4 +1,4 @@
-image: node:14
+image: node:16
 
 stages:
   - build
@@ -13,15 +13,22 @@ variables:
     NX_FIREBASE_APP_ID: ${NX_FIREBASE_MESSAGING_SENDER_ID}
     NX_FIREBASE_MEASUREMENT_ID: ${NX_FIREBASE_MEASUREMENT_ID}
 
-build:
+build-mui:
   only:
     refs:
       - development
   stage: build
   before_script:
-    - npm ci --cache .npm --prefer-offline --force
+    - npm i
   script:
     - npm run build:mui
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+    policy: push  
   environment:
     name: 'Development'
   artifacts:
@@ -35,10 +42,10 @@ deploy:
       - development
 
   stage: deploy
-  before_script:
-    - npm i -g firebase-tools
   script:
-    - firebase deploy --only hosting:backoffice-f6f72 --token $FIREBASE_TOKEN
+    - npm i -g firebase-tools
+    - npx firebase use default
+    - npx firebase deploy --token $FIREBASE_TOKEN
 
   environment:
     name: 'Development'

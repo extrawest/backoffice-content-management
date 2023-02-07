@@ -1,6 +1,9 @@
 import { FC } from "react";
-import { ModalProps } from "./Modal.types";
 import { Close } from "@mui/icons-material";
+import {
+	Button, Grid, Modal as Dialog
+} from "semantic-ui-react";
+import { ModalProps } from "./Modal.types";
 
 export const Modal:FC<ModalProps> = ({
 	handleClose,
@@ -9,39 +12,37 @@ export const Modal:FC<ModalProps> = ({
 	title
 }) => {
 	return (
-    <div
-      className={`${open ? "fixed" : "hidden"} -top-1 -right-1 -bottom-1 -left-1 z-10`}
-      role="dialog"
-      aria-modal="true"
+    <Dialog
+      onClose={handleClose}
+      open={open}
     >
-      <div
-        className="fixed -top-1 -right-1 -bottom-1 -left-1 bg-gray-500 opacity-40"
-        role="dialog"
-        aria-modal="true"
-        onClick={handleClose}
-      >
-      </div>
-      <div
-        className="fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex justify-center items-start overflow-y-auto"
-      >
-        <div
-          className="align-middle h-full my-auto bg-white rounded-1 text-left overflow-hidden shadow-xl p-4 min-w-modal"
-        >
-          <div className="flex justify-between">
-            <h3 className="task-title semi-bold">
+      <Dialog.Header>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={14}>
               {title}
-            </h3>
-            <div
-              className="close-btn cursor-pointer"
-              role="button"
-              onClick={handleClose}
+            </Grid.Column>
+            <Grid.Column
+              width={2}
+              textAlign="right"
             >
-              <Close/>
-            </div>
-          </div>
-          <div className="mx-auto h-full">{children}</div>
-        </div>
-      </div>
-    </div>
+              <Button
+                onClick={handleClose}
+                type="button"
+                size="tiny"
+
+              >
+                <Close/>
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Dialog.Header>
+      <Dialog.Content>
+        <Dialog.Description>
+          {children}
+        </Dialog.Description>
+      </Dialog.Content>
+    </Dialog>
 	);
 };

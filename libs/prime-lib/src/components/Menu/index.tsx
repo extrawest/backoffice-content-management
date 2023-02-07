@@ -11,7 +11,6 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { useAuth } from "../../../../shared/context/Auth";
-import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
 
 const menu = [
   {

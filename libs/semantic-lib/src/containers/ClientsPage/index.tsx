@@ -1,10 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import dayjs from "dayjs";
-import {
-  Avatar,
-  Box, IconButton, Stack, Typography
-} from "@mui/material";
-import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { Modal, Table } from "../../common";
 import { CreateTicketForm } from "../../forms/CreateTicketForm";
 import { TaskType, TicketType } from "@lib/shared/types";
@@ -14,6 +9,7 @@ import { StatusTag } from "../../components/StatusTag";
 import { useAuth } from "../../../../shared/context/Auth";
 import { RowMenu } from "./RowMenu";
 import { RowType } from "../../common/Table/Table.types";
+import { Button, Grid, Header, Image } from "semantic-ui-react";
 
 export const ClientsPage:FC = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -79,75 +75,85 @@ export const ClientsPage:FC = () => {
 	const handleShowModal = (status: boolean) => () => {
 		setShowModal(status);
 	};
-
-  const rows:RowType[] = [
-    {
-      title: "Task",
-      id: "task",
-      items: tickets?.map(item => item.task) ?? []
+  const tableCells:RowType[] = tickets?.map(ticket => ({
+    task: {
+     title: "Task",
+     component: ticket.task
     },
-    {
+    name: {
       title: "Name",
-      id: "name",
-      items: tickets?.map(item => (
-        <div className="flex gap-1">
-          <img
-            src={item.image}
-            className="rounded-full w-3 h-3 object-cover"
-          />
-          <p>
-            {`${item.firstName} ${item.lastName}`}
-          </p>
-        </div> ?? []
-      ))
+      component:
+        <Grid>
+          <Grid.Row verticalAlign="middle">
+            <Grid.Column width={3}>
+              <Image
+                src={ticket.image}
+                avatar
+                circular
+                size="tiny"
+              />
+            </Grid.Column>
+            <Grid.Column width={13}>
+              <span>{`${ticket.firstName} ${ticket.lastName}`}</span>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
     },
-    {
+    date: {
       title: "Date",
-      id: "date",
-      items: tickets?.map(item => dayjs(item.id).format('DD/MM/YY')) ?? []
+      component: dayjs(ticket.id).format('DD/MM/YY')
     },
-    {
+    status: {
       title: "Status",
-      id: "status",
-      items: tickets?.map(item => <StatusTag type={item.status}/>) ?? []
+      component: <StatusTag type={ticket.status}/>
     },
-    {
+    actions: {
       title: "",
-      id: "actions",
-      items: tickets?.map(item => (
+      component:
         <RowMenu
-          onDelete={deleteTicket(item.id)}
+          onDelete={deleteTicket(ticket.id)}
           tickets={tickets}
-          ticket={item}
+          ticket={ticket}
           getTickets={getTicketsData}
         />
-      )) ?? []
     }
-  ]
+  }))
 
-
-	return (
+  return (
 		<>
-      <h1 className="header-main">
+      <Header as="h1">
         Clients
-      </h1>
-      <div className="max-w-table w-full">
-        <div className="flex justify-between items-center">
-          <h4 className="header-section">
-            All tickets
-          </h4>
-          <div className="flex justify-between align-middle p-2">
-            <button
+      </Header>
+      <Grid>
+        <Grid.Row verticalAlign="middle">
+          <Grid.Column width={12}>
+            <Header as="h3">
+              All tickets
+            </Header>
+          </Grid.Column>
+          <Grid.Column
+            textAlign="right"
+            width={1}
+          >
+            <Button
+              size="small"
+              icon
               onClick={handleShowModal(true)}
-              className="icon-btn"
             >
               +
-            </button>
-          </div>
-        </div>
-        <Table
-          rows={rows}
-        />
+            </Button>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={13}>
+              <Table
+                rows={tableCells}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
         <Modal
           handleClose={handleShowModal(false)}
           open={showModal}
@@ -161,7 +167,6 @@ export const ClientsPage:FC = () => {
             closeModal={handleShowModal(false)}
           />
         </Modal>
-      </div>
 		</>
 	);
 };

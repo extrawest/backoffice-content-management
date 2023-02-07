@@ -6,7 +6,7 @@ import {
 } from "@mui/icons-material";
 import { RowMenuProps } from "./RowMenu.types";
 import { Modal } from "@lib/prime";
-import { EditTicketForm } from "../../../forms/EditTicketForm";
+import { EditTicketForm } from "@lib/prime";
 
 export const RowMenu:FC<RowMenuProps> = ({
 	onDelete,

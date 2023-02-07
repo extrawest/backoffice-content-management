@@ -1,10 +1,11 @@
 import { ReactNode } from "react";
 
-export type RowType = {
+export type CellType = {
 	title: string,
-	id: string,
-	items: ReactNode[]
+	component: ReactNode
 };
+
+export type RowType = Record<string, CellType>;
 
 export interface TableProps {
 	rows: RowType[],

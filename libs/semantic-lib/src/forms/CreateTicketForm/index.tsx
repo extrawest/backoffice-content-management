@@ -1,6 +1,6 @@
 import {
   ChangeEvent,
-  FC,
+  FC, SyntheticEvent,
   useState
 } from "react";
 import {
@@ -14,7 +14,8 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
 import { useAuth } from "../../../../shared/context/Auth";
 import { createTicketFormSchema } from "@lib/shared/types";
-import { Loader } from "@lib/tailwind";
+import { Loader } from "@libs/semantic";
+import { Grid, Header, Image, Form as SemanticForm, Input, Select, DropdownProps } from "semantic-ui-react";
 
 export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 	tasks,
@@ -99,15 +100,16 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 	};
 
 	const processedTasks = tasks?.map(task => ({
-		id: task.id,
-		label: task.name
+		key: task.id,
+		value: task.id,
+		text: task.name
 	}));
 
 	const handleChangeTask = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
 		(
-			e:  ChangeEvent<HTMLSelectElement>
+      event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps
 		) => {
-			const value = e?.target?.value ?? "";
+      const value = data?.value as string ?? "";
 			setFieldValue(
 				"task",
 				value
@@ -130,21 +132,22 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
           handleSubmit,
         }:FormikProps<FormValueProps>) => (
         <Form onSubmit={handleSubmit}>
-          <div className="flex justify-center items-center">
-            <div className="w-300">
-               {disableSubmit &&
+          <Grid>
+            <Grid.Row verticalAlign="middle">
+              <Grid.Column width={4}>
+                {disableSubmit &&
                   <div className="flex justify-center">
                     <Loader/>
                   </div>
                 }
                 {!disableSubmit &&
                   <label>
-                    <img
-                      className="w-img h-img block object-cover"
+                    <Image
                       src={imgUrl ? imgUrl : EmptyImage}
+                      size="small"
                     />
                     <input
-                      className="hidden"
+                      style={{display: "none"}}
                       onChange={getImage}
                       type="file"
                       id="image"
@@ -153,62 +156,65 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
                     />
                   </label>
                 }
-            </div>
-            <div className="w-form">
-              <div className="mb-3">
+              </Grid.Column>
+              <Grid.Column width={12}>
+                <SemanticForm.Field width="16">
                   <label>
-                    <h4 className="sub-header mb-1">
+                    <Header as="h4">
                       Task
-                    </h4>
-                    <select
-                      className="input"
+                    </Header>
+                    <Select
+                      fluid
                       name="task"
                       value={values["task"]}
+                      options={processedTasks}
                       onChange={handleChangeTask(setFieldValue)}
-                    >
-                      {processedTasks?.map(task => (
-                        <option key={task.id} value={task.id}>{task.label}</option>
-                      ))}
-                    </select>
+                    />
                   </label>
-              </div>
-              <div className="mb-3">
-                <label>
-                  <h4 className="sub-header mb-1">
-                    First Name
-                  </h4>
-                  <input
-                    className="input"
-                    name="firstName"
-                    value={values["firstName"]}
-                    onChange={handleChange}
-                  />
-                </label>
-              </div>
-              <div className="mb-3">
-                <label>
-                  <h4 className="sub-header mb-1">
-                    Last Name
-                  </h4>
-                  <input
-                    className="input"
-                    name="lastName"
-                    value={values["lastName"]}
-                    onChange={handleChange}
-                  />
-                </label>
-              </div>
-            </div>
-          </div>
-          <div className="py-2 flex justify-end">
-            <button
-              className="btn-primary"
-              type="submit"
-              disabled={isSubmitting || disableSubmit}
-            >
-              Submit
-            </button>
-          </div>
+                </SemanticForm.Field>
+                <SemanticForm.Field width="16">
+                  <label>
+                    <Header as="h4">
+                      First Name
+                    </Header>
+                    <Input
+                      fluid
+                      name="firstName"
+                      value={values["firstName"]}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </SemanticForm.Field>
+                <SemanticForm.Field width="16">
+                  <label>
+                    <Header as="h4">
+                      Last Name
+                    </Header>
+                    <Input
+                      fluid
+                      name="lastName"
+                      value={values["lastName"]}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </SemanticForm.Field>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Grid padded="vertically">
+            <Grid.Row>
+              <Grid.Column textAlign="right">
+                <SemanticForm.Button
+                  primary
+                  type="submit"
+                  size="large"
+                  disabled={isSubmitting || disableSubmit}
+                >
+                  Submit
+                </SemanticForm.Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Form>
       )}
     </Formik>

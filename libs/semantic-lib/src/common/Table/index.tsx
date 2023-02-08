@@ -4,17 +4,11 @@ import { Empty } from "./Empty";
 import {Table as TableComponent} from "semantic-ui-react";
 
 export const Table: FC<TableProps> = ({ rows}) => {
-	console.log(
-		rows,
-		"ROWS",
-		rows?.[0] && Object.values(rows?.[0])
-	);
-
 	return (
 		<>
 			{!rows?.length && <Empty/>}
 			{
-				rows?.length &&
+				!!rows?.length &&
 			  <TableComponent
           fixed
 			  >

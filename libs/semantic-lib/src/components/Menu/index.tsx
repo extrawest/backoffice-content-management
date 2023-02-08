@@ -92,6 +92,8 @@ export const Menu:FC = () => {
         <Button
           onClick={logOut}
           size="small"
+          basic
+          compact
         >
           <Grid>
             <Grid.Row verticalAlign="middle">

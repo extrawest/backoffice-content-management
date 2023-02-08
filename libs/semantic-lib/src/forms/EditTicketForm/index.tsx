@@ -1,9 +1,9 @@
 import {
-	ChangeEvent,
-	FC, useState
+  ChangeEvent,
+  FC, SyntheticEvent, useState
 } from "react";
 import {
-  Form, Formik, FormikProps, ErrorMessage, FormikHelpers
+  Form, Formik, FormikProps
 } from "formik";
 import { setDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../../../shared/firebaseconfig";
@@ -12,11 +12,11 @@ import {
 	ref, getDownloadURL, uploadBytesResumable
 } from "firebase/storage";
 import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
-import { useAuth } from "../../../../shared/context/Auth";
+import { useAuth } from "../../../../shared/context";
 import { TaskTypeEnum } from "@lib/shared/types";
 import { editTicketFormSchema } from "../../../../shared/types/src/lib/formData/EditTicketForm";
-import { StatusTag } from "../../components/StatusTag";
-import { Loader } from "@lib/tailwind";
+import { Loader } from "@libs/semantic";
+import { DropdownProps, Form as SemanticForm, Grid, Header, Image, Input, Select } from "semantic-ui-react";
 
 export const EditTicketForm:FC<EditTicketFormProps> = ({
 	tickets,
@@ -101,17 +101,17 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
 		}
 	};
 
-	const processedStatuses = Object.values(TaskTypeEnum).map(item => ({
-		id: item,
-		name: item,
-		value: item
-	}));
+  const processedStatuses = Object.values(TaskTypeEnum).map(item => ({
+    key: item,
+    text: item,
+    value: item
+  }))
 
   const handleChangeStatus = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
     (
-      e:  ChangeEvent<HTMLSelectElement>
+      event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps
     ) => {
-      const value = e.target?.value ?? "";
+      const value = data?.value as string ?? "";
       setFieldValue(
         "status",
         value
@@ -128,106 +128,107 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
           isSubmitting,
           values,
           handleChange,
-          errors,
           handleSubmit,
           setFieldValue
         }:FormikProps<FormValueProps>) => {
         return (
           <Form onSubmit={handleSubmit}>
-            <div className="flex justify-center items-center">
-              <div className="w-300">
-                {disableSubmit &&
-                  <div className="flex justify-center">
-                    <Loader/>
-                  </div>
-                }
-                {!disableSubmit &&
-                  <label>
-                    <img
-                      className="w-img h-img block object-cover"
-                      src={imgUrl ? imgUrl : EmptyImage}
-                    />
-                    <input
-                      className="hidden"
-                      onChange={getImage}
-                      type="file"
-                      id="image"
-                      name="image"
-                      accept="image/png, image/jpeg"
-                    />
-                  </label>
-                }
-              </div>
-              <div className="w-form">
-                <div className="mb-3">
-                  <label>
-                    <h4 className="sub-header mb-1">
-                      Task
-                    </h4>
-                    <input
-                      className="input"
-                      name="task"
-                      value={values["task"]}
-                      onChange={handleChange}
-                    />
-                  </label>
-                </div>
-                <div className="mb-3 w-full">
-                  <label>
-                    <h4 className="sub-header mb-1">
-                      Status
-                    </h4>
-                    <select
-                      className="input"
-                      name="status"
-                      value={values["status"]}
-                      onChange={handleChangeStatus(setFieldValue)}
-                    >
-                      {processedStatuses.map(item => (
-                        <option key={item.id} value={item.id}>
-                          <StatusTag type={item.name}/>
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-                <div className="mb-3">
-                  <label>
-                    <h4 className="sub-header mb-1">
-                      First Name
-                    </h4>
-                    <input
-                      className="input"
-                      name="firstName"
-                      value={values["firstName"]}
-                      onChange={handleChange}
-                    />
-                  </label>
-                </div>
-                <div className="mb-3">
-                  <label>
-                    <h4 className="sub-header mb-1">
-                      Last Name
-                    </h4>
-                    <input
-                      className="input"
-                      name="lastName"
-                      value={values["lastName"]}
-                      onChange={handleChange}
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className="py-2 flex justify-end">
-              <button
-                className="btn-primary"
-                type="submit"
-                disabled={isSubmitting || disableSubmit}
-              >
-                Submit
-              </button>
-            </div>
+            <Grid>
+              <Grid.Row verticalAlign="middle">
+                <Grid.Column width={4}>
+                  {disableSubmit &&
+                    <div className="flex justify-center">
+                      <Loader/>
+                    </div>
+                  }
+                  {!disableSubmit &&
+                    <label>
+                      <Image
+                        src={imgUrl ? imgUrl : EmptyImage}
+                        size="small"
+                      />
+                      <input
+                        style={{display: "none"}}
+                        onChange={getImage}
+                        type="file"
+                        id="image"
+                        name="image"
+                        accept="image/png, image/jpeg"
+                      />
+                    </label>
+                  }
+                </Grid.Column>
+                <Grid.Column width={12}>
+                  <SemanticForm.Field width="16">
+                    <label>
+                      <Header as="h4">
+                        Task
+                      </Header>
+                      <Input
+                        fluid
+                        name="task"
+                        value={values["task"]}
+                        onChange={handleChange}
+                      />
+                    </label>
+                  </SemanticForm.Field>
+                  <SemanticForm.Field width="16">
+                    <label>
+                      <Header as="h4">
+                        Status
+                      </Header>
+                      <Select
+                        fluid
+                        name="status"
+                        value={values["status"]}
+                        options={processedStatuses}
+                        onChange={handleChangeStatus(setFieldValue)}
+                      />
+                    </label>
+                  </SemanticForm.Field>
+                  <SemanticForm.Field width="16">
+                    <label>
+                      <Header as="h4">
+                        First Name
+                      </Header>
+                      <Input
+                        fluid
+                        name="firstName"
+                        value={values["firstName"]}
+                        onChange={handleChange}
+                      />
+                    </label>
+                  </SemanticForm.Field>
+                  <SemanticForm.Field width="16">
+                    <label>
+                      <Header as="h4">
+                        Last Name
+                      </Header>
+                      <Input
+                        fluid
+                        name="lastName"
+                        value={values["lastName"]}
+                        onChange={handleChange}
+                      />
+                    </label>
+                  </SemanticForm.Field>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+            <Grid padded="vertically">
+              <Grid.Row>
+                <Grid.Column textAlign="right">
+                  <SemanticForm.Button
+                    primary
+                    type="submit"
+                    size="large"
+                    disabled={isSubmitting || disableSubmit}
+                  >
+                    Submit
+                  </SemanticForm.Button>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </Form>
         )
       } }

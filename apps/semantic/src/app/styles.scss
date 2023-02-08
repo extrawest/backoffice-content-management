@@ -42,7 +42,7 @@
   margin: 0;
   height: 100%;
   padding: 3rem;
-  width: 320px;
+  width: 18rem;
   box-shadow: 0.5rem 0 1rem 0 rgba(0,0,0,0.2);
 }
 .menu-list.ui.container {
@@ -83,6 +83,15 @@
 .ui.primary.button {
   border-radius: 20px;
   background-color: var(--primary-main);
+}
+.ui.primary.button.icon {
+  border-radius: 0.5rem;
+  margin: 0 0.5rem;
+}
+.ui.primary.button[type="submit"] {
+  padding-left: 50px;
+  padding-right: 50px;
+  background: linear-gradient(180deg, var(--primary-main) 0%, var(--primary-light) 100%)
 }
 .field {
   margin-bottom: 2rem;

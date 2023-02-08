@@ -7,14 +7,14 @@ import {
   Form, Formik, FormikHelpers, FormikProps
 } from "formik";
 import { setDoc, doc } from "firebase/firestore";
-import { db, storage } from "../../../../shared/firebaseconfig";
+import { db, storage } from "@libs/shared/firebaseconfig";
 import dayjs from "dayjs";
 import { CreateTicketFormProps, FormValueProps } from "./CreateTicketForm.types";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
-import { useAuth } from "../../../../shared/context/Auth";
+import EmptyImage from "../../assets/images/emptyImage.png";
 import { createTicketFormSchema } from "@lib/shared/types";
 import { Loader } from "@lib/tailwind";
+import { useAuth } from "@lib/shared";
 
 export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 	tasks,

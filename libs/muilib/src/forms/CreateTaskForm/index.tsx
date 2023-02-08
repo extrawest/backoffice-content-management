@@ -1,42 +1,45 @@
 import { FC } from "react";
-import {
-	ErrorMessage, Form, Formik
-} from "formik";
+import {Form, Formik} from "formik";
 import {
 	Box,
 	Button, FormControl, Grid, OutlinedInput
 } from "@mui/material";
 import { footerSx } from "./CreateTaskForm.sx";
 import { setDoc, doc } from "firebase/firestore";
-import { db } from "../../../../shared/firebaseconfig";
+import { db } from "@libs/shared/firebaseconfig";
 import dayjs from "dayjs";
 import { CreateTaskFormProps } from "./CreateTaskForm.types";
-import { useAuth } from "../../../../shared/context/Auth";
+import { useAuth } from "@lib/shared";
 
 export const CreateTaskForm:FC<CreateTaskFormProps> = ({
-  getBacklogData,
-  closeModal,
-  backlog
+	getBacklogData,
+	closeModal,
+	backlog
 }) => {
-  const me = useAuth()
+	const me = useAuth();
 	const handleSubmit = () => async (values: {name: string}) => {
-    try {
-      if (me?.user?.uid) {
-        await setDoc(doc(
-          db, 'backlog', me?.user?.uid
-        ), {
-          tasks: [...backlog, {
-            id: dayjs().valueOf().toString(),
-            name: values.name
-          }]
-        })
-      }
-    } catch (error) {
-      console.error(error)
-    } finally {
-      getBacklogData();
-      closeModal()
-    }
+		try {
+			if (me?.user?.uid) {
+				await setDoc(
+					doc(
+						db,
+						"backlog",
+						me?.user?.uid
+					),
+					{
+						tasks: [...backlog, {
+							id: dayjs().valueOf().toString(),
+							name: values.name
+						}]
+					}
+				);
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			getBacklogData();
+			closeModal();
+		}
 	};
 
 	return (

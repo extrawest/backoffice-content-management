@@ -1,39 +1,48 @@
 import { FC } from "react";
 import {
-  Form, Formik, FormikHelpers
+	Form, Formik, FormikHelpers
 } from "formik";
-import { Divider, Form as SemanticForm, Grid, Header, Input } from "semantic-ui-react";
+import {
+	Form as SemanticForm, Grid, Header, Input
+} from "semantic-ui-react";
 import { setDoc, doc } from "firebase/firestore";
-import { db } from "../../../../shared/firebaseconfig";
+import { db } from "@libs/shared/firebaseconfig";
 import dayjs from "dayjs";
 import { CreateTaskFormProps } from "./CreateTaskForm.types";
-import { useAuth } from "../../../../shared/context/Auth";
+import { useAuth } from "@lib/shared";
 
 export const CreateTaskForm:FC<CreateTaskFormProps> = ({
-  getBacklogData,
-  closeModal,
-  backlog
+	getBacklogData,
+	closeModal,
+	backlog
 }) => {
-  const me = useAuth()
-	const handleSubmit = () => async (values: {name: string}, helpers: FormikHelpers<{name: string}>) => {
-    try {
-      if (me?.user?.uid) {
-        await setDoc(doc(
-          db, 'backlog', me?.user?.uid
-        ), {
-          tasks: [...backlog, {
-            id: dayjs().valueOf().toString(),
-            name: values.name
-          }]
-        })
-      }
-    } catch (error) {
-      console.error(error)
-    } finally {
-      getBacklogData();
-      closeModal();
-      helpers.resetForm();
-    }
+	const me = useAuth();
+	const handleSubmit = () => async (
+		values: {name: string}, helpers: FormikHelpers<{name: string}>
+	) => {
+		try {
+			if (me?.user?.uid) {
+				await setDoc(
+					doc(
+						db,
+						"backlog",
+						me?.user?.uid
+					),
+					{
+						tasks: [...backlog, {
+							id: dayjs().valueOf().toString(),
+							name: values.name
+						}]
+					}
+				);
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			getBacklogData();
+			closeModal();
+			helpers.resetForm();
+		}
 	};
 
 	return (

@@ -3,20 +3,20 @@ import {
 	FC, useState
 } from "react";
 import {
-  Form, Formik, FormikProps, ErrorMessage, FormikHelpers
+  Form, Formik, FormikProps
 } from "formik";
 import { setDoc, doc } from "firebase/firestore";
-import { db, storage } from "../../../../shared/firebaseconfig";
+import { db, storage } from "@libs/shared/firebaseconfig";
 import { EditTicketFormProps, FormValueProps } from "./EditTicketForm.types";
 import {
 	ref, getDownloadURL, uploadBytesResumable
 } from "firebase/storage";
-import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
-import { useAuth } from "../../../../shared/context/Auth";
+import EmptyImage from "../../assets/images/emptyImage.png";
 import { TaskTypeEnum } from "@lib/shared/types";
-import { editTicketFormSchema } from "../../../../shared/types/src/lib/formData/EditTicketForm";
+import { editTicketFormSchema } from "@lib/shared/types";
 import { StatusTag } from "../../components/StatusTag";
 import { Loader } from "@lib/tailwind";
+import { useAuth } from "@lib/shared";
 
 export const EditTicketForm:FC<EditTicketFormProps> = ({
 	tickets,

@@ -3,18 +3,18 @@ import {
 	FC, useState
 } from "react";
 import {
-  Form, Formik, FormikProps, ErrorMessage, FormikHelpers
+	Form, Formik, FormikProps
 } from "formik";
 import { setDoc, doc } from "firebase/firestore";
-import { db, storage } from "../../../../shared/firebaseconfig";
+import { db, storage } from "@libs/shared/firebaseconfig";
 import { EditTicketFormProps, FormValueProps } from "./EditTicketForm.types";
 import {
 	ref, getDownloadURL, uploadBytesResumable
 } from "firebase/storage";
-import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
-import { useAuth } from "../../../../shared/context/Auth";
+import EmptyImage from "../../assets/images/emptyImage.png";
+import { useAuth } from "@lib/shared";
 import { TaskTypeEnum } from "@lib/shared/types";
-import { editTicketFormSchema } from "../../../../shared/types/src/lib/formData/EditTicketForm";
+import { editTicketFormSchema } from "@lib/shared/types";
 import { StatusTag } from "../../components/StatusTag";
 import { Loader } from "@lib/tailwind";
 
@@ -72,27 +72,27 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
 
 	const onSubmit = () => async (values: FormValueProps) => {
 		try {
-      if (me.user?.uid) {
-        await setDoc(
-          doc(
-            db,
-            "tickets",
-            me.user?.uid
-          ),
-          {
-            data: tickets.map(ticket => {
-              if (ticket.id !== init.id) {
-                return ticket
-              } else {
-                return ({
-                  ...ticket,
-                  ...values
-                })
-              }
-            })
-          }
-        );
-      }
+			if (me.user?.uid) {
+				await setDoc(
+					doc(
+						db,
+						"tickets",
+						me.user?.uid
+					),
+					{
+						data: tickets.map(ticket => {
+							if (ticket.id !== init.id) {
+								return ticket;
+							} else {
+								return ({
+									...ticket,
+									...values
+								});
+							}
+						})
+					}
+				);
+			}
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -107,16 +107,14 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
 		value: item
 	}));
 
-  const handleChangeStatus = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
-    (
-      e:  ChangeEvent<HTMLSelectElement>
-    ) => {
-      const value = e.target?.value ?? "";
-      setFieldValue(
-        "status",
-        value
-      );
-    };
+	const handleChangeStatus = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
+		(e:  ChangeEvent<HTMLSelectElement>) => {
+			const value = e.target?.value ?? "";
+			setFieldValue(
+				"status",
+				value
+			);
+		};
 
 	return (
     <Formik
@@ -184,7 +182,10 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
                       onChange={handleChangeStatus(setFieldValue)}
                     >
                       {processedStatuses.map(item => (
-                        <option key={item.id} value={item.id}>
+                        <option
+key={item.id}
+value={item.id}
+                        >
                           <StatusTag type={item.name}/>
                         </option>
                       ))}
@@ -229,7 +230,7 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
               </button>
             </div>
           </Form>
-        )
+        );
       } }
     </Formik>
 	);

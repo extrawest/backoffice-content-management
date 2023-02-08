@@ -7,8 +7,8 @@ import { footerSx } from "../CreateTaskForm/CreateTaskForm.sx";
 import { AddOfferFormProps, AddOfferValues } from "./AddOfferForm.types";
 import { formLabel } from "../CreateTicketForm/CreateTicketForm.sx";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../../../shared/firebaseconfig";
-import { useAuth } from "../../../../shared/context/Auth";
+import { db } from "@libs/shared/firebaseconfig";
+import { useAuth } from "@lib/shared";
 
 export const AddOfferForm:FC<AddOfferFormProps> = ({
 	getOffers,

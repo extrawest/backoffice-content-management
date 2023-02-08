@@ -18,6 +18,7 @@ import { auth, googleProvider } from "../../../../shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { Form, Formik } from "formik";
 import { Link } from "react-router-dom";
+import { Button, Container, Form as SemanticForm, Grid, Header, Input, Select } from "semantic-ui-react";
 
 export const LoginPage: FC = () => {
 	const [openAlert, setOpenAlert] = useState(false);
@@ -107,62 +108,92 @@ export const LoginPage: FC = () => {
           values,
           handleChange
         }) => (
-        <Form>
-      <div className="mx-auto pt-10 w-auth">
-        <h1 className="header-main text-center">
-          Login to account
-        </h1>
-        <div className="mb-3 w-full">
-          <input
-            className="input"
-            placeholder="Email address"
-            name="email"
-            type="email"
-            value={values["email"]}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3 w-full">
-          <input
-            className="input"
-            placeholder="Password"
-            name="password"
-            type="password"
-            value={values["password"]}
-            onChange={handleChange}
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="btn-primary flex mx-auto"
-        >
-          Log In
-        </button>
-        <div className="flex justify-end my-2">
-          <Link
-            to={AppRoutesEnum.REGISTRATION}
-            className="underline text-primary-main"
-          >
-            Don't have an account? Sign Up
-          </Link>
-        </div>
-        <p className="text-center mb-4">- Or continue with -</p>
-        <div className="flex justify-center gap-3">
-          <button
-            className="btn-primary-icon"
-            onClick={handleGoogleLogin}
-          >
-            <Google />
-          </button>
-          <button
-            className="btn-primary-icon"
-            onClick={handleFbLogin}
-          >
-            <Facebook />
-          </button>
-        </div>
-      </div>
+        <Form style={{paddingTop: "8rem"}}>
+          <Grid textAlign="center" centered>
+            <Grid.Row centered>
+              <Grid.Column width={6}>
+                <Header as="h1" textAlign="center">
+                  Login to account
+                </Header>
+                <SemanticForm.Field width="16">
+                  <label>
+                    <Input
+                      fluid
+                      type="email"
+                      name="email"
+                      placeholder="Email address"
+                      value={values["email"]}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </SemanticForm.Field>
+                <SemanticForm.Field width="16">
+                  <label>
+                    <Input
+                      fluid
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      value={values["password"]}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </SemanticForm.Field>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Grid centered>
+            <Grid.Row>
+              <Grid.Column textAlign="center" width={6}>
+                <Button
+                  primary
+                  disabled={isSubmitting}
+                  type="submit"
+                  size="large"
+                  circular
+                >
+                  Log In
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column textAlign="right" width={6}>
+                <Link
+                  to={AppRoutesEnum.REGISTRATION}
+                  className="underline text-primary-main"
+                >
+                  Don't have an account? Sign Up
+                </Link>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column textAlign="center" width={6}>
+                <Header as="h5">
+                  - Or continue with -
+                </Header>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column textAlign="center" width={3}>
+                <Button
+                  primary
+                  circular
+                  onClick={handleGoogleLogin}
+                  icon
+                >
+                  <Google />
+                </Button>
+                <Button
+                  primary
+                  circular
+                  onClick={handleFbLogin}
+                  icon
+                >
+                  <Facebook />
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
       <Snackbar
         open={openAlert}
         onClose={() => setOpenAlert(false)}

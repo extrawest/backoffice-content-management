@@ -10,6 +10,7 @@ import {
 import { auth } from "../../../../shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { Form, Formik } from "formik";
+import { Button, Form as SemanticForm, Grid, Header, Input } from "semantic-ui-react";
 
 export const RegistrationPage: FC = () => {
 	const [passwordCorrect, setPasswordCorrect] = useState(true);
@@ -62,70 +63,90 @@ export const RegistrationPage: FC = () => {
           values,
           handleChange
         }) => (
-        <Form>
-          <div className="mx-auto pt-10 w-auth">
-            <h1 className="header-main text-center">
-              Registration
-            </h1>
-            <div className="mb-3 w-full">
-              <input
-                className="input"
-                placeholder="Email address"
-                name="email"
-                type="email"
-                value={values["email"]}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="mb-3 w-full">
-              <input
-                className="input"
-                placeholder="Password"
-                name="password"
-                type="password"
-                value={values["password"]}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="mb-3 w-full">
-              <input
-                className="input"
-                placeholder="Confirm password"
-                name="confirm_password"
-                type="password"
-                value={values["confirm_password"]}
-                onChange={handleChange}
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="btn-primary flex mx-auto"
+        <Form style={{paddingTop: "8rem"}}>
+          <Grid textAlign="center" centered>
+            <Grid.Row centered>
+              <Grid.Column width={6}>
+                <Header as="h1" textAlign="center">
+                  Registration
+                </Header>
+                <SemanticForm.Field width="16">
+                  <label>
+                    <Input
+                      fluid
+                      type="email"
+                      name="email"
+                      placeholder="Email address"
+                      value={values["email"]}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </SemanticForm.Field>
+                <SemanticForm.Field width="16">
+                  <label>
+                    <Input
+                      fluid
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      value={values["password"]}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </SemanticForm.Field>
+                <SemanticForm.Field width="16">
+                  <label>
+                    <Input
+                      fluid
+                      type="password"
+                      name="confirm_password"
+                      placeholder="Confirm password"
+                      value={values["confirm_password"]}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </SemanticForm.Field>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Grid centered>
+            <Grid.Row>
+              <Grid.Column textAlign="center" width={6}>
+                <Button
+                  primary
+                  disabled={isSubmitting}
+                  type="submit"
+                  size="large"
+                  circular
+                >
+                  Sign up
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column textAlign="right" width={6}>
+                <Link
+                  to={AppRoutesEnum.LOGIN}
+                  className="underline text-primary-main"
+                >
+                  Already have an account? Sign in
+                </Link>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Snackbar
+            open={openAlert}
+            onClose={() => settOpenAlert(false)}
+            autoHideDuration={5000}
+          >
+            <Alert
+              onClose={() => settOpenAlert(false)}
+              severity="error"
+              sx={{ width: "100%" }}
             >
-              Sign up
-            </button>
-            <div className="flex justify-end my-2">
-              <Link
-                to={AppRoutesEnum.LOGIN}
-                className="underline text-primary-main"
-              >
-                Already have an account? Sign in
-              </Link>
-            </div>
-      </div>
-      <Snackbar
-        open={openAlert}
-        onClose={() => settOpenAlert(false)}
-        autoHideDuration={5000}
-      >
-        <Alert
-          onClose={() => settOpenAlert(false)}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          {`Something went wrong... ${error}`}
-        </Alert>
-      </Snackbar>
+              {`Something went wrong... ${error}`}
+            </Alert>
+          </Snackbar>
         </Form>)}
     </Formik>
 	);

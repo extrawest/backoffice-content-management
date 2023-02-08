@@ -66,6 +66,12 @@ export const RowMenu:FC<RowMenuProps> = ({
 	return (
 		<Container className="relative">
     <Button
+      size="tiny"
+      icon
+      circular
+      basic
+      compact
+
       onClick={handleShowMenu(true)}
     >
       <MoreVert/>

@@ -30,7 +30,9 @@ export const Modal:FC<ModalProps> = ({
                 onClick={handleClose}
                 type="button"
                 size="tiny"
-
+                icon
+                basic
+                compact
               >
                 <Close/>
               </Button>

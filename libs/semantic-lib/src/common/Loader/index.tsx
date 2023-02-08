@@ -1,11 +1,13 @@
 import { FC } from "react";
-import {Loader as LoaderComponent} from "semantic-ui-react";
+import {Dimmer, Loader as LoaderComponent} from "semantic-ui-react";
 
 export const Loader: FC = () => {
 	return (
-    <LoaderComponent
+    <Dimmer
       active
-      inline='centered'
-    />
+      inverted
+    >
+      <LoaderComponent size='medium'>Loading</LoaderComponent>
+    </Dimmer>
 	);
 };

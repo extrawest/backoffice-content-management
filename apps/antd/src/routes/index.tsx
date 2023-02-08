@@ -6,7 +6,7 @@ import { commonRoutes } from "./commonRotes";
 import { LayoutEnum } from "@lib/shared/types";
 import { Layout } from "antd";
 import { loaderBox } from "./routes.sx";
-import { useAuth } from "../../../../libs/shared/context/Auth";
+import { useAuth } from "@lib/shared";
 
 export const AppRoutes: FC = () => {
   const me = useAuth();

@@ -1,9 +1,11 @@
 import { FC } from "react";
-import { Form, Formik, FormikHelpers } from "formik";
+import {
+	Form, Formik, FormikHelpers
+} from "formik";
 import { AddOfferFormProps, AddOfferValues } from "./AddOfferForm.types";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../../../shared/firebaseconfig";
-import { useAuth } from "../../../../shared/context/Auth";
+import { db } from "@libs/shared/firebaseconfig";
+import { useAuth } from "@lib/shared";
 
 export const AddOfferForm:FC<AddOfferFormProps> = ({
 	getOffers,
@@ -11,7 +13,9 @@ export const AddOfferForm:FC<AddOfferFormProps> = ({
 }) => {
 	const me = useAuth();
 
-	const handleSubmit = () => async (values: AddOfferValues, helper: FormikHelpers<AddOfferValues>) => {
+	const handleSubmit = () => async (
+		values: AddOfferValues, helper: FormikHelpers<AddOfferValues>
+	) => {
 		try {
 			if (me?.user?.uid) {
 				await addDoc(
@@ -31,7 +35,7 @@ export const AddOfferForm:FC<AddOfferFormProps> = ({
 		} finally {
 			getOffers();
 			closeModal();
-      helper.resetForm();
+			helper.resetForm();
 		}
 	};
 

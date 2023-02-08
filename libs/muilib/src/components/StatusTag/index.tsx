@@ -4,7 +4,7 @@ import { Typography, useTheme } from "@mui/material";
 import { tagSx } from "./StatusTag.sx";
 import { TaskTypeEnum } from "@lib/shared/types";
 import { getDesignTokens } from "../../theme";
-import { ThemeContext } from "../../../../shared/context/themeContext";
+import { ThemeContext } from "@lib/shared";
 
 export const StatusTag: FC<StatusTagProps> = ({ type }) => {
 	const theme = useTheme();

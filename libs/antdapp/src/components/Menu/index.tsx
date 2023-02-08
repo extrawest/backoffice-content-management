@@ -1,9 +1,9 @@
 import { FC } from "react";
 import {
-	logoutSx, menuItemSx, menuListSx, menuStackSx, photoSx, textSx, wrapperSx
+	logoutSx, menuItemSx, menuStackSx, photoSx, textSx, wrapperSx
 } from "./Menu.sx";
 import { signOut } from "firebase/auth";
-import { auth } from "../../../../shared/firebaseconfig";
+import { auth } from "@libs/shared/firebaseconfig";
 import LogoutIcon from "@mui/icons-material/Logout";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
@@ -13,8 +13,10 @@ import AddCardOutlinedIcon from "@mui/icons-material/AddCardOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 import { AppRoutesEnum } from "@lib/shared/types";
-import { useAuth } from "../../../../shared/context/Auth";
-import { Avatar, Button, Col, Layout, List, Row, Space, Typography } from "antd";
+import { useAuth } from "@lib/shared";
+import {
+	Avatar, Button, Col, Layout, List, Row, Space, Typography
+} from "antd";
 
 const menu = [
 	{
@@ -93,7 +95,7 @@ export const Menu:FC = () => {
           style={logoutSx}
         >
             Log out
-          </Button>
+        </Button>
       </Space>
     </Layout.Sider>
 	);

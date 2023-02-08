@@ -6,17 +6,17 @@ import {
   Form, Formik, FormikProps
 } from "formik";
 import { setDoc, doc } from "firebase/firestore";
-import { db, storage } from "../../../../shared/firebaseconfig";
+import { db, storage } from "@libs/shared/firebaseconfig";
 import { EditTicketFormProps, FormValueProps } from "./EditTicketForm.types";
 import {
 	ref, getDownloadURL, uploadBytesResumable
 } from "firebase/storage";
-import EmptyImage from "../../../../shared/assets/images/emptyImage.png";
-import { useAuth } from "../../../../shared/context";
+import EmptyImage from "../../assets/images/emptyImage.png";
 import { TaskTypeEnum } from "@lib/shared/types";
-import { editTicketFormSchema } from "../../../../shared/types/src/lib/formData/EditTicketForm";
+import { editTicketFormSchema } from "@lib/shared/types";
 import { Loader } from "@libs/semantic";
 import { DropdownProps, Form as SemanticForm, Grid, Header, Image, Input, Select } from "semantic-ui-react";
+import { useAuth } from "@lib/shared";
 
 export const EditTicketForm:FC<EditTicketFormProps> = ({
 	tickets,

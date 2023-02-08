@@ -1,51 +1,61 @@
-import { FC, useEffect, useState } from "react";
+import {
+	FC, useEffect, useState
+} from "react";
 import { Backlog } from "./Backlog";
 import { Tasks } from "./Tasks";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../../../shared/firebaseconfig";
+import { db } from "@libs/shared/firebaseconfig";
 import { BacklogType, TaskType } from "@lib/shared/types";
 import { Chart } from "./Chart";
-import { useAuth } from "../../../../shared/context/Auth";
+import { useAuth } from "@lib/shared";
 import { Panel } from "primereact/panel";
 
 export const MainPage:FC = () => {
-  const me = useAuth();
-  const [backlog, setBacklog] = useState<BacklogType[]>([]);
-  const [tasks, setTasks] = useState<TaskType[]>([]);
+	const me = useAuth();
+	const [backlog, setBacklog] = useState<BacklogType[]>([]);
+	const [tasks, setTasks] = useState<TaskType[]>([]);
 
-  const getBacklogData = async () => {
-    try {
-      if (me?.user?.uid) {
-        const docRef = doc(db, "backlog", me?.user?.uid);
-        const docSnap = await getDoc(docRef);
-        const data = docSnap.data();
-        setBacklog(data?.["tasks"]);
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  };
+	const getBacklogData = async () => {
+		try {
+			if (me?.user?.uid) {
+				const docRef = doc(
+					db,
+					"backlog",
+					me?.user?.uid
+				);
+				const docSnap = await getDoc(docRef);
+				const data = docSnap.data();
+				setBacklog(data?.["tasks"]);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-  const getTasksData = async () => {
-    try {
-      if (me?.user?.uid) {
-        const docRef = doc(db, "tasks", me?.user?.uid);
-        const docSnap = await getDoc(docRef);
-        const data = docSnap.data();
-        setTasks(data?.["tasks"]);
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  };
+	const getTasksData = async () => {
+		try {
+			if (me?.user?.uid) {
+				const docRef = doc(
+					db,
+					"tasks",
+					me?.user?.uid
+				);
+				const docSnap = await getDoc(docRef);
+				const data = docSnap.data();
+				setTasks(data?.["tasks"]);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-  useEffect(
-    () => {
-      getBacklogData();
-      getTasksData();
-    },
-    []
-  );
+	useEffect(
+		() => {
+			getBacklogData();
+			getTasksData();
+		},
+		[]
+	);
 
 	return (
 		<Panel className="panel">

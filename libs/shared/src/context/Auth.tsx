@@ -6,7 +6,7 @@ import {
 	useState
 } from "react";
 import { User, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebaseconfig";
+import { auth } from "@libs/shared/firebaseconfig";
 
 type ContextProps = {
 	user: User | null;

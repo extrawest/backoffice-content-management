@@ -9,9 +9,9 @@ import { Modal } from "@lib/tailwind";
 import {
 	collection, getDocs, query, where
 } from "firebase/firestore";
-import { db } from "../../../../../shared/firebaseconfig";
-import { useAuth } from "../../../../../shared/context/Auth";
-import { AddOfferForm } from "../../../forms";
+import { db } from "@libs/shared/firebaseconfig";
+import { useAuth } from "@lib/shared";
+import { AddOfferForm } from "@lib/prime";
 
 export const Offers:FC = () => {
 	const [showModal, setShowModal] = useState(false);

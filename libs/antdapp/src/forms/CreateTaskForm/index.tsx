@@ -1,39 +1,46 @@
 import { FC } from "react";
+import {Formik} from "formik";
 import {
-	Formik
-} from "formik";
-import { footerSx, inputSx, submitBtnSx  } from "./CreateTaskForm.sx";
+	footerSx, inputSx, submitBtnSx
+} from "./CreateTaskForm.sx";
 import { setDoc, doc } from "firebase/firestore";
-import { db } from "../../../../shared/firebaseconfig";
+import { db } from "@libs/shared/firebaseconfig";
 import dayjs from "dayjs";
 import { CreateTaskFormProps } from "./CreateTaskForm.types";
-import { useAuth } from "../../../../shared/context/Auth";
-import { Button, Form, Input, Layout, Typography } from "antd";
+import { useAuth } from "@lib/shared";
+import {
+	Button, Form, Input, Layout, Typography
+} from "antd";
 
 export const CreateTaskForm:FC<CreateTaskFormProps> = ({
-  getBacklogData,
-  closeModal,
-  backlog
+	getBacklogData,
+	closeModal,
+	backlog
 }) => {
-  const me = useAuth()
+	const me = useAuth();
 	const handleSubmit = () => async (values: {name: string}) => {
-    try {
-      if (me?.user?.uid) {
-        await setDoc(doc(
-          db, 'backlog', me?.user?.uid
-        ), {
-          tasks: [...backlog, {
-            id: dayjs().valueOf().toString(),
-            name: values.name
-          }]
-        })
-      }
-    } catch (error) {
-      console.error(error)
-    } finally {
-      getBacklogData();
-      closeModal()
-    }
+		try {
+			if (me?.user?.uid) {
+				await setDoc(
+					doc(
+						db,
+						"backlog",
+						me?.user?.uid
+					),
+					{
+						tasks: [...backlog, {
+							id: dayjs().valueOf().toString(),
+							name: values.name
+						}]
+					}
+				);
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			getBacklogData();
+			closeModal();
+		}
 	};
 
 	return (
@@ -54,7 +61,10 @@ export const CreateTaskForm:FC<CreateTaskFormProps> = ({
         handleChange,
         handleSubmit
       }) => (
-        <Form layout="vertical" onFinish={handleSubmit}>
+        <Form
+layout="vertical"
+onFinish={handleSubmit}
+        >
           <Form.Item
             colon={false}
             label={
@@ -62,7 +72,11 @@ export const CreateTaskForm:FC<CreateTaskFormProps> = ({
                 Task
               </Typography.Text>}
           >
-            <Input style={inputSx} value={values["name"]} onChange={handleChange} name="name" />
+            <Input
+style={inputSx}
+value={values["name"]}
+onChange={handleChange}
+name="name" />
           </Form.Item>
           <Layout.Footer style={footerSx}>
             <Button

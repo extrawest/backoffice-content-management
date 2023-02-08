@@ -1,95 +1,102 @@
-import { FC, useEffect, useState } from "react";
-import dayjs from "dayjs";
 import {
-  Avatar,
-  Box, IconButton, Stack, Typography
-} from "@mui/material";
-import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
+	FC, useEffect, useState
+} from "react";
+import dayjs from "dayjs";
 import { Modal, Table } from "../../common";
-import { CreateTicketForm } from "../../forms/CreateTicketForm";
+import { CreateTicketForm } from "../../forms";
 import { TaskType, TicketType } from "@lib/shared/types";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "../../../../shared/firebaseconfig";
+import {
+	doc, getDoc, setDoc
+} from "firebase/firestore";
+import { db } from "@libs/shared/firebaseconfig";
 import { StatusTag } from "../../components/StatusTag";
-import { useAuth } from "../../../../shared/context/Auth";
 import { RowMenu } from "./RowMenu";
 import { RowType } from "../../common/Table/Table.types";
+import { useAuth } from "@lib/shared";
 
 export const ClientsPage:FC = () => {
 	const [showModal, setShowModal] = useState(false);
-  const [tasks, setTasks] = useState<TaskType[]>([]);
-  const [tickets, setTickets] = useState<TicketType[]>([]);
-  const me = useAuth();
+	const [tasks, setTasks] = useState<TaskType[]>([]);
+	const [tickets, setTickets] = useState<TicketType[]>([]);
+	const me = useAuth();
 
-  const getTasksData = async () => {
-    try {
-      if (me?.user?.uid) {
-        const docRef = doc(db, "tasks", me?.user?.uid);
-        const docSnap = await getDoc(docRef);
-        const data = docSnap.data();
-        setTasks(data?.["tasks"]);
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  };
+	const getTasksData = async () => {
+		try {
+			if (me?.user?.uid) {
+				const docRef = doc(
+					db,
+					"tasks",
+					me?.user?.uid
+				);
+				const docSnap = await getDoc(docRef);
+				const data = docSnap.data();
+				setTasks(data?.["tasks"]);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-  const getTicketsData = async () => {
-    try {
-      if (me?.user?.uid) {
-        const docRef = doc(db, "tickets", me?.user?.uid);
-        const docSnap = await getDoc(docRef);
-        const data = docSnap.data();
-        setTickets(data?.["data"]);
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  };
+	const getTicketsData = async () => {
+		try {
+			if (me?.user?.uid) {
+				const docRef = doc(
+					db,
+					"tickets",
+					me?.user?.uid
+				);
+				const docSnap = await getDoc(docRef);
+				const data = docSnap.data();
+				setTickets(data?.["data"]);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-  const deleteTicket = (taskId: string) => async () => {
-    try {
-      if (me.user?.uid) {
-        await setDoc(
-          doc(
-            db,
-            "tickets",
-            me.user?.uid
-          ),
-          {
-            data: tickets.filter(ticket => ticket.id !== taskId)
-          }
-        );
-      }
-    } catch (error) {
-      console.error(error)
-    } finally {
-      getTicketsData()
-    }
-  }
+	const deleteTicket = (taskId: string) => async () => {
+		try {
+			if (me.user?.uid) {
+				await setDoc(
+					doc(
+						db,
+						"tickets",
+						me.user?.uid
+					),
+					{
+						data: tickets.filter(ticket => ticket.id !== taskId)
+					}
+				);
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			getTicketsData();
+		}
+	};
 
-  useEffect(
-    () => {
-      getTasksData();
-      getTicketsData();
-    },
-    []
-  );
+	useEffect(
+		() => {
+			getTasksData();
+			getTicketsData();
+		},
+		[]
+	);
 
 	const handleShowModal = (status: boolean) => () => {
 		setShowModal(status);
 	};
 
-  const rows:RowType[] = [
-    {
-      title: "Task",
-      id: "task",
-      items: tickets?.map(item => item.task) ?? []
-    },
-    {
-      title: "Name",
-      id: "name",
-      items: tickets?.map(item => (
+	const rows:RowType[] = [
+		{
+			title: "Task",
+			id: "task",
+			items: tickets?.map(item => item.task) ?? []
+		},
+		{
+			title: "Name",
+			id: "name",
+			items: tickets?.map(item => (
         <div className="flex gap-1">
           <img
             src={item.image}
@@ -99,32 +106,31 @@ export const ClientsPage:FC = () => {
             {`${item.firstName} ${item.lastName}`}
           </p>
         </div> ?? []
-      ))
-    },
-    {
-      title: "Date",
-      id: "date",
-      items: tickets?.map(item => dayjs(item.id).format('DD/MM/YY')) ?? []
-    },
-    {
-      title: "Status",
-      id: "status",
-      items: tickets?.map(item => <StatusTag type={item.status}/>) ?? []
-    },
-    {
-      title: "",
-      id: "actions",
-      items: tickets?.map(item => (
+			))
+		},
+		{
+			title: "Date",
+			id: "date",
+			items: tickets?.map(item => dayjs(item.id).format("DD/MM/YY")) ?? []
+		},
+		{
+			title: "Status",
+			id: "status",
+			items: tickets?.map(item => <StatusTag type={item.status}/>) ?? []
+		},
+		{
+			title: "",
+			id: "actions",
+			items: tickets?.map(item => (
         <RowMenu
           onDelete={deleteTicket(item.id)}
           tickets={tickets}
           ticket={item}
           getTickets={getTicketsData}
         />
-      )) ?? []
-    }
-  ]
-
+			)) ?? []
+		}
+	];
 
 	return (
 		<>

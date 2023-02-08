@@ -2,16 +2,14 @@ import {
 	FC, useEffect, useState
 } from "react";
 import { Link } from "react-router-dom";
-import {
-	AppRoutesEnum, OfferType
-} from "@lib/shared/types";
+import {AppRoutesEnum, OfferType} from "@lib/shared/types";
 import { Modal } from "@lib/tailwind";
 import {
 	collection, getDocs, query, where
 } from "firebase/firestore";
-import { db } from "../../../../../shared/firebaseconfig";
-import { useAuth } from "../../../../../shared/context/Auth";
+import { db } from "@libs/shared/firebaseconfig";
 import { AddOfferForm } from "../../../forms";
+import { useAuth } from "@lib/shared";
 
 export const Offers:FC = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -24,10 +22,17 @@ export const Offers:FC = () => {
 	const getOffersData = async () => {
 		try {
 			if (me?.user?.uid) {
-        const q = query(
-          collection(db, "offers"),
-          where("userId", "==", me.user.uid)
-        );
+				const q = query(
+					collection(
+						db,
+						"offers"
+					),
+					where(
+						"userId",
+						"==",
+						me.user.uid
+					)
+				);
 				const offersRef = await getDocs(q);
 				const data: OfferType[] = [];
 				offersRef.forEach(it => {
@@ -42,7 +47,7 @@ export const Offers:FC = () => {
 
 	useEffect(
 		() => {
-      getOffersData();
+			getOffersData();
 		},
 		[]
 	);
@@ -53,7 +58,10 @@ export const Offers:FC = () => {
         <h4 className="header-section">
           Offers
         </h4>
-        <Link to={AppRoutesEnum.TEAM} className="flex items-center no-underline">
+        <Link
+to={AppRoutesEnum.TEAM}
+className="flex items-center no-underline"
+        >
               <span className="flex items-center">
                 View all
               </span>

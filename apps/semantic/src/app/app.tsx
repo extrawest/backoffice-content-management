@@ -1,18 +1,22 @@
-import { useMemo, useState } from 'react';
-import { createTheme, PaletteMode, ThemeProvider } from '@mui/material';
-import { getDesignTokens } from '../../../../libs/muilib/src/theme';
-import { ThemeContext } from '../../../../libs/shared/context/themeContext';
+import { useMemo, useState } from "react";
+import {
+	createTheme, PaletteMode, ThemeProvider
+} from "@mui/material";
+import { getDesignTokens } from "@lib/muiapp";
 import { AppRoutes } from "../routes";
-import { AuthProvider } from "../../../../libs/shared/context/Auth";
-import 'semantic-ui-css/semantic.min.css';
-import './styles.scss';
+import "semantic-ui-css/semantic.min.css";
+import "./styles.scss";
+import { AuthProvider, ThemeContext } from "@lib/shared";
 
 export function App() {
-  const [mode, setMode] = useState<PaletteMode>('light');
+	const [mode, setMode] = useState<PaletteMode>("light");
 
-  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+	const theme = useMemo(
+		() => createTheme(getDesignTokens(mode)),
+		[mode]
+	);
 
-  return (
+	return (
     <AuthProvider>
       <ThemeContext.Provider value={{ mode, setMode }}>
         <ThemeProvider theme={theme}>
@@ -20,7 +24,7 @@ export function App() {
         </ThemeProvider>
       </ThemeContext.Provider>
     </AuthProvider>
-  );
+	);
 }
 
 export default App;

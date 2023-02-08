@@ -85,17 +85,12 @@ export const ClientsPage:FC = () => {
       component:
         <Grid>
           <Grid.Row verticalAlign="middle">
-            <Grid.Column width={3}>
               <Image
                 src={ticket.image}
-                avatar
                 circular
-                size="tiny"
+                avatar
               />
-            </Grid.Column>
-            <Grid.Column width={13}>
-              <span>{`${ticket.firstName} ${ticket.lastName}`}</span>
-            </Grid.Column>
+              <span style={{marginLeft: "0.5rem"}}>{`${ticket.firstName} ${ticket.lastName}`}</span>
           </Grid.Row>
         </Grid>
     },

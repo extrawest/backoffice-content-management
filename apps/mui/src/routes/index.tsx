@@ -5,7 +5,7 @@ import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute } from "@lib/
 import { privateRoutes } from "./privateRotes";
 import { commonRoutes } from "./commonRotes";
 import { LayoutEnum } from "@lib/shared/types";
-import { useAuth } from "libs/shared/context/Auth";
+import { useAuth } from "@lib/shared";
 
 export const AppRoutes: FC = () => {
   const me = useAuth();

@@ -6,7 +6,7 @@ import {
   addSx, boxSx, headerStackSx, linkSx, subTextSx, taskRowSx
 } from "./Backlog.sx";
 import { Modal } from "@lib/muiapp";
-import { CreateTaskForm } from "../../../forms";
+import { CreateTaskForm } from "@lib/muiapp";
 import { BacklogProps } from "./Backlog.types";
 import { Link } from "react-router-dom";
 import { AppRoutesEnum } from "@lib/shared/types";

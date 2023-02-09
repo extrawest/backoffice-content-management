@@ -6,7 +6,7 @@ import {
 	IconButton, Stack, Typography
 } from "@mui/material";
 import { Modal } from "@lib/muiapp";
-import { InitTaskForm } from "../../../forms/InitTaskForm";
+import { InitTaskForm } from "@lib/muiapp";
 import { StatusTag } from "../../../components/StatusTag";
 import { TasksProps } from "./Tasks.types";
 import {

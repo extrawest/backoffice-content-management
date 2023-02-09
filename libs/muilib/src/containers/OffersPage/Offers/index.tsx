@@ -1,5 +1,6 @@
 import {
-	FC, useEffect, useState
+  Dispatch,
+  FC, SetStateAction, useEffect, useState
 } from "react";
 import {
 	addSx, boxSx, headerStackSx, subTextSx, taskRowSx, linkSx
@@ -20,6 +21,30 @@ import { useAuth } from "@lib/shared";
 import { AddOfferForm } from "@lib/muiapp";
 import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
 
+const getOffersData = async (
+  setOffers: Dispatch<SetStateAction<OfferType[]>>,
+  sort: boolean,
+  uid?: string
+) => {
+  try {
+    if (uid) {
+      const q = query(
+        collection(db, "offers"),
+        orderBy("title", sort ? 'asc' : 'desc'),
+        where("userId", "==", uid)
+      );
+      const offersRef = await getDocs(q);
+      const data: OfferType[] = [];
+      offersRef.forEach(it => {
+        data.push(it.data() as OfferType);
+        setOffers(data);
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const Offers:FC = () => {
 	const [showModal, setShowModal] = useState(false);
   const [sort, setSort] = useState(true);
@@ -33,36 +58,20 @@ export const Offers:FC = () => {
     setSort(!sort);
   }
 
-	const getOffersData = async () => {
-		try {
-			if (me?.user?.uid) {
-        const q = query(
-          collection(db, "offers"),
-          orderBy("title", sort ? 'asc' : 'desc'),
-          where("userId", "==", me.user.uid)
-        );
-				const offersRef = await getDocs(q);
-				const data: OfferType[] = [];
-				offersRef.forEach(it => {
-					data.push(it.data() as OfferType);
-					setOffers(data);
-				});
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	};
+  const getOffers = () => {
+    getOffersData(setOffers, sort, me?.user?.uid)
+  }
 
 	useEffect(
 		() => {
-      getOffersData();
+      getOffers();
 		},
 		[]
 	);
 
   useEffect(
     () => {
-      getOffersData();
+      getOffers();
     },
     [sort]
   );
@@ -144,7 +153,7 @@ export const Offers:FC = () => {
         type='lg'
       >
         <AddOfferForm
-          getOffers={getOffersData}
+          getOffers={getOffers}
           closeModal={handleShowModal(false)}
         />
       </Modal>

@@ -1,5 +1,6 @@
 import {
-	FC, useEffect, useState
+	Dispatch,
+	FC, SetStateAction, useEffect, useState
 } from "react";
 import dayjs from "dayjs";
 import {
@@ -22,71 +23,99 @@ import {
 	nameSx, photoSx, titleSx, wrapperSx
 } from "./ClientsPage.sx";
 
+const getTasksData = async (
+	setTasks: Dispatch<SetStateAction<TaskType[]>>,
+	uid?: string
+) => {
+	try {
+		if (uid) {
+			const docRef = doc(
+				db,
+				"tasks",
+				uid
+			);
+			const docSnap = await getDoc(docRef);
+			const data = docSnap.data();
+			setTasks(data?.["tasks"]);
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+const getTicketsData = async (
+	setTickets: Dispatch<SetStateAction<TicketType[]>>,
+	uid?: string
+) => {
+	try {
+		if (uid) {
+			const docRef = doc(
+				db,
+				"tickets",
+				uid
+			);
+			const docSnap = await getDoc(docRef);
+			const data = docSnap.data();
+			setTickets(data?.["data"]);
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+const deleteTicket = (
+	taskId: string,
+	tickets: TicketType[],
+	setTickets: Dispatch<SetStateAction<TicketType[]>>,
+	uid?: string
+) => async () => {
+	try {
+		if (uid) {
+			await setDoc(
+				doc(
+					db,
+					"tickets",
+					uid
+				),
+				{
+					data: tickets.filter(ticket => ticket.id !== taskId)
+				}
+			);
+		}
+	} catch (error) {
+		console.error(error);
+	} finally {
+		getTicketsData(
+			setTickets,
+			uid
+		);
+	}
+};
+
 export const ClientsPage:FC = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [tasks, setTasks] = useState<TaskType[]>([]);
 	const [tickets, setTickets] = useState<TicketType[]>([]);
 	const me = useAuth();
 
-	const getTasksData = async () => {
-		try {
-			if (me?.user?.uid) {
-				const docRef = doc(
-					db,
-					"tasks",
-					me?.user?.uid
-				);
-				const docSnap = await getDoc(docRef);
-				const data = docSnap.data();
-				setTasks(data?.["tasks"]);
-			}
-		} catch (error) {
-			console.error(error);
-		}
+	const getTasks = () => {
+		getTasksData(
+			setTasks,
+			me?.user?.uid
+		);
 	};
 
-	const getTicketsData = async () => {
-		try {
-			if (me?.user?.uid) {
-				const docRef = doc(
-					db,
-					"tickets",
-					me?.user?.uid
-				);
-				const docSnap = await getDoc(docRef);
-				const data = docSnap.data();
-				setTickets(data?.["data"]);
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
-	const deleteTicket = (taskId: string) => async () => {
-		try {
-			if (me.user?.uid) {
-				await setDoc(
-					doc(
-						db,
-						"tickets",
-						me.user?.uid
-					),
-					{
-						data: tickets.filter(ticket => ticket.id !== taskId)
-					}
-				);
-			}
-		} catch (error) {
-			console.error(error);
-		} finally {
-			getTicketsData();
-		}
+	const getTickets = () => {
+		getTicketsData(
+			setTickets,
+			me?.user?.uid
+		);
 	};
 
 	useEffect(
 		() => {
-			getTasksData();
-			getTicketsData();
+			getTasks();
+			getTickets();
 		},
 		[]
 	);
@@ -146,10 +175,15 @@ export const ClientsPage:FC = () => {
 			cellClassName: "hoverableCell",
 			renderCell: (params) =>
         <RowMenu
-          onDelete={deleteTicket(params.row.id)}
+          onDelete={deleteTicket(
+      params.row.id,
+      tickets,
+    setTickets,
+            me?.user?.uid
+          )}
           tickets={tickets}
           ticket={params.row}
-          getTickets={getTicketsData}
+          getTickets={getTickets}
         />
 		},
 	];
@@ -185,8 +219,8 @@ export const ClientsPage:FC = () => {
           <CreateTicketForm
             tasks={tasks}
             tickets={tickets}
-            getTasks={getTasksData}
-            getTickets={getTicketsData}
+            getTasks={getTasks}
+            getTickets={getTickets}
             closeModal={handleShowModal(false)}
           />
         </Modal>

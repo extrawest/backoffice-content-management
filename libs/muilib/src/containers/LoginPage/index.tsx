@@ -5,6 +5,7 @@ import {
 	Alert,
 	Box,
 	Button,
+  FormControl,
 	Grid,
 	Link,
 	Snackbar,
@@ -24,19 +25,13 @@ import { auth, googleProvider } from "../../../../shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { submitBoxSx, titleSx, wrapperSx } from "./LoginPage.sx";
 import { ButtonContained } from "../../components/ButtonContained";
+import { Form, Formik } from "formik";
 
 export const LoginPage: FC = () => {
 	const [openAlert, setOpenAlert] = useState(false);
 	const [error, setError] = useState("");
 
-	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-
-		const value = {
-			email: data.get("email") as string,
-			password: data.get("password") as string
-		};
+	const handleSubmit = () => async (value: {email: string, password: string}) => {
 		try {
 			await signInWithEmailAndPassword(
 				auth,
@@ -112,94 +107,109 @@ export const LoginPage: FC = () => {
 
 	return (
 		<>
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
-        sx={wrapperSx}
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        onSubmit={handleSubmit()}
       >
-        <Typography
-          variant="h2"
-          sx={titleSx}
-        >
-          Login to account
-        </Typography>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-        <Box sx={submitBoxSx}>
-          <ButtonContained
-            type="submit"
-            fullWidth
-          >
-            Log In
-          </ButtonContained>
-        </Box>
-        <Grid
-          container
-          justifyContent="flex-end"
-        >
-          <Grid item>
-            <Link
-              href={AppRoutesEnum.REGISTRATION}
-              variant="body2"
+        {({
+            isSubmitting,
+            values,
+            handleChange
+          }) => (
+          <Form>
+            <Box
+              sx={wrapperSx}
             >
-              Don't have an account? Sign Up
-            </Link>
-          </Grid>
-        </Grid>
-        <Grid
-          sx={{ py: 2 }}
-          container
-          justifyContent="center"
-        >
-          <Grid item>
-            <Typography>- Or continue with -</Typography>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          justifyContent="center"
-          sx={{ py: 2 }}
-          spacing={2}
-        >
-          <Grid item>
-            <Button
-              sx={{ height: 50, width: 50 }}
-              onClick={handleGoogleLogin}
-              variant={"contained"}
-            >
-              <Google />
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              sx={{ height: 50, width: 50 }}
-              onClick={handleFbLogin}
-              variant={"contained"}
-            >
-              <Facebook />
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
+              <Typography
+                variant="h2"
+                sx={titleSx}
+              >
+                Login to account
+              </Typography>
+              <FormControl>
+                <TextField
+                  required
+                  fullWidth
+                  value={values["email"]}
+                  onChange={handleChange}
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+              </FormControl>
+              <FormControl>
+                <TextField
+                  required
+                  fullWidth
+                  value={values["password"]}
+                  onChange={handleChange}
+                  name="password"
+                  label="Password"
+                  type="password"
+                  autoComplete="current-password"
+                />
+              </FormControl>
+              <Box sx={submitBoxSx}>
+                <ButtonContained
+                  type="submit"
+                  disabled={isSubmitting}
+                  fullWidth
+                >
+                  Log In
+                </ButtonContained>
+              </Box>
+              <Grid
+                container
+                justifyContent="flex-end"
+              >
+                <Grid item>
+                  <Link
+                    href={AppRoutesEnum.REGISTRATION}
+                    variant="body2"
+                  >
+                    Don't have an account? Sign Up
+                  </Link>
+                </Grid>
+              </Grid>
+              <Grid
+                sx={{ py: 2 }}
+                container
+                justifyContent="center"
+              >
+                <Grid item>
+                  <Typography>- Or continue with -</Typography>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                justifyContent="center"
+                sx={{ py: 2 }}
+                spacing={2}
+              >
+                <Grid item>
+                  <Button
+                    sx={{ height: 50, width: 50 }}
+                    onClick={handleGoogleLogin}
+                    variant={"contained"}
+                  >
+                    <Google />
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    sx={{ height: 50, width: 50 }}
+                    onClick={handleFbLogin}
+                    variant={"contained"}
+                  >
+                    <Facebook />
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </Form>
+        )}
+      </Formik>
       <Snackbar
         open={openAlert}
         onClose={() => setOpenAlert(false)}

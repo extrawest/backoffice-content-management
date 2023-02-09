@@ -13,6 +13,9 @@ export const titleSx: SxProps<Theme> = {
 };
 export const wrapperSx: SxProps<Theme> = {
 	maxWidth: maxAuthWidth,
+  display: "flex",
+  flexDirection: "column",
+  gap: 2,
 	mx: "auto",
 	pt: 10
 };

@@ -13,25 +13,32 @@ import {
 } from "@lib/shared/types";
 import { Modal } from "@lib/muiapp";
 import {
-	collection, getDocs, query, where
+	collection, getDocs, orderBy, query, where
 } from "firebase/firestore";
 import { db } from "@libs/shared/firebaseconfig";
 import { useAuth } from "@lib/shared";
 import { AddOfferForm } from "@lib/muiapp";
+import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
 
 export const Offers:FC = () => {
 	const [showModal, setShowModal] = useState(false);
+  const [sort, setSort] = useState(true);
 	const [offers, setOffers] = useState<OfferType[]>([]);
 	const me = useAuth();
 	const handleShowModal = (status: boolean) => () => {
 		setShowModal(status);
 	};
 
+  const toggleSort = () => {
+    setSort(!sort);
+  }
+
 	const getOffersData = async () => {
 		try {
 			if (me?.user?.uid) {
         const q = query(
           collection(db, "offers"),
+          orderBy("title", sort ? 'asc' : 'desc'),
           where("userId", "==", me.user.uid)
         );
 				const offersRef = await getDocs(q);
@@ -52,6 +59,13 @@ export const Offers:FC = () => {
 		},
 		[]
 	);
+
+  useEffect(
+    () => {
+      getOffersData();
+    },
+    [sort]
+  );
 
 	return (
     <Box sx={boxSx}>
@@ -81,6 +95,19 @@ export const Offers:FC = () => {
         >
           +
         </IconButton>
+      </Stack>
+      <Stack sx={headerStackSx}>
+        <Stack direction="row" alignItems="center">
+          <Typography variant="h4">
+            Name
+          </Typography>
+          <IconButton onClick={toggleSort}>
+            {sort ? <ArrowUpward/> : <ArrowDownward/>}
+          </IconButton>
+        </Stack>
+        <Typography variant="h4">
+          Description
+        </Typography>
       </Stack>
       {!!offers?.length && (
         <Stack>

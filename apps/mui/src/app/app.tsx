@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react';
 import { createTheme, PaletteMode, ThemeProvider } from '@mui/material';
-import { getDesignTokens } from '../../../../libs/muilib/src/theme';
-import { ThemeContext } from '../../../../libs/shared/context/themeContext';
+import { getDesignTokens } from '@lib/muiapp';
 import { AppRoutes } from "../routes";
-import { AuthProvider } from "../../../../libs/shared/context/Auth";
+import { AuthProvider, ThemeContext } from "@lib/shared";
 
 export function App() {
   const [mode, setMode] = useState<PaletteMode>('light');

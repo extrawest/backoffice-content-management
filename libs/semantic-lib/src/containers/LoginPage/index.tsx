@@ -1,6 +1,4 @@
-import {
-  FC, useState
-} from "react";
+import {FC, useState} from "react";
 import {
 	Alert,
 	Snackbar
@@ -14,11 +12,13 @@ import {
 	signInWithPopup,
 	signInWithRedirect
 } from "firebase/auth";
-import { auth, googleProvider } from "../../../../shared/firebaseconfig";
+import { auth, googleProvider } from "@libs/shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { Form, Formik } from "formik";
 import { Link } from "react-router-dom";
-import { Button, Container, Form as SemanticForm, Grid, Header, Input, Select } from "semantic-ui-react";
+import {
+	Button, Form as SemanticForm, Grid, Header, Input
+} from "semantic-ui-react";
 
 export const LoginPage: FC = () => {
 	const [openAlert, setOpenAlert] = useState(false);
@@ -109,10 +109,16 @@ export const LoginPage: FC = () => {
           handleChange
         }) => (
         <Form style={{paddingTop: "8rem"}}>
-          <Grid textAlign="center" centered>
+          <Grid
+textAlign="center"
+centered
+          >
             <Grid.Row centered>
               <Grid.Column width={6}>
-                <Header as="h1" textAlign="center">
+                <Header
+as="h1"
+textAlign="center"
+                >
                   Login to account
                 </Header>
                 <SemanticForm.Field width="16">
@@ -144,7 +150,10 @@ export const LoginPage: FC = () => {
           </Grid>
           <Grid centered>
             <Grid.Row>
-              <Grid.Column textAlign="center" width={6}>
+              <Grid.Column
+textAlign="center"
+width={6}
+              >
                 <Button
                   primary
                   disabled={isSubmitting}
@@ -157,7 +166,10 @@ export const LoginPage: FC = () => {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column textAlign="right" width={6}>
+              <Grid.Column
+textAlign="right"
+width={6}
+              >
                 <Link
                   to={AppRoutesEnum.REGISTRATION}
                   className="underline text-primary-main"
@@ -167,14 +179,20 @@ export const LoginPage: FC = () => {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column textAlign="center" width={6}>
+              <Grid.Column
+textAlign="center"
+width={6}
+              >
                 <Header as="h5">
                   - Or continue with -
                 </Header>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column textAlign="center" width={3}>
+              <Grid.Column
+textAlign="center"
+width={3}
+              >
                 <Button
                   primary
                   circular
@@ -208,6 +226,6 @@ export const LoginPage: FC = () => {
         </Alert>
       </Snackbar>
         </Form>)}
-      </Formik>
+    </Formik>
 	);
 };

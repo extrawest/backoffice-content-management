@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { LoginPage } from "@lib/antdapp";
+import { LoginPage } from "@antlib";
 
 const Login:FC = () => {
   return <LoginPage/>

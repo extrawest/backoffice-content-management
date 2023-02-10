@@ -1,6 +1,6 @@
 import { FC, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute } from "@lib/antdapp";
+import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute } from "@antlib";
 import { privateRoutes } from "./privateRotes";
 import { commonRoutes } from "./commonRotes";
 import { LayoutEnum } from "@lib/shared/types";

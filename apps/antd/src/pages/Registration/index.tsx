@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { RegistrationPage } from "@lib/muiapp";
+import { RegistrationPage } from "@antlib";
 
 const Registration:FC = () => {
   return <RegistrationPage/>

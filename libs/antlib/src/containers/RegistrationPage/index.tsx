@@ -12,7 +12,7 @@ import {
 	Snackbar,
 	TextField
 } from "@mui/material";
-import { auth } from "../../../../shared/firebaseconfig";
+import { auth } from "@libs/shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
 
 export const RegistrationPage: FC = () => {
@@ -43,11 +43,11 @@ export const RegistrationPage: FC = () => {
 				)
 					.then(async (res) => {
 						await	res.user.getIdToken().then((tokenRes) => {
-								localStorage.setItem(
-									"token",
-									tokenRes ?? ""
-								);
-							})
+							localStorage.setItem(
+								"token",
+								tokenRes ?? ""
+							);
+						});
 					})
 					.then(() => {
 						navigate("/");

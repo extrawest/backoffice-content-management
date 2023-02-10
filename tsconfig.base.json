@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@lib/antdapp": ["libs/antdapp/src/index.ts"],
+      "@antlib": ["libs/antlib/src/index.ts"],
       "@lib/muiapp": ["libs/muilib/src/index.ts"],
       "@lib/prime": ["libs/prime-lib/src/index.ts"],
       "@lib/redux": ["libs/redux/src/index.ts"],

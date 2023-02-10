@@ -3,7 +3,7 @@
   "version": 2,
   "projects": {
     "antd": "apps/antd",
-    "antdapp": "libs/antdapp",
+    "antlib": "libs/antlib",
     "mui": "apps/mui",
     "muilib": "libs/muilib",
     "prime-lib": "libs/prime-lib",

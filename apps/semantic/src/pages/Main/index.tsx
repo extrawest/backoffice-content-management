@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { MainPage } from "@libs/semantic";
+import { MainPage } from "@semanticlib";
 
 const Main:FC = () => {
 	return <MainPage/>;

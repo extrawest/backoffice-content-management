@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { RegistrationPage } from "@lib/tailwind";
+import { RegistrationPage } from "@tailwindlib";
 
 const Registration:FC = () => {
-  return <RegistrationPage/>
-}
+	return <RegistrationPage/>;
+};
 
-export default Registration
+export default Registration;

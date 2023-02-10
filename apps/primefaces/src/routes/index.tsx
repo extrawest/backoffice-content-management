@@ -1,16 +1,18 @@
 import { FC, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import { AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute } from "@lib/prime";
+import {
+	AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute
+} from "@primelib";
 import { privateRoutes } from "./privateRoutes";
 import { commonRoutes } from "./commonRoutes";
 import { LayoutEnum } from "@lib/shared/types";
-import { useAuth } from "libs/shared/context/Auth";
+import { useAuth } from "@lib/shared";
 
 export const AppRoutes: FC = () => {
-  const me = useAuth();
-  const token = localStorage.getItem('token');
+	const me = useAuth();
+	const token = localStorage.getItem("token");
 
-  return (
+	return (
     <Suspense
       fallback={
         <div className="flex justify-content-center align-items-center h-screen">
@@ -19,7 +21,9 @@ export const AppRoutes: FC = () => {
       }
     >
       <Routes>
-        {[...privateRoutes, ...commonRoutes].map((route, index) => (
+        {[...privateRoutes, ...commonRoutes].map((
+route, index
+) => (
           <Route
             {...route}
             key={`r_${index}_${route.path}`}
@@ -56,5 +60,5 @@ export const AppRoutes: FC = () => {
         ))}
       </Routes>
     </Suspense>
-  );
+	);
 };

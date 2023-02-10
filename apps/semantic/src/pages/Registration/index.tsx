@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { RegistrationPage } from "@libs/semantic";
+import { RegistrationPage } from "@semanticlib";
 
 const Registration:FC = () => {
 	return <RegistrationPage/>;

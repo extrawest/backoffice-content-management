@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { Box, CssBaseline } from "@mui/material";
 import {
 	AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute
-} from "@lib/tailwind";
+} from "@tailwindlib";
 import { privateRoutes } from "./privateRotes";
 import { commonRoutes } from "./commonRotes";
 import { LayoutEnum } from "@lib/shared/types";

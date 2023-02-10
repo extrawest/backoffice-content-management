@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { MainPage } from "@lib/tailwind";
+import { MainPage } from "@tailwindlib";
 
 const Main:FC = () => {
-  return <MainPage/>
-}
+	return <MainPage/>;
+};
 
-export default Main
+export default Main;

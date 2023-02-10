@@ -30,7 +30,10 @@
       "@lib/shared/utils": ["libs/shared/utils/src/index.ts"],
       "@lib/tailwind": ["libs/tailwindapp/src/index.ts"],
       "@libs/semantic": ["libs/semantic-lib/src/index.ts"],
-      "@libs/shared/firebaseconfig": ["libs/shared/firebaseconfig.js"]
+      "@libs/shared/firebaseconfig": ["libs/shared/firebaseconfig.js"],
+      "@primelib": ["libs/primelib/src/index.ts"],
+      "@semanticlib": ["libs/semanticlib/src/index.ts"],
+      "@tailwindlib": ["libs/tailwindlib/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

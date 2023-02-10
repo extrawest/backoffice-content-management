@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { LoginPage } from "@lib/tailwind";
+import { LoginPage } from "@tailwindlib";
 
 const Login:FC = () => {
-  return <LoginPage/>
-}
+	return <LoginPage/>;
+};
 
-export default Login
+export default Login;

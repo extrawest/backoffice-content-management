@@ -2,6 +2,26 @@
   "projects": {
     "default": "backoffice-f6f72"
   },
-  "targets": {},
+  "targets": {
+    "backoffice-f6f72": {
+      "hosting": {
+        "antd": [
+          "antlibrary"
+        ],
+        "prime": [
+          "primefaces"
+        ],
+        "semantic": [
+          "semantic"
+        ],
+        "tailwind": [
+          "tailwindapp"
+        ],
+        "mui": [
+          "backoffice-f6f72"
+        ]
+      }
+    }
+  },
   "etags": {}
 }

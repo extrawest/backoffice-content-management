@@ -25,7 +25,7 @@ build-mui:
     - npm run build:antd
     - npm run build:tailwind
     - npm run build:semantic
-    - npm run build:primefaces
+    - npm run build:prime
   cache:
     key:
       files:

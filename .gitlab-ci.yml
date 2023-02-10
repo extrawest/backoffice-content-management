@@ -34,7 +34,7 @@ build-mui:
   artifacts:
     expire_in: '300'
     paths:
-      - dist/apps/mui
+      - dist/apps
 
 deploy:
   only:
@@ -46,6 +46,11 @@ deploy:
     - npm i -g firebase-tools
     - npx firebase use default
     - npx firebase deploy --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting:mui-hosting --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting:antd-hosting --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting:primefaces-hosting --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting:semantic-hosting --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting:tailwind-hosting --token $FIREBASE_TOKEN
 
   environment:
     name: 'Development'

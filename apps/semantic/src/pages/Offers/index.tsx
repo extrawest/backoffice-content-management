@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { OffersPage } from "@libs/semantic";
+import { OffersPage } from "@semanticlib";
 
 const Offers:FC = () => {
 	return <OffersPage/>;

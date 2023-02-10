@@ -5,7 +5,7 @@ import { commonRoutes } from "./commonRotes";
 import { LayoutEnum } from "@lib/shared/types";
 import {
 	AuthLayout, Loader, PageLayout, PrivateRoute, PublicRoute
-} from "@libs/semantic";
+} from "@semanticlib";
 import { useAuth } from "@lib/shared";
 
 export const AppRoutes: FC = () => {

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { LoginPage } from "@libs/semantic";
+import { LoginPage } from "@semanticlib";
 
 const Login:FC = () => {
 	return <LoginPage/>;

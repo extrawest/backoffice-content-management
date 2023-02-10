@@ -6,11 +6,11 @@
     "antlib": "libs/antlib",
     "mui": "apps/mui",
     "muilib": "libs/muilib",
-    "prime-lib": "libs/prime-lib",
     "primefaces": "apps/primefaces",
+    "primelib": "libs/primelib",
     "redux": "libs/redux",
     "semantic": "apps/semantic",
-    "semantic-lib": "libs/semantic-lib",
+    "semanticlib": "libs/semanticlib",
     "shared": "libs/shared",
     "shared-hoks": "libs/shared/hoks",
     "shared-hooks": "libs/shared/hooks",
@@ -19,6 +19,6 @@
     "shared-ui": "libs/shared/ui",
     "shared-utils": "libs/shared/utils",
     "tailwind": "apps/tailwind",
-    "tailwindapp": "libs/tailwindapp"
+    "tailwindlib": "libs/tailwindlib"
   }
 }

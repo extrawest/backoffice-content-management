@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ClientsPage } from "@lib/prime";
+import { ClientsPage } from "@primelib";
 
 const Main:FC = () => {
 	return <ClientsPage/>;

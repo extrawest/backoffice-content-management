@@ -1,14 +1,69 @@
 {
-  "hosting": [{
-    "public": "dist/apps/mui",
-    "rewrites": [ {
-      "source": "**",
-      "destination": "/index.html"
-    } ],
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }]
+  "hosting": [
+    {
+      "public": "dist/apps/mui",
+      "target": "mui",
+      "rewrites": [ {
+        "source": "**",
+        "destination": "/index.html"
+      } ],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "public": "dist/apps/antd",
+      "target": "antd",
+      "rewrites": [ {
+        "source": "**",
+        "destination": "/index.html"
+      } ],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "public": "dist/apps/primefaces",
+      "target": "prime",
+      "rewrites": [ {
+        "source": "**",
+        "destination": "/index.html"
+      } ],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "public": "dist/apps/semantic",
+      "target": "semantic",
+      "rewrites": [ {
+        "source": "**",
+        "destination": "/index.html"
+      } ],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "public": "dist/apps/tailwind",
+      "target": "tailwind",
+      "rewrites": [ {
+        "source": "**",
+        "destination": "/index.html"
+      } ],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    }
+  ]
 }

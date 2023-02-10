@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ClientsPage } from "@lib/antdapp";
+import { ClientsPage } from "@antlib";
 
 const Main:FC = () => {
   return <ClientsPage/>

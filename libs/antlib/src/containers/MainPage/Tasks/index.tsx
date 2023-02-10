@@ -1,9 +1,9 @@
 import {FC, useState} from "react";
 import {
-  Button, Layout, Row, Space, theme, Typography
+	Button, Layout, Row, Space, theme, Typography
 } from "antd";
-import { Modal } from "@lib/antdapp";
-import { InitTaskForm } from "@lib/antdapp";
+import { Modal } from "@antlib";
+import { InitTaskForm } from "@antlib";
 import { StatusTag } from "../../../components/StatusTag";
 import { TasksProps } from "./Tasks.types";
 import {
@@ -30,7 +30,10 @@ export const Tasks:FC<TasksProps> = ({
       style={boxSx(token)}
     >
       <Space style={headerStackSx}>
-        <Typography.Title level={3} style={{margin: 0}}>
+        <Typography.Title
+level={3}
+style={{margin: 0}}
+        >
           Tasks
         </Typography.Title>
         <Typography.Text>

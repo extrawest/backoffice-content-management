@@ -1,12 +1,12 @@
+import { AuthProvider } from "@lib/shared";
 import { AppRoutes } from "../routes";
-import { AuthProvider } from "../../../../libs/shared/context/Auth";
 
 export function App() {
-  return (
+	return (
     <AuthProvider>
       <AppRoutes />
     </AuthProvider>
-  );
+	);
 }
 
 export default App;

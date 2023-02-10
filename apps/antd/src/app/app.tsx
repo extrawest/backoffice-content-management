@@ -1,7 +1,7 @@
 import { AppRoutes } from "../routes";
 import { ConfigProvider } from "antd";
-import { AuthProvider } from "../../../../libs/shared/context/Auth";
-import { theme } from "../../../../libs/antdapp/theme/theme";
+import { AuthProvider } from "@lib/shared";
+import { theme } from "@antlib";
 
 export function App() {
   return (

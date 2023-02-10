@@ -1,9 +1,5 @@
-import {
-  FC
-} from "react";
-import {
-  Formik
-} from "formik";
+import {FC} from "react";
+import {Formik} from "formik";
 import { Google, Facebook } from "@mui/icons-material";
 import {
 	FacebookAuthProvider,
@@ -13,15 +9,19 @@ import {
 	signInWithPopup,
 	signInWithRedirect
 } from "firebase/auth";
-import { auth, googleProvider } from "../../../../shared/firebaseconfig";
+import { auth, googleProvider } from "@libs/shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
-import { continueSx, socialsSx, submitBoxSx, titleSx, wrapperSx } from "./LoginPage.sx";
-import { Form, Input, Typography, Button, Row, Col, message } from "antd";
+import {
+	continueSx, socialsSx, submitBoxSx, titleSx, wrapperSx
+} from "./LoginPage.sx";
+import {
+	Form, Input, Typography, Button, Row, Col, message
+} from "antd";
 import { LoginFormTypes } from "./LoginPage.types";
 import { Link } from "react-router-dom";
 
 export const LoginPage: FC = () => {
-  const [api, context] = message.useMessage()
+	const [api, context] = message.useMessage();
 
 	const handleSubmit = () => async (values: LoginFormTypes) => {
 		const value = {
@@ -43,14 +43,14 @@ export const LoginPage: FC = () => {
 					"token",
 					token ?? ""
 				);
-			})
+			});
 		} catch (err) {
 			let errorMessage = "Failed to do something exceptional";
 			if (err instanceof Error) {
 				errorMessage = err.message;
 			}
-      api.error(errorMessage)
-    }
+			api.error(errorMessage);
+		}
 	};
 
 	const handleGoogleLogin = () => {
@@ -72,8 +72,8 @@ export const LoginPage: FC = () => {
 			})
 			.catch((err) => {
 				const errorMessage = err.message;
-        api.error(errorMessage)
-      });
+				api.error(errorMessage);
+			});
 	};
 
 	const handleFbLogin = () => {
@@ -94,13 +94,13 @@ export const LoginPage: FC = () => {
 			})
 			.catch((err) => {
 				const errorMessage = err.message;
-        api.error(errorMessage)
+				api.error(errorMessage);
 			});
 	};
 
 	return (
 		<>
-      {context}
+			{context}
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={handleSubmit()}
@@ -111,7 +111,11 @@ export const LoginPage: FC = () => {
             handleChange,
             handleSubmit
           }) => (
-          <Form layout="vertical" onFinish={handleSubmit} style={wrapperSx}>
+          <Form
+layout="vertical"
+onFinish={handleSubmit}
+style={wrapperSx}
+          >
             <Typography.Title
               level={1}
               style={titleSx}
@@ -125,7 +129,11 @@ export const LoginPage: FC = () => {
                   Email
                 </Typography.Text>}
             >
-              <Input name="email" value={values["email"]} onChange={handleChange} />
+              <Input
+name="email"
+value={values["email"]}
+onChange={handleChange}
+              />
             </Form.Item>
             <Form.Item
               colon={false}
@@ -134,7 +142,11 @@ export const LoginPage: FC = () => {
                   Password
                 </Typography.Text>}
             >
-              <Input.Password name="password" value={values["password"]} onChange={handleChange} />
+              <Input.Password
+name="password"
+value={values["password"]}
+onChange={handleChange}
+              />
             </Form.Item>
               <Row style={submitBoxSx}>
                 <Button
@@ -158,7 +170,10 @@ export const LoginPage: FC = () => {
                   </Col>
                 </Row>
                 <Typography.Text style={continueSx}>- Or continue with -</Typography.Text>
-            <Row gutter={12} style={socialsSx}>
+            <Row
+gutter={12}
+style={socialsSx}
+            >
               <Col>
                 <Button
                   style={{ height: 50, width: 50 }}

@@ -111,9 +111,9 @@ export const LoginPage: FC = () => {
             handleChange
           }) => (
           <Form
-layout="vertical"
-onFinish={handleSubmit}
-style={wrapperSx}
+            layout="vertical"
+            onFinish={handleSubmit}
+            style={wrapperSx}
           >
             <Typography.Title
               level={1}

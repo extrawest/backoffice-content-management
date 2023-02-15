@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 import { pxToRem } from "@lib/shared/utils";
 
 export const footerSx:CSSProperties = {
-	padding: "1rem 0",
+	padding: 0,
 	display: "flex",
 	justifyContent: "flex-end",
 	width: "100%"

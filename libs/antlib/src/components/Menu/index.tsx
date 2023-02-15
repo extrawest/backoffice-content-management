@@ -66,7 +66,7 @@ export const Menu:FC = () => {
         src={avatar}
         style={photoSx}
       />
-        <Typography.Title level={2}>
+        <Typography.Title level={3}>
           {me?.user?.displayName ?? me?.user?.email}
         </Typography.Title>
       <Space style={menuStackSx}>

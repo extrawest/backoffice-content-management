@@ -48,7 +48,7 @@ export const Chart:FC<ChartProps> = ({
     <Container className="section">
       <Grid>
         <Grid.Row>
-          <Grid.Column  width={14} className="p-2">
+          <Grid.Column  width={13} className="p-2">
           <Header as="h3">
             Today&apos;s trends
           </Header>
@@ -113,26 +113,26 @@ export const Chart:FC<ChartProps> = ({
             </AreaChart>
           </ResponsiveContainer>
           </Grid.Column>
-        <Grid.Column width={2} className="chart-list">
+        <Grid.Column width={3} className="chart-list">
           <List relaxed divided className="border-l">
             <List.Item className="p-2">
-              <Header as="h3" textAlign="center">
+              <Header as="h5" textAlign="center">
                 Backlog
               </Header>
               <Header as="h5" textAlign="center">
                 {backlogLength}
               </Header>
             </List.Item>
-            <List.Item>
-              <Header as="h3" textAlign="center">
+            <List.Item className="p-2">
+              <Header as="h5" textAlign="center">
                 Tasks in progress
               </Header>
               <Header as="h5" textAlign="center">
                 {tasksLength}
               </Header>
             </List.Item>
-            <List.Item>
-              <Header as="h3" textAlign="center">
+            <List.Item className="p-2">
+              <Header as="h5" textAlign="center">
                 Total
               </Header>
               <Header as="h5" textAlign="center">

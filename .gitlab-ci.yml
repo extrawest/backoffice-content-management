@@ -13,6 +13,15 @@ variables:
     NX_FIREBASE_APP_ID: ${NX_FIREBASE_MESSAGING_SENDER_ID}
     NX_FIREBASE_MEASUREMENT_ID: ${NX_FIREBASE_MEASUREMENT_ID}
 
+
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - node_modules
+  policy: push  
+
 build:
   only:
     refs:
@@ -32,7 +41,7 @@ build:
         - package-lock.json
     paths:
       - node_modules
-    policy: push  
+    policy: pull  
   environment:
     name: 'Development'
   artifacts:

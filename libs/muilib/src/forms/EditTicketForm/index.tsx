@@ -93,7 +93,8 @@ export const EditTicketForm:FC<EditTicketFormProps> = ({
               } else {
                 return ({
                   ...ticket,
-                  ...values
+                  ...values,
+                  image: imgUrl
                 })
               }
             })

@@ -108,8 +108,7 @@ export const LoginPage: FC = () => {
         {({
             isSubmitting,
             values,
-            handleChange,
-            handleSubmit
+            handleChange
           }) => (
           <Form
 layout="vertical"
@@ -130,9 +129,9 @@ style={wrapperSx}
                 </Typography.Text>}
             >
               <Input
-name="email"
-value={values["email"]}
-onChange={handleChange}
+                name="email"
+                value={values["email"]}
+                onChange={handleChange}
               />
             </Form.Item>
             <Form.Item
@@ -152,6 +151,7 @@ onChange={handleChange}
                 <Button
                   htmlType="submit"
                   type="primary"
+                  shape="round"
                   disabled={isSubmitting}
                 >
                   Log In
@@ -164,7 +164,7 @@ onChange={handleChange}
                       to={AppRoutesEnum.REGISTRATION}
                     >
                       <Typography.Text>
-                        Don't have an account? Sign Up
+                        Don&apos;t have an account? Sign Up
                       </Typography.Text>
                     </Link>
                   </Col>

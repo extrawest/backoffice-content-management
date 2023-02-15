@@ -2,7 +2,7 @@ import { SxProps, Theme } from "@mui/material";
 import { CSSProperties } from "react";
 
 export const footerSx:CSSProperties = {
-	padding: "2rem 0",
+	padding: 0,
 	display: "flex",
 	justifyContent: "flex-end",
 	width: "100%"

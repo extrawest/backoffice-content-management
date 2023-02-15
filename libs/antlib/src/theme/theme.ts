@@ -1,7 +1,7 @@
 import { AliasToken } from "antd/es/theme/interface";
 
 export const theme: Partial<AliasToken> = {
-	borderRadius: 8,
+	borderRadius: 20,
 	colorPrimary: "#1D2992",
 	"blue-3": "#237DBF",
 	colorText: "#000000",

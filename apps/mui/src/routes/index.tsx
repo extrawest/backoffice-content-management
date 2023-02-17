@@ -20,7 +20,7 @@ export const AppRoutes: FC = () => {
                   </PageLayout>
                 </PrivateRoute>
               ) : (
-                <PublicRoute >
+                <PublicRoute>
                   <AuthLayout>
                     {route.element}
                   </AuthLayout>

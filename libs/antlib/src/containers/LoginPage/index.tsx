@@ -1,15 +1,9 @@
-import {FC} from "react";
+import {
+	FC, useCallback, useEffect, useState 
+} from "react";
 import {Formik} from "formik";
 import { Google, Facebook } from "@mui/icons-material";
-import {
-	FacebookAuthProvider,
-	getRedirectResult,
-	GoogleAuthProvider,
-	signInWithEmailAndPassword,
-	signInWithPopup,
-	signInWithRedirect
-} from "firebase/auth";
-import { auth, googleProvider } from "@libs/shared/firebaseconfig";
+import { auth } from "@libs/shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
 import {
 	continueSx, socialsSx, submitBoxSx, titleSx, wrapperSx
@@ -17,98 +11,94 @@ import {
 import {
 	Form, Input, Typography, Button, Row, Col, message
 } from "antd";
-import { LoginFormTypes } from "./LoginPage.types";
 import { Link } from "react-router-dom";
+import {
+	useSignInWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle 
+} from "react-firebase-hooks/auth";
+import { LoginFormTypes } from "./LoginPage.types";
 
 export const LoginPage: FC = () => {
 	const [api, context] = message.useMessage();
-
-	const handleSubmit = () => async (values: LoginFormTypes) => {
-		const value = {
-			email:  values.email,
-			password: values.password
-		};
-		try {
-			await signInWithEmailAndPassword(
-				auth,
-				value.email,
-				value.password
-			).then(async (result) => {
-
-				let token = "";
-				await result.user.getIdToken().then((tokenRes) => {
-					token = tokenRes;
-				});
-				localStorage.setItem(
-					"token",
-					token ?? ""
-				);
-			});
-		} catch (err) {
-			let errorMessage = "Failed to do something exceptional";
-			if (err instanceof Error) {
-				errorMessage = err.message;
+	
+	const [
+		signInWithGoogle, ,
+		loadingSignInWithGoogle,
+		errorSignInWithGoogle
+	] = useSignInWithGoogle(auth);
+	
+	const [
+		signInWithFacebook, ,
+		loadingSignInWithFacebook,
+		errorSignInWithFacebook
+	] = useSignInWithFacebook(auth);
+	
+	const [
+		signInWithEmailAndPassword, ,
+		loadingSignInWithEmailAndPassword,
+		errorSignInWithEmailAndPassword
+	] = useSignInWithEmailAndPassword(auth);
+	
+	const handleSignInWithGoogle = useCallback(
+		() => {
+			setError("");
+			signInWithGoogle();
+		},
+		[signInWithGoogle],
+	);
+	
+	const handleSignInWithFacebook = useCallback(
+		() => {
+			setError("");
+			signInWithFacebook();
+		},
+		[signInWithFacebook],
+	);
+	const handleSignInWithEmailAndPassword = useCallback(
+		(values: LoginFormTypes) => {
+			setError("");
+			signInWithEmailAndPassword(
+				values.email ?? "",
+				values.password ?? ""
+			);
+		},
+		[signInWithEmailAndPassword],
+	);
+	
+	const [error, setError] = useState("");
+	
+	useEffect(
+		() => {
+			if (errorSignInWithFacebook || errorSignInWithGoogle || errorSignInWithEmailAndPassword) {
+				setError(errorSignInWithFacebook?.message ??
+					errorSignInWithGoogle?.message ??
+					errorSignInWithEmailAndPassword?.message ??
+					"");
 			}
-			api.error(errorMessage);
-		}
-	};
-
-	const handleGoogleLogin = () => {
-		signInWithRedirect(
-			auth,
-			googleProvider
-		);
-		getRedirectResult(auth)
-			.then((result) => {
-				if (result) {
-					const credential =
-            GoogleAuthProvider.credentialFromResult(result);
-					const token = credential?.accessToken;
-					localStorage.setItem(
-						"token",
-						token ?? ""
-					);
-				}
-			})
-			.catch((err) => {
-				const errorMessage = err.message;
-				api.error(errorMessage);
-			});
-	};
-
-	const handleFbLogin = () => {
-		const provider = new FacebookAuthProvider();
-		signInWithPopup(
-			auth,
-			provider
-		)
-			.then((result) => {
-				const user = result.user;
-				const credential =
-          FacebookAuthProvider.credentialFromResult(result);
-				const accessToken = credential?.accessToken;
-				localStorage.setItem(
-					"token",
-					accessToken ?? ""
-				);
-			})
-			.catch((err) => {
-				const errorMessage = err.message;
-				api.error(errorMessage);
-			});
-	};
+		},
+		[errorSignInWithFacebook, errorSignInWithGoogle, errorSignInWithEmailAndPassword]
+	);
+	
+	useEffect(
+		() => {
+			if (error) {
+				api.error(error);
+			}
+		},
+		[error]
+	);
 
 	return (
 		<>
 			{context}
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={handleSubmit()}
+        onSubmit={handleSignInWithEmailAndPassword}
       >
         {({
             isSubmitting,
             values,
-            handleChange
+            handleChange,
+											handleSubmit
           }) => (
           <Form
             layout="vertical"
@@ -142,10 +132,10 @@ export const LoginPage: FC = () => {
                 </Typography.Text>}
             >
               <Input.Password
-name="password"
-value={values["password"]}
-onChange={handleChange}
-              />
+															name="password"
+															value={values["password"]}
+															onChange={handleChange}
+														/>
             </Form.Item>
               <Row style={submitBoxSx}>
                 <Button
@@ -171,13 +161,13 @@ onChange={handleChange}
                 </Row>
                 <Typography.Text style={continueSx}>- Or continue with -</Typography.Text>
             <Row
-gutter={12}
-style={socialsSx}
+													gutter={12}
+													style={socialsSx}
             >
               <Col>
                 <Button
                   style={{ height: 50, width: 50 }}
-                  onClick={handleGoogleLogin}
+                  onClick={handleSignInWithGoogle}
                   type="primary"
                 >
                   <Google />
@@ -186,7 +176,7 @@ style={socialsSx}
               <Col>
                 <Button
                   style={{ height: 50, width: 50 }}
-                  onClick={handleFbLogin}
+                  onClick={handleSignInWithFacebook}
                   type="primary"
                 >
                   <Facebook />

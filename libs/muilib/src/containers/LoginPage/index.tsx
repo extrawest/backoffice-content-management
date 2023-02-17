@@ -1,11 +1,11 @@
 import {
-  FC, useCallback, useEffect, useState
+	FC, useCallback, useEffect, useState
 } from "react";
 import {
 	Alert,
 	Box,
 	Button,
-  FormControl,
+	FormControl,
 	Grid,
 	Link,
 	Snackbar,
@@ -15,74 +15,84 @@ import {
 import { Google, Facebook } from "@mui/icons-material";
 import { auth } from "@libs/shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
-import { submitBoxSx, titleSx, wrapperSx } from "./LoginPage.sx";
+import {
+	submitBoxSx, titleSx, wrapperSx 
+} from "./LoginPage.sx";
 import { ButtonContained } from "../../components/ButtonContained";
 import { Form, Formik } from "formik";
-import { useSignInWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { LoginFormTypes } from "../../../../antlib/src/containers/LoginPage/LoginPage.types";
+import {
+	useSignInWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle 
+} from "react-firebase-hooks/auth";
+import { LoginFormTypes } from "./LoginPage.types";
 
 export const LoginPage: FC = () => {
-  const [
-    signInWithGoogle, ,
-    loadingSignInWithGoogle,
-    errorSignInWithGoogle
-  ] = useSignInWithGoogle(auth);
+	const [
+		signInWithGoogle, ,
+		loadingSignInWithGoogle,
+		errorSignInWithGoogle
+	] = useSignInWithGoogle(auth);
 
-  const [
-    signInWithFacebook, ,
-    loadingSignInWithFacebook,
-    errorSignInWithFacebook
-  ] = useSignInWithFacebook(auth);
+	const [
+		signInWithFacebook, ,
+		loadingSignInWithFacebook,
+		errorSignInWithFacebook
+	] = useSignInWithFacebook(auth);
 
-  const [
-    signInWithEmailAndPassword, ,
-    loadingSignInWithEmailAndPassword,
-    errorSignInWithEmailAndPassword
-  ] = useSignInWithEmailAndPassword(auth);
+	const [
+		signInWithEmailAndPassword, ,
+		loadingSignInWithEmailAndPassword,
+		errorSignInWithEmailAndPassword
+	] = useSignInWithEmailAndPassword(auth);
 
-  const handleSignInWithGoogle = useCallback(
-    () => {
-      setError('');
-      signInWithGoogle();
-    },
-    [signInWithGoogle],
-  );
+	const handleSignInWithGoogle = useCallback(
+		() => {
+			setError("");
+			signInWithGoogle();
+		},
+		[signInWithGoogle],
+	);
 
-  const handleSignInWithFacebook = useCallback(
-    () => {
-      setError('');
-      signInWithFacebook();
-    },
-    [signInWithFacebook],
-  );
-  const handleSignInWithEmailAndPassword = useCallback(
-    (values: LoginFormTypes) => {
-      setError('');
-      signInWithEmailAndPassword(values.email ?? "", values.password ?? "");
-    },
-    [signInWithEmailAndPassword],
-  );
+	const handleSignInWithFacebook = useCallback(
+		() => {
+			setError("");
+			signInWithFacebook();
+		},
+		[signInWithFacebook],
+	);
+	const handleSignInWithEmailAndPassword = useCallback(
+		(values: LoginFormTypes) => {
+			setError("");
+			signInWithEmailAndPassword(
+				values.email ?? "",
+				values.password ?? ""
+			);
+		},
+		[signInWithEmailAndPassword],
+	);
 
-  const [openAlert, setOpenAlert] = useState(false);
+	const [openAlert, setOpenAlert] = useState(false);
 	const [error, setError] = useState("");
 
-  useEffect(() => {
-      if (errorSignInWithFacebook || errorSignInWithGoogle || errorSignInWithEmailAndPassword) {
-        setError(
-          errorSignInWithFacebook?.message ??
+	useEffect(
+		() => {
+			if (errorSignInWithFacebook || errorSignInWithGoogle || errorSignInWithEmailAndPassword) {
+				setError(errorSignInWithFacebook?.message ??
           errorSignInWithGoogle?.message ??
           errorSignInWithEmailAndPassword?.message ??
-          ''
-        )
-      }
-    },
-    [errorSignInWithFacebook, errorSignInWithGoogle, errorSignInWithEmailAndPassword])
+          "");
+			}
+		},
+		[errorSignInWithFacebook, errorSignInWithGoogle, errorSignInWithEmailAndPassword]
+	);
 
-  useEffect(() => {
-    if (error) {
-      setOpenAlert(true)
-    }
-  }, [error])
+	useEffect(
+		() => {
+			if (error) {
+				setOpenAlert(true);
+			}
+		},
+		[error]
+	);
 
 	return (
 		<>
@@ -151,7 +161,7 @@ export const LoginPage: FC = () => {
                     href={AppRoutesEnum.REGISTRATION}
                     variant="body2"
                   >
-                    Don't have an account? Sign Up
+                    Don&apos;t have an account? Sign Up
                   </Link>
                 </Grid>
               </Grid>

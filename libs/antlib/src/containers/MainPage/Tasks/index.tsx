@@ -31,8 +31,8 @@ export const Tasks:FC<TasksProps> = ({
     >
       <Space style={headerStackSx}>
         <Typography.Title
-level={3}
-style={{margin: 0}}
+          level={3}
+          style={{margin: 0}}
         >
           Tasks
         </Typography.Title>

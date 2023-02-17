@@ -2,10 +2,12 @@ import {
 	ChangeEvent,
 	FC, useEffect, useState
 } from "react";
-import { Formik, FormikProps} from "formik";
+import {
+	Formik, Form as FormikForm, FormikProps
+} from "formik";
 import dayjs from "dayjs";
 import {
-	AutoComplete, Button, Col, Form, Input, Layout, Row, Typography
+	AutoComplete, Button, Col, Form, Input, Layout, Row
 } from "antd";
 import { setDoc, doc } from "firebase/firestore";
 import { db, storage } from "@libs/shared/firebaseconfig";
@@ -70,7 +72,6 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 			}
 		);
 	};
-
 	const handleSubmit = () => async (values: FormValueProps) => {
 		try {
 			if (me.user?.uid) {
@@ -83,11 +84,11 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 					{
 						data: [...tickets, {
 							id: dayjs().valueOf().toString(),
-							task: tasks.find(task => task.id === activeTask)?.name,
+							task: tasks.find(task => task.name === activeTask)?.name,
 							firstName: values.firstName,
 							lastName: values.lastName,
 							image: imgUrl,
-							status: tasks.find(task => task.id === activeTask)?.type
+							status: tasks.find(task => task.name === activeTask)?.type
 						}]
 					}
 				);
@@ -98,7 +99,7 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
 						me.user?.uid
 					),
 					{
-						tasks: tasks.filter(task => task.id !== activeTask)
+						tasks: tasks.filter(task => task.name !== activeTask)
 					}
 				);
 			}
@@ -160,13 +161,9 @@ export const CreateTicketForm:FC<CreateTicketFormProps> = ({
           values,
           errors,
           handleChange,
-          setFieldValue,
-          handleSubmit,
+          setFieldValue
         }:FormikProps<FormValueProps>) => (
-        <Form
-layout="vertical"
-onFinish={handleSubmit}
-        >
+        <FormikForm style={{padding: "2rem 0"}}>
           <Row
             gutter={24}
             style={wrapperSx}
@@ -195,31 +192,25 @@ onFinish={handleSubmit}
             >
               <Form.Item
                 colon={false}
-                label={
-                <Typography.Text>
-                  Task
-                </Typography.Text>}
               >
                 <AutoComplete
+																	placeholder="Task"
                   options={processedTasks}
                   onSelect={onSelect(setFieldValue)}
                   onSearch={onSearch}
                 >
                   <Input.Search
-style={inputSx}
-size="large"
-enterButton
+																			style={inputSx}
+																			size="large"
+																			enterButton
                   />
                 </AutoComplete>
               </Form.Item>
               <Form.Item
                 colon={false}
-                label={
-                  <Typography.Text>
-                    First name
-                  </Typography.Text>}
               >
                 <Input
+																	placeholder="First Name"
 style={inputSx}
 value={values["firstName"]}
 onChange={handleChange}
@@ -228,12 +219,9 @@ name="firstName"
               </Form.Item>
               <Form.Item
                 colon={false}
-                label={
-                  <Typography.Text>
-                    Last name
-                  </Typography.Text>}
               >
                 <Input
+																	placeholder="Last Name"
 style={inputSx}
 value={values["lastName"]}
 onChange={handleChange}
@@ -252,7 +240,7 @@ name="lastName" />
               Submit
             </Button>
           </Layout.Footer>
-        </Form>
+        </FormikForm>
       )}
     </Formik>
 	);

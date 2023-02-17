@@ -11,7 +11,7 @@ export const subTextSx:SxProps<Theme> = {
 	color: (theme: Theme) => theme.palette.grey[500]
 };
 export const linkSx:CSSProperties = {
-  textDecoration: "none"
+	textDecoration: "none"
 };
 export const addSx:SxProps<Theme> = {
 	fontSize: (theme: Theme) => theme.spacing(14/8),
@@ -29,6 +29,7 @@ export const taskRowSx = (notLast: boolean):SxProps<Theme> => ({
 		`${theme.spacing(1/8)} solid ${theme.palette.grey[400]}` :
 		"none",
 	width: "100%",
+	boxSizing: "border-box",
 	p: 2
 });
 export const headerStackSx:SxProps<Theme> = {

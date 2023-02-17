@@ -22,7 +22,6 @@ export const textSx: SxProps<Theme> = {
 };
 export const menuStackSx: SxProps<Theme> = {
 	justifyContent: "space-between",
-	maxHeight: "100%",
 	height: "100%",
 	alignItems: "flex-start"
 };
@@ -33,11 +32,12 @@ export const wrapperSx: SxProps<Theme> = {
 	bottom: 0,
 	display: "flex",
 	flexDirection: "column",
-	width: (theme: Theme) => theme.spacing(362/8),
+	width: (theme: Theme) => theme.spacing(320/8),
 	boxShadow: (theme: Theme) => `${theme.spacing(4/8)} 0 ${theme.spacing(36/8)} ${theme.spacing(36/8)} rgba(96,94,94,0.08)`,
 	m: 0,
-	minHeight: "100vh",
+	maxHeight: "100vh",
 	height: "100%",
+	boxSizing: "border-box",
 	py: 10,
 	pl: 10,
 	pr: 5

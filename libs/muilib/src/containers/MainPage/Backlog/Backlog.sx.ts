@@ -26,6 +26,7 @@ export const taskRowSx = (notLast: boolean):SxProps<Theme> => ({
 		`${theme.spacing(1/8)} solid ${theme.palette.grey[400]}` :
 		"none",
 	width: "100%",
+	boxSizing: "border-box",
 	p: 2
 });
 export const headerStackSx:SxProps<Theme> = {

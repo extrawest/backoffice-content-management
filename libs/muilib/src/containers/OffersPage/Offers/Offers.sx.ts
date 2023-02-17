@@ -3,7 +3,8 @@ import { CSSProperties } from "react";
 
 export const boxSx:SxProps<Theme> = {
 	border: (theme: Theme) => `${theme.spacing(1/8)} solid ${theme.palette.grey[400]}`,
-	borderRadius: (theme: Theme) => theme.spacing(8/8)
+	borderRadius: (theme: Theme) => theme.spacing(8/8),
+	boxSizing: "border-box"
 };
 export const subTextSx:SxProps<Theme> = {
 	fontSize: (theme: Theme) => theme.spacing(14/8),
@@ -20,6 +21,7 @@ export const addSx:SxProps<Theme> = {
 };
 export const taskRowSx = (notLast: boolean):SxProps<Theme> => ({
 	display: "flex",
+	boxSizing: "border-box",
 	justifyContent: "space-between",
 	alignItems: "center",
 	borderBottom: (theme: Theme) => notLast ?

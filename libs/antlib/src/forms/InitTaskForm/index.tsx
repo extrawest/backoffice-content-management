@@ -1,7 +1,9 @@
 import {
 	FC, useEffect, useState
 } from "react";
-import {Formik, FormikProps} from "formik";
+import {
+	Formik, Form as FormikForm, FormikProps
+} from "formik";
 import { footerSx } from "./InitTaskForm.sx";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "@libs/shared/firebaseconfig";
@@ -36,7 +38,7 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 					{
 						tasks: [...tasks, {
 							id: dayjs().valueOf().toString(),
-							name: backlog.find(task => task.id === activeTask)?.name,
+							name: backlog.find(task => task.name === activeTask)?.name,
 							type: values.type
 						}]
 					}
@@ -48,7 +50,7 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 						me.user?.uid
 					),
 					{
-						tasks: backlog.filter(task => task.id !== activeTask)
+						tasks: backlog.filter(task => task.name !== activeTask)
 					}
 				);
 			}
@@ -63,12 +65,11 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 
 	const [processedTasks, setProcessedTasks] = useState<OptionType[]>([]);
 	const [processedStatuses, setProcessedStatuses] = useState<OptionType[]>([]);
-	const {useToken} = theme;
-	const {token} = useToken();
+
 	useEffect(
 		() => {
 			if (tasks) {
-				setProcessedTasks(tasks.map((
+				setProcessedTasks(backlog.map((
 					task, index
 				) => ({
 					value: task.name,
@@ -111,7 +112,7 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 	const changeStatus = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
 		(val: string) => {
 			setFieldValue(
-				"status",
+				"type",
 				val
 			);
 		};
@@ -119,56 +120,43 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 	return (
     <Formik
       initialValues={{ name: "", type: TaskTypeEnum.DEFAULT }}
-      validate={values => {
-        const errors:Record<string, string> = {};
-        if (!values.name) {
-          errors["name"] = "Required";
-        }
-        return errors;
-      }}
       onSubmit={handleSubmit()}
     >
       {({
           isSubmitting,
           setFieldValue,
-          handleSubmit
+							values
         }) => (
-        <Form
-layout="vertical"
-onFinish={handleSubmit}
-        >
+        <FormikForm style={{ padding: "2rem 0" }}>
           <Form.Item
             colon={false}
-            label={
-              <Typography.Text>
-                Task
-              </Typography.Text>}
           >
             <AutoComplete
+													placeholder="Task"
+													value={values["name"]}
               options={processedTasks}
               onSelect={onSelectTask(setFieldValue)}
               onSearch={onSearchTask}
             >
               <Input.Search
-size="large"
-enterButton
+															size="large"
+															enterButton
               />
             </AutoComplete>
           </Form.Item>
           <Form.Item
             colon={false}
-            label={
-              <Typography.Text>
-                Status
-              </Typography.Text>}
           >
             <Select
+													placeholder="Status"
               onChange={changeStatus(setFieldValue)}
+														value={values["type"]}
             >
                 {processedStatuses.map(item => (
                   <Select.Option
-key={item.key}
-value={item.value}>
+																			key={item.key}
+																			value={item.value}
+                  >
                     <Space style={{width: "fit-content"}}>
                       <StatusTag type={item.label as TaskTypeEnum}/>
                     </Space>
@@ -185,7 +173,7 @@ value={item.value}>
               Submit
             </Button>
           </Layout.Footer>
-        </Form>
+        </FormikForm>
       )}
     </Formik>
 	);

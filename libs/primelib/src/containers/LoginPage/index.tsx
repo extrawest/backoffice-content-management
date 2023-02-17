@@ -1,104 +1,89 @@
-import {FC, useState} from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import {
 	Alert,
 	Snackbar
 } from "@mui/material";
 import { Google, Facebook } from "@mui/icons-material";
-import {
-	FacebookAuthProvider,
-	getRedirectResult,
-	GoogleAuthProvider,
-	signInWithEmailAndPassword,
-	signInWithPopup,
-	signInWithRedirect
-} from "firebase/auth";
-import { auth, googleProvider } from "@libs/shared/firebaseconfig";
+import { auth } from "@libs/shared/firebaseconfig";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { Form, Formik } from "formik";
 import { Link } from "react-router-dom";
+import { useSignInWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { LoginFormTypes } from "../../../../semanticlib/src/containers/LoginPage/LoginPage.types";
 
 export const LoginPage: FC = () => {
+	const [
+		signInWithGoogle, ,
+		loadingSignInWithGoogle,
+		errorSignInWithGoogle
+	] = useSignInWithGoogle(auth);
+	
+	const [
+		signInWithFacebook, ,
+		loadingSignInWithFacebook,
+		errorSignInWithFacebook
+	] = useSignInWithFacebook(auth);
+	
+	const [
+		signInWithEmailAndPassword, ,
+		loadingSignInWithEmailAndPassword,
+		errorSignInWithEmailAndPassword
+	] = useSignInWithEmailAndPassword(auth);
+	
+	const handleSignInWithGoogle = useCallback(
+		() => {
+			setError("");
+			signInWithGoogle();
+		},
+		[signInWithGoogle],
+	);
+	
+	const handleSignInWithFacebook = useCallback(
+		() => {
+			setError("");
+			signInWithFacebook();
+		},
+		[signInWithFacebook],
+	);
+	const handleSignInWithEmailAndPassword = useCallback(
+		(values: LoginFormTypes) => {
+			setError("");
+			signInWithEmailAndPassword(
+				values.email ?? "",
+				values.password ?? ""
+			);
+		},
+		[signInWithEmailAndPassword],
+	);
+	
 	const [openAlert, setOpenAlert] = useState(false);
 	const [error, setError] = useState("");
-
-	const handleSubmit = () => async (value: {email: string, password: string}) => {
-		try {
-			await signInWithEmailAndPassword(
-				auth,
-				value.email,
-				value.password
-			).then(async (result) => {
-
-				let token = "";
-				await result.user.getIdToken().then((tokenRes) => {
-					token = tokenRes;
-				});
-				localStorage.setItem(
-					"token",
-					token ?? ""
-				);
-			});
-		} catch (err) {
-			let errorMessage = "Failed to do something exceptional";
-			if (err instanceof Error) {
-				errorMessage = err.message;
+	
+	useEffect(
+		() => {
+			if (errorSignInWithFacebook || errorSignInWithGoogle || errorSignInWithEmailAndPassword) {
+				setError(errorSignInWithFacebook?.message ??
+					errorSignInWithGoogle?.message ??
+					errorSignInWithEmailAndPassword?.message ??
+					"");
 			}
-			setOpenAlert(true);
-			setError(errorMessage);
-		}
-	};
-
-	const handleGoogleLogin = () => {
-		signInWithRedirect(
-			auth,
-			googleProvider
-		);
-		getRedirectResult(auth)
-			.then((result) => {
-				if (result) {
-					const credential =
-            GoogleAuthProvider.credentialFromResult(result);
-					const token = credential?.accessToken;
-					localStorage.setItem(
-						"token",
-						token ?? ""
-					);
-				}
-			})
-			.catch((err) => {
-				const errorMessage = err.message;
+		},
+		[errorSignInWithFacebook, errorSignInWithGoogle, errorSignInWithEmailAndPassword]
+	);
+	
+	useEffect(
+		() => {
+			if (error) {
 				setOpenAlert(true);
-				setError(errorMessage);
-			});
-	};
-
-	const handleFbLogin = () => {
-		const provider = new FacebookAuthProvider();
-		signInWithPopup(
-			auth,
-			provider
-		)
-			.then((result) => {
-				const user = result.user;
-				const credential =
-          FacebookAuthProvider.credentialFromResult(result);
-				const accessToken = credential?.accessToken;
-				localStorage.setItem(
-					"token",
-					accessToken ?? ""
-				);
-			})
-			.catch((err) => {
-				const errorMessage = err.message;
-				setOpenAlert(true);
-				setError(errorMessage);
-			});
-	};
+			}
+		},
+		[error]
+	);
 
 	return (
     <Formik
       initialValues={{ email: "", password: "" }}
-      onSubmit={handleSubmit()}
+      onSubmit={handleSignInWithEmailAndPassword}
     >
       {({
           isSubmitting,
@@ -149,13 +134,13 @@ export const LoginPage: FC = () => {
         <div className="flex justify-content-center gap-3">
           <button
             className="primary-btn size-3 cursor-pointer text-white uppercase border-none outline-none font-semibold border-round-lg"
-            onClick={handleGoogleLogin}
+            onClick={handleSignInWithGoogle}
           >
             <Google />
           </button>
           <button
             className="primary-btn size-3 cursor-pointer text-white uppercase border-none outline-none font-semibold border-round-lg"
-            onClick={handleFbLogin}
+            onClick={handleSignInWithFacebook}
           >
             <Facebook />
           </button>

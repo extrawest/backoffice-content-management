@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { OffersPage } from "@tailwindlib";
+import { OffersPage } from "@lib/tailwind";
 
-const Offers:FC = () => {
-	return <OffersPage/>;
+const Offers: FC = () => {
+	return <OffersPage />;
 };
 
 export default Offers;

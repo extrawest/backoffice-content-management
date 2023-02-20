@@ -1,3 +1,3 @@
 export type PublicRouteProps = {
-  isAuthed: boolean;
+	isAuthed: boolean;
 };

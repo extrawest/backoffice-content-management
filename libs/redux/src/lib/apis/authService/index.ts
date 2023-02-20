@@ -13,13 +13,13 @@ export const authService = createApi({
 				url: "/login/access-token",
 				method: "POST",
 				headers: {
-					"Content-Type": "application/x-www-form-urlencoded"
+					"Content-Type": "application/x-www-form-urlencoded",
 				},
 				data: body,
 			}),
-			transformResponse: (response: AuthResponse) => encryptUserInfo(response)
-		})
-	})
+			transformResponse: (response: AuthResponse) => encryptUserInfo(response),
+		}),
+	}),
 });
 export const { login } = authService.endpoints;
 export const { useLoginMutation } = authService;

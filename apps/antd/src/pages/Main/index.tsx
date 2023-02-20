@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { MainPage } from "@antlib";
+import { MainPage } from "@lib/ant";
 
-const Main:FC = () => {
-  return <MainPage/>
-}
+const Main: FC = () => {
+	return <MainPage />;
+};
 
-export default Main
+export default Main;

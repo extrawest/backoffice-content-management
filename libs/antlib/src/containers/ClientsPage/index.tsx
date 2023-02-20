@@ -13,13 +13,15 @@ import { TaskType, TicketType } from "@lib/shared/types";
 import {
 	doc, getDoc, setDoc
 } from "firebase/firestore";
-import { db } from "@libs/shared/firebaseconfig";
+import { db } from "@lib/shared";
 import {
-	addSx, headerStackSx, subTextSx
+	addSx,
+	headerStackSx,
+	subTextSx,
 } from "../MainPage/Backlog/Backlog.sx";
 import { titleSx } from "./ClientsPage.sx";
 
-export const ClientsPage:FC = () => {
+export const ClientsPage: FC = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [tasks, setTasks] = useState<TaskType[]>([]);
 	const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -71,7 +73,7 @@ export const ClientsPage:FC = () => {
 						me.user?.uid
 					),
 					{
-						data: tickets.filter(ticket => ticket.id !== taskId)
+						data: tickets.filter((ticket) => ticket.id !== taskId),
 					}
 				);
 			}
@@ -94,97 +96,96 @@ export const ClientsPage:FC = () => {
 		setShowModal(status);
 	};
 
-	const dataSource = tickets?.map(ticket => ({
-		key: ticket?.id,
-		task: ticket.task,
-		name: <Space>
-      <Avatar
-        src={ticket.image}
-        size={40}
-      />
-      {`${ticket.firstName} ${ticket.lastName}`}
-        </Space>,
-		date: dayjs(ticket.id).format("DD/MM/YY"),
-		status: ticket.status,
-		delete: <Button
-          type="text"
-          shape="circle"
-          onClick={deleteTicket(ticket.id)}
-		>
-          <Delete/>
-          </Button>
-	})) ?? [];
+	const dataSource =
+		tickets?.map((ticket) => ({
+			key: ticket?.id,
+			task: ticket.task,
+			name: (
+				<Space>
+					<Avatar
+						src={ticket.image}
+						size={40}
+					/>
+					{`${ticket.firstName} ${ticket.lastName}`}
+				</Space>
+			),
+			date: dayjs(ticket.id).format("DD/MM/YY"),
+			status: ticket.status,
+			delete: (
+				<Button
+					type="text"
+					shape="circle"
+					onClick={deleteTicket(ticket.id)}
+				>
+					<Delete />
+				</Button>
+			),
+		})) ?? [];
 
 	const columns = [
 		{
 			dataIndex: "task",
 			title: "Ticket details",
-			key: "title"
+			key: "title",
 		},
 		{
 			dataIndex: "name",
 			title: "Customer name",
-			key: "name"
+			key: "name",
 		},
 		{
 			dataIndex: "date",
 			title: "Date",
-			key: "date"
+			key: "date",
 		},
 		{
 			dataIndex: "status",
 			title: "Priority",
-			key: "status"
+			key: "status",
 		},
 		{
 			dataIndex: "delete",
 			title: "",
-			key: "delete"
-		}
+			key: "delete",
+		},
 	];
 
 	return (
 		<>
-      <Typography.Title level={1}>
-        Clients
-      </Typography.Title>
-      <Layout.Content>
-        <Space style={titleSx}>
-          <Typography.Title level={3}>
-            All tickets
-          </Typography.Title>
-          <Space style={headerStackSx}>
-            <Button
-              type="text"
-              shape="circle"
-              onClick={handleShowModal(true)}
-              style={addSx(token)}
-            >
-              +
-            </Button>
-            <Typography.Text style={subTextSx(token)}>
-              Add
-            </Typography.Text>
-          </Space>
-        </Space>
-        <Table
-          dataSource={dataSource}
-          columns={columns}
-        />
-        <Modal
-          onCancel={handleShowModal(false)}
-          open={showModal}
-          title="Create new ticket"
-        >
-          <CreateTicketForm
-            tasks={tasks}
-            tickets={tickets}
-            getTasks={getTasksData}
-            getTickets={getTicketsData}
-            closeModal={handleShowModal(false)}
-          />
-        </Modal>
-      </Layout.Content>
+			<Typography.Title level={1}>Clients</Typography.Title>
+			<Layout.Content>
+				<Space style={titleSx}>
+					<Typography.Title level={3}>All tickets</Typography.Title>
+					<Space style={headerStackSx}>
+						<Button
+							type="text"
+							shape="circle"
+							onClick={handleShowModal(true)}
+							style={addSx(token)}
+						>
+							+
+						</Button>
+						<Typography.Text style={subTextSx(token)}>Add</Typography.Text>
+					</Space>
+				</Space>
+				<Table
+					dataSource={dataSource}
+					columns={columns}
+				/>
+				<Modal
+					onCancel={handleShowModal(false)}
+					open={showModal}
+					title="Create new ticket"
+				>
+					<CreateTicketForm
+						tasks={tasks}
+						tickets={tickets}
+						getTasks={getTasksData}
+						getTickets={getTicketsData}
+						closeModal={handleShowModal(false)}
+					/>
+				</Modal>
+			</Layout.Content>
 		</>
 	);
 };

@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import {
-	AppRoutesEnum, LayoutEnum, RouteType
+	AppRoutesEnum, LayoutEnum, RouteType 
 } from "@lib/shared/types";
 
 const Login = lazy(() => import("../pages/Login"));
@@ -18,5 +18,5 @@ export const commonRoutes: Array<RouteType> = [
 		path: AppRoutesEnum.REGISTRATION,
 		isAuth: false,
 		layout: LayoutEnum.AUTH,
-	}
+	},
 ];

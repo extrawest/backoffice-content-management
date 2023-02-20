@@ -7,7 +7,7 @@ import { AuthProvider } from "@lib/shared";
 export function App() {
 	return (
     <AuthProvider>
-          <AppRoutes />
+      <AppRoutes />
     </AuthProvider>
 	);
 }

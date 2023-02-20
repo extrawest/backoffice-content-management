@@ -5,7 +5,7 @@ import { logOut } from "../apis/userService";
 
 const initialState: AuthResponse & { isLoggedIn: boolean } = {
 	access_token: "",
-	isLoggedIn: false
+	isLoggedIn: false,
 };
 
 export const authSlice = createSlice({

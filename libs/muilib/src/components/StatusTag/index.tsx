@@ -11,21 +11,21 @@ export const StatusTag: FC<StatusTagProps> = ({ type }) => {
 
 	return (
     <ThemeContext.Consumer>
-      {({mode}) => (
+      {({ mode }) => (
         <Typography
           component="span"
           sx={{
             ...tagSx,
             backgroundColor:
               type === TaskTypeEnum.URGENT
-                ?  getDesignTokens(mode).palette.primaryColors[600]
+                ? getDesignTokens(mode).palette.primaryColors[600]
                 : type === TaskTypeEnum.NEW
-                  ? getDesignTokens(mode).palette.green[400]
-                  : getDesignTokens(mode).palette.greyScale[500],
+                ? getDesignTokens(mode).palette.green[400]
+                : getDesignTokens(mode).palette.greyScale[500],
             color:
               type === TaskTypeEnum.DEFAULT
                 ? getDesignTokens(mode).palette.greyScale[800]
-                :  theme.palette.common.white,
+                : theme.palette.common.white,
           }}
         >
           {type}

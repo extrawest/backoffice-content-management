@@ -1,35 +1,32 @@
 import {
-	ChangeEvent,
-	FC,
-	useState
+	ChangeEvent, FC, useState
 } from "react";
 import {
 	Form, Formik, FormikHelpers, FormikProps
 } from "formik";
-import { setDoc, doc } from "firebase/firestore";
-import { db } from "@lib/shared";
 import dayjs from "dayjs";
-import { FormType, InitTaskFormProps } from "./InitTaskForm.types";
+import { setDoc, doc } from "firebase/firestore";
+import { db, useAuth } from "@lib/shared";
 import { TaskTypeEnum } from "@lib/shared/types";
+import { FormType, InitTaskFormProps } from "./InitTaskForm.types";
 import { StatusTag } from "../../components/StatusTag";
-import { useAuth } from "@lib/shared";
 
-export const InitTaskForm:FC<InitTaskFormProps> = ({
+export const InitTaskForm: FC<InitTaskFormProps> = ({
 	backlog,
 	tasks,
 	getTasks,
 	getBacklog,
-	closeModal
+	closeModal,
 }) => {
 	const me = useAuth();
 	const [activeTask, setActiveTask] = useState("");
-	const handleSubmit = () =>
-		async (
-			values: FormType, formikHelpers:  FormikHelpers<FormType>
+	const onSubmit =
+		() => async (
+			values: FormType, formikHelpers: FormikHelpers<FormType>
 		) => {
 			console.log(
 				values,
-				backlog.find(task => task.id === activeTask)?.name,
+				backlog.find((task) => task.id === activeTask)?.name,
 				tasks
 			);
 			try {
@@ -41,11 +38,14 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 							me.user?.uid
 						),
 						{
-							tasks: [...tasks, {
-								id: dayjs().valueOf().toString(),
-								name: backlog.find(task => task.id === activeTask)?.name,
-								type: values.type
-							}]
+							tasks: [
+								...tasks,
+								{
+									id: dayjs().valueOf().toString(),
+									name: backlog.find((task) => task.id === activeTask)?.name,
+									type: values.type,
+								},
+							],
 						}
 					);
 					await setDoc(
@@ -55,7 +55,7 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 							me.user?.uid
 						),
 						{
-							tasks: backlog.filter(task => task.id !== activeTask)
+							tasks: backlog.filter((task) => task.id !== activeTask),
 						}
 					);
 				}
@@ -69,103 +69,98 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 			}
 		};
 
-	const processedTasks = backlog?.map(task => ({
+	const processedTasks = backlog?.map((task) => ({
 		id: task.id,
-		label: task.name
+		label: task.name,
 	}));
 
-	const processedStatuses = Object.values(TaskTypeEnum).map(item => ({
+	const processedStatuses = Object.values(TaskTypeEnum).map((item) => ({
 		id: item,
 		name: item,
-		value: item
+		value: item,
 	}));
 
-	const handleChangeStatus = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
-		(e:  ChangeEvent<HTMLSelectElement>) => {
-			const value = e.target?.value ?? "";
-			setFieldValue(
-				"type",
-				value
-			);
-		};
+	const handleChangeStatus =
+		(setFieldValue: FormikProps<unknown>["setFieldValue"]) =>
+			(e: ChangeEvent<HTMLSelectElement>) => {
+				const value = e.target?.value ?? "";
+				setFieldValue(
+					"type",
+					value
+				);
+			};
 
-	const handleChangeTask = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
-		(e:  ChangeEvent<HTMLSelectElement>) => {
-			const value = e.target?.value ?? "";
-			setFieldValue(
-				"name",
-				value
-			);
-			setActiveTask(value);
-		};
+	const handleChangeTask =
+		(setFieldValue: FormikProps<unknown>["setFieldValue"]) =>
+			(e: ChangeEvent<HTMLSelectElement>) => {
+				const value = e.target?.value ?? "";
+				setFieldValue(
+					"name",
+					value
+				);
+				setActiveTask(value);
+			};
 
 	return (
-    <Formik
-      initialValues={{ name: "", type: TaskTypeEnum.DEFAULT }}
-      onSubmit={handleSubmit()}
-    >
-      {({
-          isSubmitting,
-          values,
-          setFieldValue
-        }) => (
-        <Form>
-          <div className="flex flex-col items-center w-form pt-3">
-            <div className="mb-3 w-full">
-              <label>
-                <h4 className="sub-header mb-1">
-                  Task
-                </h4>
-                <select
-                  className="input"
-                  name="name"
-                  value={values["name"]}
-                  onChange={handleChangeTask(setFieldValue)}
-                >
-                  {processedTasks.map(task => (
-                    <option
-key={task.id}
-value={task.id}
-                    >{task.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <div className="mb-3 w-full">
-              <label>
-                <h4 className="sub-header mb-1">
-                  Status
-                </h4>
-                <select
-                  className="input"
-                  name="type"
-                  value={values["type"]}
-                  onChange={handleChangeStatus(setFieldValue)}
-                >
-                  {processedStatuses.map(item => (
-                    <option
-key={item.id}
-value={item.id}
-                    >
-                      <StatusTag type={item.name}/>
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-          </div>
-          <div className="py-2 flex justify-end">
-            <button
-              className="btn-primary"
-              type="submit"
-              disabled={isSubmitting}
-            >
-              Submit
-            </button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+		<Formik
+			initialValues={{ name: "", type: TaskTypeEnum.DEFAULT }}
+			onSubmit={onSubmit()}
+		>
+			{({ isSubmitting, values, setFieldValue, handleSubmit }) => (
+				<Form>
+					<div className="flex flex-col items-center w-form pt-3">
+						<div className="mb-3 w-full">
+							<label>
+								<h4 className="sub-header mb-1">Task</h4>
+								<select
+									className="input"
+									name="name"
+									value={values["name"]}
+									onChange={handleChangeTask(setFieldValue)}
+								>
+									{processedTasks.map((task) => (
+										<option
+											key={task.id}
+											value={task.id}
+										>
+											{task.label}
+										</option>
+									))}
+								</select>
+							</label>
+						</div>
+						<div className="mb-3 w-full">
+							<label>
+								<h4 className="sub-header mb-1">Status</h4>
+								<select
+									className="input"
+									name="type"
+									value={values["type"]}
+									onChange={handleChangeStatus(setFieldValue)}
+								>
+									{processedStatuses.map((item) => (
+										<option
+											key={item.id}
+											value={item.id}
+										>
+											<StatusTag type={item.name} />
+										</option>
+									))}
+								</select>
+							</label>
+						</div>
+					</div>
+					<div className="py-2 flex justify-end">
+						<button
+							className="btn-primary"
+							type="submit"
+							disabled={isSubmitting}
+						>
+							Submit
+						</button>
+					</div>
+				</Form>
+			)}
+		</Formik>
 	);
 };

@@ -3,10 +3,10 @@ import {
 	FC,
 	PropsWithChildren,
 	useContext,
-	useState
+	useState,
 } from "react";
 import { User, onAuthStateChanged } from "firebase/auth";
-import { auth } from "@libs/shared/firebaseconfig";
+import { auth } from "../lib/firebaseconfig";
 
 type ContextProps = {
 	user: User | null;
@@ -16,7 +16,7 @@ const defaultValues = { user: null };
 const Auth = createContext<ContextProps>(defaultValues);
 
 export const AuthProvider: FC<PropsWithChildren<Record<string, unknown>>> = ({
-	children
+	children,
 }) => {
 	const [user, setUser] = useState<User | null>(null);
 
@@ -28,13 +28,13 @@ export const AuthProvider: FC<PropsWithChildren<Record<string, unknown>>> = ({
 	);
 
 	return (
-    <Auth.Provider
-      value={{
-        user
-      }}
-    >
-      {children}
-    </Auth.Provider>
+		<Auth.Provider
+			value={{
+				user,
+			}}
+		>
+			{children}
+		</Auth.Provider>
 	);
 };
 

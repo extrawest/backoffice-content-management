@@ -4,13 +4,13 @@ import {
 import { Backlog } from "./Backlog";
 import { Tasks } from "./Tasks";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "@libs/shared/firebaseconfig";
+import { db } from "@lib/shared";
 import { BacklogType, TaskType } from "@lib/shared/types";
 import { Chart } from "./Chart";
 import { Grid, Header } from "semantic-ui-react";
 import { useAuth } from "@lib/shared";
 
-export const MainPage:FC = () => {
+export const MainPage: FC = () => {
 	const me = useAuth();
 	const [backlog, setBacklog] = useState<BacklogType[]>([]);
 	const [tasks, setTasks] = useState<TaskType[]>([]);
@@ -59,35 +59,33 @@ export const MainPage:FC = () => {
 
 	return (
 		<>
-      <Header as="h1">
-        Dashboard
-      </Header>
-      <Grid relaxed>
-        <Grid.Row>
-          <Grid.Column width={14}>
-            <Chart
-              tasks={tasks}
-              backlog={backlog}
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column width={7}>
-            <Backlog
-              backlog={backlog}
-              getBacklogData={getBacklogData}
-            />
-          </Grid.Column>
-          <Grid.Column width={7}>
-            <Tasks
-              backlog={backlog ?? []}
-              tasks={tasks}
-              getBacklog={getBacklogData}
-              getTasks={getTasksData}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+			<Header as="h1">Dashboard</Header>
+			<Grid relaxed>
+				<Grid.Row>
+					<Grid.Column width={14}>
+						<Chart
+							tasks={tasks}
+							backlog={backlog}
+						/>
+					</Grid.Column>
+				</Grid.Row>
+				<Grid.Row>
+					<Grid.Column width={7}>
+						<Backlog
+							backlog={backlog}
+							getBacklogData={getBacklogData}
+						/>
+					</Grid.Column>
+					<Grid.Column width={7}>
+						<Tasks
+							backlog={backlog ?? []}
+							tasks={tasks}
+							getBacklog={getBacklogData}
+							getTasks={getTasksData}
+						/>
+					</Grid.Column>
+				</Grid.Row>
+			</Grid>
 		</>
 	);
 };

@@ -5,13 +5,14 @@ import {
 	Delete, Edit, MoreVert
 } from "@mui/icons-material";
 import { RowMenuProps } from "./RowMenu.types";
-import { Modal, EditTicketForm } from "@primelib";
+import { EditTicketForm } from "../../../forms";
+import { Modal } from "../../../common";
 
-export const RowMenu:FC<RowMenuProps> = ({
+export const RowMenu: FC<RowMenuProps> = ({
 	onDelete,
 	tickets,
 	ticket,
-	getTickets
+	getTickets,
 }) => {
 	const [open, setOpen] = useState(false);
 	const [showModal, setShowModal] = useState(false);
@@ -25,7 +26,7 @@ export const RowMenu:FC<RowMenuProps> = ({
 		setOpen(status);
 	};
 
-	const handleClickOutside = (e: any) => {
+	const handleClickOutside = (e: Event) => {
 		if (node?.current?.contains(e.target as Node)) {
 			return;
 		}
@@ -61,49 +62,50 @@ export const RowMenu:FC<RowMenuProps> = ({
 
 	return (
 		<>
-      <div className="relative">
-        <button
-          className="border-none outline-none transparent cursor-pointer"
-          onClick={handleShowMenu(true)}
-        >
-          <MoreVert/>
-        </button>
-        <div
-          ref={node}
-          className={`${open ? "absolute" : "hidden"} top-2 right-4 p-2 surface-0 border-round-xl z-5 shadow-lg w-150`}
-        >
-          <ul className="m-0 p-0">
-            <li className="hover:surface-300 list-none m-0 p-0">
-              <button
-                className="w-full p-1 border-none outline-none transparent cursor-pointer"
-                onClick={onEdit}
-              >
-                <Edit/>
-              </button>
-            </li>
-            <li className="hover:surface-300 list-none m-0 p-0">
-              <button
-                className="w-full p-1 border-none outline-none transparent cursor-pointer"
-                onClick={handleDelete}
-              >
-                <Delete/>
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <Modal
-        handleClose={handleShowModal(false)}
-        open={showModal}
-        title="Update ticket"
-      >
-        <EditTicketForm
-          init={ticket}
-          tickets={tickets}
-          closeModal={handleShowModal(false)}
-          getTickets={getTickets}
-        />
-      </Modal>
+			<div className="relative">
+				<button
+					className="border-none outline-none transparent cursor-pointer"
+					onClick={handleShowMenu(true)}
+				>
+					<MoreVert />
+				</button>
+				<div
+					ref={node}
+					className={`${open ? "absolute" : "hidden"
+						} top-2 right-4 p-2 surface-0 border-round-xl z-5 shadow-lg w-150`}
+				>
+					<ul className="m-0 p-0">
+						<li className="hover:surface-300 list-none m-0 p-0">
+							<button
+								className="w-full p-1 border-none outline-none transparent cursor-pointer"
+								onClick={onEdit}
+							>
+								<Edit />
+							</button>
+						</li>
+						<li className="hover:surface-300 list-none m-0 p-0">
+							<button
+								className="w-full p-1 border-none outline-none transparent cursor-pointer"
+								onClick={handleDelete}
+							>
+								<Delete />
+							</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<Modal
+				handleClose={handleShowModal(false)}
+				open={showModal}
+				title="Update ticket"
+			>
+				<EditTicketForm
+					init={ticket}
+					tickets={tickets}
+					closeModal={handleShowModal(false)}
+					getTickets={getTickets}
+				/>
+			</Modal>
 		</>
 	);
 };

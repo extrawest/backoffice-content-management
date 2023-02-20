@@ -5,5 +5,5 @@ export const authRootSx: SxProps<Theme> = {
 	width: "100%",
 	height: "100%",
 	minHeight: "100vh",
-	py: 8
+	py: 8,
 };

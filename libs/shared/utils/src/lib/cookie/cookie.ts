@@ -5,8 +5,8 @@ const cookie = new Cookies();
 
 /**
  * Set cookie with key and value
- * @param key 
- * @param value 
+ * @param key
+ * @param value
  */
 export const setCookie = (
 	key: string, value: Cookie
@@ -22,7 +22,7 @@ export const setCookie = (
 
 /**
  * Remove cookie by key
- * @param key 
+ * @param key
  */
 export const removeCookie = (key: string) => {
 	cookie.remove(key);
@@ -37,8 +37,8 @@ export const removeCookie = (key: string) => {
 
 /**
  * Get cookie by key
- * @param key 
- * @returns 
+ * @param key
+ * @returns
  */
 export const getCookie = (key: string) => {
 	return cookie.get(key);

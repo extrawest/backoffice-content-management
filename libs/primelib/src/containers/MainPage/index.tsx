@@ -4,13 +4,13 @@ import {
 import { Backlog } from "./Backlog";
 import { Tasks } from "./Tasks";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "@libs/shared/firebaseconfig";
+import { db } from "@lib/shared";
 import { BacklogType, TaskType } from "@lib/shared/types";
 import { Chart } from "./Chart";
 import { useAuth } from "@lib/shared";
 import { Panel } from "primereact/panel";
 
-export const MainPage:FC = () => {
+export const MainPage: FC = () => {
 	const me = useAuth();
 	const [backlog, setBacklog] = useState<BacklogType[]>([]);
 	const [tasks, setTasks] = useState<TaskType[]>([]);
@@ -59,29 +59,27 @@ export const MainPage:FC = () => {
 
 	return (
 		<Panel className="panel">
-      <h1 className="text-4xl font-bold mb-4">
-        Dashboard
-      </h1>
-      <Chart
-        tasks={tasks}
-        backlog={backlog}
-      />
-      <div className="flex gap-4">
-        <div className="w-6">
-          <Backlog
-            backlog={backlog}
-            getBacklogData={getBacklogData}
-          />
-        </div>
-        <div className="w-6">
-          <Tasks
-            backlog={backlog ?? []}
-            tasks={tasks}
-            getBacklog={getBacklogData}
-            getTasks={getTasksData}
-          />
-        </div>
-      </div>
+			<h1 className="text-4xl font-bold mb-4">Dashboard</h1>
+			<Chart
+				tasks={tasks}
+				backlog={backlog}
+			/>
+			<div className="flex gap-4">
+				<div className="w-6">
+					<Backlog
+						backlog={backlog}
+						getBacklogData={getBacklogData}
+					/>
+				</div>
+				<div className="w-6">
+					<Tasks
+						backlog={backlog ?? []}
+						tasks={tasks}
+						getBacklog={getBacklogData}
+						getTasks={getTasksData}
+					/>
+				</div>
+			</div>
 		</Panel>
 	);
 };

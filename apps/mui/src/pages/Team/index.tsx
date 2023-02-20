@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { ClientsPage } from "@lib/muiapp";
+import { ClientsPage } from "@lib/mui";
 
-const Main:FC = () => {
-  return <ClientsPage/>
-}
+const Main: FC = () => {
+	return <ClientsPage />;
+};
 
-export default Main
+export default Main;

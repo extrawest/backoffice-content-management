@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "@libs/shared/firebaseconfig";
+import { auth } from "@lib/shared";
 import LogoutIcon from "@mui/icons-material/Logout";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
@@ -16,36 +16,36 @@ const menu = [
 	{
 		listIcon: <InfoOutlinedIcon />,
 		listText: "Dashboard",
-		url: AppRoutesEnum.MAIN
+		url: AppRoutesEnum.MAIN,
 	},
 	{
 		listIcon: <PeopleOutlineOutlinedIcon />,
 		listText: "Team",
-		url: AppRoutesEnum.TEAM
+		url: AppRoutesEnum.TEAM,
 	},
 	{
 		listIcon: <PercentOutlinedIcon />,
 		listText: "Offers",
-		url: AppRoutesEnum.OFFERS
+		url: AppRoutesEnum.OFFERS,
 	},
 	{
 		listIcon: <HandshakeOutlinedIcon />,
 		listText: "Partners",
-		url: AppRoutesEnum.MAIN
+		url: AppRoutesEnum.MAIN,
 	},
 	{
 		listIcon: <AddCardOutlinedIcon />,
 		listText: "Finances",
-		url: AppRoutesEnum.MAIN
+		url: AppRoutesEnum.MAIN,
 	},
 	{
 		listIcon: <AccountCircleOutlinedIcon />,
 		listText: "Clients",
-		url: AppRoutesEnum.MAIN
+		url: AppRoutesEnum.MAIN,
 	},
 ];
 
-export const Menu:FC = () => {
+export const Menu: FC = () => {
 	const me = useAuth();
 	const avatar = me?.user?.photoURL ?? "";
 
@@ -55,47 +55,42 @@ export const Menu:FC = () => {
 	};
 
 	return (
-    <div className="fixed flex flex-column m-0 top-0 bottom-0 w-menu left-0 py-8 px-5 h-12 shadow-lg">
-      <div
-        className="h-10rem w-10rem border-circle mb-4 surface-300"
-      >
-        <img
-          src={avatar}
-          className="h-10rem w-10rem border-circle"
-        />
-      </div>
-      <h3 className="text-xl">
-          {me?.user?.displayName ?? me?.user?.email}
-      </h3>
-      <div className="flex flex-column justify-content-between h-12 align-items-start">
-        <ul className="pt-5 pb-8 mb-8 px-0">
-          {menu.map((
-listItem, index
-) => (
-              <li
-key={index}
-className="list-none m-0 py-2"
-              >
-                <Link
-to={listItem.url}
-className="no-underline flex gap-1 py-1 text-500"
-                >
-                  {listItem.listIcon}
-                  <span className="text-800">
-                    {listItem.listText}
-                  </span>
-                </Link>
-              </li>
-          ))}
-        </ul>
-        <button
-          onClick={logOut}
-          className="cursor-pointer surface-0 flex gap-1 align-items-center border-1 text-700 py-2 px-4 border-round-lg border-500 outline-none hover:surface-300 ease-in-out"
-        >
-          <LogoutIcon/>
-          Log out
-        </button>
-      </div>
-    </div>
+		<div className="fixed flex flex-column m-0 top-0 bottom-0 w-menu left-0 py-8 px-5 h-12 shadow-lg">
+			<div className="h-10rem w-10rem border-circle mb-4 surface-300">
+				<img
+					src={avatar}
+					className="h-10rem w-10rem border-circle"
+					alt=""
+				/>
+			</div>
+			<h3 className="text-xl">{me?.user?.displayName ?? me?.user?.email}</h3>
+			<div className="flex flex-column justify-content-between h-12 align-items-start">
+				<ul className="pt-5 pb-8 mb-8 px-0">
+					{menu.map((
+						listItem, index
+					) => (
+						<li
+							key={index}
+							className="list-none m-0 py-2"
+						>
+							<Link
+								to={listItem.url}
+								className="no-underline flex gap-1 py-1 text-500"
+							>
+								{listItem.listIcon}
+								<span className="text-800">{listItem.listText}</span>
+							</Link>
+						</li>
+					))}
+				</ul>
+				<button
+					onClick={logOut}
+					className="cursor-pointer surface-0 flex gap-1 align-items-center border-1 text-700 py-2 px-4 border-round-lg border-500 outline-none hover:surface-300 ease-in-out"
+				>
+					<LogoutIcon />
+					Log out
+				</button>
+			</div>
+		</div>
 	);
 };

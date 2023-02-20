@@ -1,3 +1,3 @@
 export type StatChartProps = {
-  data: Record<string, string | number>[]
-}
+	data: Record<string, string | number>[];
+};

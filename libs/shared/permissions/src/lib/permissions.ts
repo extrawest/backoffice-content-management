@@ -3,7 +3,7 @@ import {
 	ExtractSubjectType,
 	MongoQuery,
 	Subject,
-	SubjectRawRule
+	SubjectRawRule,
 } from "@casl/ability";
 import { AnyObject } from "@casl/ability/dist/types/types";
 import { User } from "@mono-redux-starter/shared/types";
@@ -19,7 +19,11 @@ export const abilityCheckStorage = (store: RootReduxState) => {
 		const prevAuth = currentAuth;
 		currentAuth = store.getState().userSlice;
 		if (prevAuth !== currentAuth) {
-			const rules: SubjectRawRule<string, ExtractSubjectType<Subject>, MongoQuery<AnyObject>>[] = defineRulesFor(currentAuth);
+			const rules: SubjectRawRule<
+			string,
+			ExtractSubjectType<Subject>,
+			MongoQuery<AnyObject>
+			>[] = defineRulesFor(currentAuth);
 
 			ability.update(rules);
 		}

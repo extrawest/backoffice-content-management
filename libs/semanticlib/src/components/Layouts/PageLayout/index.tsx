@@ -2,17 +2,18 @@ import { FC, PropsWithChildren } from "react";
 import { Menu } from "../../Menu";
 import { Grid } from "semantic-ui-react";
 
-export const PageLayout:FC<PropsWithChildren<Record<string, unknown>>> = ({children}) => {
+export const PageLayout: FC<PropsWithChildren<Record<string, unknown>>> = ({
+	children,
+}) => {
 	return (
     <Grid>
       <Grid.Row>
         <Grid.Column width={3}>
-          <Menu/>
+          <Menu />
         </Grid.Column>
         <Grid.Column
-          width={13}
-
-          className="p-2"
+width={13}
+className="p-2"
         >
           {children}
         </Grid.Column>

@@ -62,7 +62,7 @@ export const YupGlobalLocale = () => {
 			min: minStringText,
 			max: maxStringText,
 			url: validUrlText,
-			matches: validText
+			matches: validText,
 		},
 		number: {
 			min: minNumberText,
@@ -71,8 +71,8 @@ export const YupGlobalLocale = () => {
 		},
 		array: {
 			length: requiredText,
-			min: requiredText
-		}
+			min: requiredText,
+		},
 	});
 
 	return null;

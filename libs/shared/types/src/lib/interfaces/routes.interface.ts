@@ -5,12 +5,12 @@ export enum AppRoutesEnum {
 	REGISTRATION = "/registration",
 	LOGIN = "/login",
 	TEAM = "/clients",
-	OFFERS = "/offers"
+	OFFERS = "/offers",
 }
 
 export enum LayoutEnum {
 	DEFAULT = "default",
-	AUTH = "auth"
+	AUTH = "auth",
 }
 
 export interface RouteType {

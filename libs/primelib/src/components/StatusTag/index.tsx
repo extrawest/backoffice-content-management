@@ -4,12 +4,15 @@ import { TaskTypeEnum } from "@lib/shared/types";
 import { Tag } from "primereact/tag";
 
 export const StatusTag: FC<StatusTagProps> = ({ type }) => {
-	const color = type === TaskTypeEnum.URGENT ? "warning" : type === TaskTypeEnum.NEW ? "success" : "info";
-	return (
-	    <Tag
-	     severity={color}
-	     value={type}
-       rounded
-	    />
-	);
+	const color =
+		type === TaskTypeEnum.URGENT
+			? "warning"
+			: type === TaskTypeEnum.NEW
+				? "success"
+				: "info";
+	return <Tag
+		severity={color}
+		value={type}
+		rounded
+	/>;
 };

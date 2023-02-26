@@ -1,8 +1,11 @@
 import { FC, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import {
-	AuthLayout, PageLayout, PrivateRoute, PublicRoute 
-} from "@tailwindlib";
+	AuthLayout,
+	PageLayout,
+	PrivateRoute,
+	PublicRoute,
+} from "@lib/tailwind";
 import { privateRoutes } from "./privateRotes";
 import { commonRoutes } from "./commonRotes";
 
@@ -11,23 +14,19 @@ export const AppRoutes: FC = () => {
     <Suspense>
       <Routes>
         {[...privateRoutes, ...commonRoutes].map((
-route, index
-) => (
+          route, index
+        ) => (
           <Route
             {...route}
             key={`r_${index}_${route.path}`}
             element={
               route.isAuth ? (
                 <PrivateRoute>
-                  <PageLayout>
-                    {route.element}
-                  </PageLayout>
+                  <PageLayout>{route.element}</PageLayout>
                 </PrivateRoute>
               ) : (
                 <PublicRoute>
-                  <AuthLayout>
-                    {route.element}
-                  </AuthLayout>
+                  <AuthLayout>{route.element}</AuthLayout>
                 </PublicRoute>
               )
             }

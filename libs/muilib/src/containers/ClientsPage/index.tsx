@@ -1,11 +1,9 @@
 import {
-	Dispatch,
-	FC, SetStateAction, useEffect, useState
+	Dispatch, FC, SetStateAction, useEffect, useState
 } from "react";
 import dayjs from "dayjs";
 import {
-	Avatar,
-	Box, IconButton, Stack, Typography
+	Avatar, Box, IconButton, Stack, Typography
 } from "@mui/material";
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { Modal, Table } from "../../common";
@@ -14,11 +12,11 @@ import { TaskType, TicketType } from "@lib/shared/types";
 import {
 	doc, getDoc, setDoc
 } from "firebase/firestore";
-import { db } from "@libs/shared/firebaseconfig";
+import { db } from "@lib/shared";
 import { StatusTag } from "../../components/StatusTag";
 import { useAuth } from "@lib/shared";
 import { RowMenu } from "./RowMenu";
-import {addSx, headerStackSx} from "../MainPage/Backlog/Backlog.sx";
+import { addSx, headerStackSx } from "../MainPage/Backlog/Backlog.sx";
 import {
 	nameSx, photoSx, titleSx, wrapperSx
 } from "./ClientsPage.sx";
@@ -63,36 +61,38 @@ const getTicketsData = async (
 	}
 };
 
-const deleteTicket = (
-	taskId: string,
-	tickets: TicketType[],
-	setTickets: Dispatch<SetStateAction<TicketType[]>>,
-	uid?: string
-) => async () => {
-	try {
-		if (uid) {
-			await setDoc(
-				doc(
-					db,
-					"tickets",
-					uid
-				),
-				{
-					data: tickets.filter(ticket => ticket.id !== taskId)
+const deleteTicket =
+	(
+		taskId: string,
+		tickets: TicketType[],
+		setTickets: Dispatch<SetStateAction<TicketType[]>>,
+		uid?: string
+	) =>
+		async () => {
+			try {
+				if (uid) {
+					await setDoc(
+						doc(
+							db,
+							"tickets",
+							uid
+						),
+						{
+							data: tickets.filter((ticket) => ticket.id !== taskId),
+						}
+					);
 				}
-			);
-		}
-	} catch (error) {
-		console.error(error);
-	} finally {
-		getTicketsData(
-			setTickets,
-			uid
-		);
-	}
-};
+			} catch (error) {
+				console.error(error);
+			} finally {
+				getTicketsData(
+					setTickets,
+					uid
+				);
+			}
+		};
 
-export const ClientsPage:FC = () => {
+export const ClientsPage: FC = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [tasks, setTasks] = useState<TaskType[]>([]);
 	const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -124,107 +124,103 @@ export const ClientsPage:FC = () => {
 		setShowModal(status);
 	};
 
-	const rows: GridRowsProp = tickets?.map(ticket => ({
-		id: ticket?.id,
-		task: ticket.task,
-		name: `${ticket.firstName} ${ticket.lastName}`,
-		firstName: ticket.firstName,
-		lastName: ticket.lastName,
-		date: dayjs(ticket.id).format("DD/MM/YY"),
-		status: ticket.status,
-		image: ticket.image ?? ""
-	})) ?? [];
+	const rows: GridRowsProp =
+		tickets?.map((ticket) => ({
+			id: ticket?.id,
+			task: ticket.task,
+			name: `${ticket.firstName} ${ticket.lastName}`,
+			firstName: ticket.firstName,
+			lastName: ticket.lastName,
+			date: dayjs(ticket.id).format("DD/MM/YY"),
+			status: ticket.status,
+			image: ticket.image ?? "",
+		})) ?? [];
 
 	const columns: GridColDef[] = [
 		{
 			field: "task",
 			headerName: "Ticket details",
-			flex: 1
+			flex: 1,
 		},
 		{
 			field: "name",
 			headerName: "Customer name",
 			renderCell: (params) => (
-        <Box sx={nameSx}>
-          <Avatar
-            src={params.row.image}
-            sx={photoSx}
-          />
-          <Typography>
-            {params.row.name}
-          </Typography>
-        </Box>
+				<Box sx={nameSx}>
+					<Avatar
+						src={params.row.image}
+						sx={photoSx}
+					/>
+					<Typography>{params.row.name}</Typography>
+				</Box>
 			),
-			flex: 1
+			flex: 1,
 		},
 		{
 			field: "date",
 			headerName: "Date",
-			flex: 1
+			flex: 1,
 		},
 		{
 			field: "status",
 			headerName: "Priority",
 			flex: 1,
-			renderCell: (params) => <StatusTag type={params.row.status}/>
+			renderCell: (params) => <StatusTag type={params.row.status} />,
 		},
 		{
 			field: "delete",
 			headerName: "",
 			flex: 1,
 			cellClassName: "hoverableCell",
-			renderCell: (params) =>
-        <RowMenu
-          onDelete={deleteTicket(
-      params.row.id,
-      tickets,
-    setTickets,
-            me?.user?.uid
-          )}
-          tickets={tickets}
-          ticket={params.row}
-          getTickets={getTickets}
-        />
+			renderCell: (params) => (
+				<RowMenu
+					onDelete={deleteTicket(
+						params.row.id,
+						tickets,
+						setTickets,
+						me?.user?.uid
+					)}
+					tickets={tickets}
+					ticket={params.row}
+					getTickets={getTickets}
+				/>
+			),
 		},
 	];
 
 	return (
 		<>
-      <Typography variant="h2">
-        Clients
-      </Typography>
-      <Box sx={wrapperSx}>
-        <Box sx={titleSx}>
-          <Typography variant="h3">
-            All tickets
-          </Typography>
-          <Stack sx={headerStackSx}>
-            <IconButton
-              onClick={handleShowModal(true)}
-              sx={addSx}
-            >
-              +
-            </IconButton>
-          </Stack>
-        </Box>
-        <Table
-          rows={rows}
-          columns={columns}
-        />
-        <Modal
-          handleClose={handleShowModal(false)}
-          open={showModal}
-          title="Create ticket"
-        >
-          <CreateTicketForm
-            tasks={tasks}
-            tickets={tickets}
-            getTasks={getTasks}
-            getTickets={getTickets}
-            closeModal={handleShowModal(false)}
-          />
-        </Modal>
-      </Box>
+			<Typography variant="h2">Clients</Typography>
+			<Box sx={wrapperSx}>
+				<Box sx={titleSx}>
+					<Typography variant="h3">All tickets</Typography>
+					<Stack sx={headerStackSx}>
+						<IconButton
+							onClick={handleShowModal(true)}
+							sx={addSx}
+						>
+							+
+						</IconButton>
+					</Stack>
+				</Box>
+				<Table
+					rows={rows}
+					columns={columns}
+				/>
+				<Modal
+					handleClose={handleShowModal(false)}
+					open={showModal}
+					title="Create ticket"
+				>
+					<CreateTicketForm
+						tasks={tasks}
+						tickets={tickets}
+						getTasks={getTasks}
+						getTickets={getTickets}
+						closeModal={handleShowModal(false)}
+					/>
+				</Modal>
+			</Box>
 		</>
 	);
 };

@@ -1,2 +1,2 @@
 export * from "./lib/YupGlobalLocale/YupGlobalLocale";
-import * from "./lib/StatChart";
+export * from "./lib/StatChart";

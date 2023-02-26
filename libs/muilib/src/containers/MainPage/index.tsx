@@ -1,18 +1,18 @@
 import {
-	Dispatch,
-	FC, SetStateAction, useEffect, useState
+	Dispatch, FC, SetStateAction, useEffect, useState
 } from "react";
 import { Grid, Typography } from "@mui/material";
 import { Backlog } from "./Backlog";
 import { Tasks } from "./Tasks";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "@libs/shared/firebaseconfig";
+import { db } from "@lib/shared";
 import { BacklogType, TaskType } from "@lib/shared/types";
 import { Chart } from "./Chart";
 import { useAuth } from "@lib/shared";
 
 const getBacklogData = async (
-	setBacklog: Dispatch<SetStateAction<BacklogType[]>>, uid?: string
+	setBacklog: Dispatch<SetStateAction<BacklogType[]>>,
+	uid?: string
 ) => {
 	try {
 		if (uid) {
@@ -50,7 +50,7 @@ const getTasksData = async (
 	}
 };
 
-export const MainPage:FC = () => {
+export const MainPage: FC = () => {
 	const me = useAuth();
 	const [backlog, setBacklog] = useState<BacklogType[]>([]);
 	const [tasks, setTasks] = useState<TaskType[]>([]);
@@ -79,40 +79,38 @@ export const MainPage:FC = () => {
 
 	return (
 		<>
-      <Typography variant="h2">
-        Dashboard
-      </Typography>
-      <Chart
-        tasks={tasks}
-        backlog={backlog}
-      />
-      <Grid
-        container
-        spacing={3}
-      >
-        <Grid
-          item
-          xs={12}
-          lg={6}
-        >
-          <Backlog
-            backlog={backlog}
-            getBacklogData={getBacklog}
-          />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={6}
-        >
-          <Tasks
-            backlog={backlog}
-            tasks={tasks}
-            getBacklog={getBacklog}
-            getTasks={getTasks}
-          />
-        </Grid>
-      </Grid>
+			<Typography variant="h2">Dashboard</Typography>
+			<Chart
+				tasks={tasks}
+				backlog={backlog}
+			/>
+			<Grid
+				container
+				spacing={3}
+			>
+				<Grid
+					item
+					xs={12}
+					lg={6}
+				>
+					<Backlog
+						backlog={backlog}
+						getBacklogData={getBacklog}
+					/>
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					lg={6}
+				>
+					<Tasks
+						backlog={backlog}
+						tasks={tasks}
+						getBacklog={getBacklog}
+						getTasks={getTasks}
+					/>
+				</Grid>
+			</Grid>
 		</>
 	);
 };

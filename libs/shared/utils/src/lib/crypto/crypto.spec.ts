@@ -1,8 +1,5 @@
 import AES from "crypto-js/aes";
-import {
-	decryptUserInfo,
-	encryptUserInfo
-} from "./crypto";
+import { decryptUserInfo, encryptUserInfo } from "./crypto";
 import { getCookie } from "../cookie/cookie";
 import { authData } from "./__mocks__";
 
@@ -16,7 +13,7 @@ jest.mock(
 			default: {
 				encrypt: jest.fn(),
 				decrypt: jest.fn(),
-			}
+			},
 		};
 	}
 );
@@ -24,7 +21,7 @@ jest.mock(
 jest.mock(
 	"../cookie/cookie",
 	() => {
-		// eslint-disable-next-line @typescript-eslint/no-shadow
+	// eslint-disable-next-line @typescript-eslint/no-shadow
 		const getCookie = jest.fn();
 		const setCookie = jest.fn();
 		const removeCookie = jest.fn();

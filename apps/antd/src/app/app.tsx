@@ -1,19 +1,21 @@
 import { AppRoutes } from "../routes";
 import { ConfigProvider } from "antd";
 import { AuthProvider } from "@lib/shared";
-import { theme } from "@antlib";
+import { theme } from "@lib/ant";
 import "./style.less";
 
 export function App() {
-  return (
-    <AuthProvider>
-      <ConfigProvider theme={{
-        token: theme
-      }}>
-        <AppRoutes />
-      </ConfigProvider>
-    </AuthProvider>
-  );
+	return ((
+		<AuthProvider>
+			<ConfigProvider
+				theme={{
+					token: theme,
+				}}
+			>
+				<AppRoutes />
+			</ConfigProvider>
+		</AuthProvider>
+	));
 }
 
 export default App;

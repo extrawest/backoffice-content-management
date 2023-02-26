@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { MainPage } from "@semanticlib";
+import { MainPage } from "@lib/semantic";
 
-const Main:FC = () => {
-	return <MainPage/>;
+const Main: FC = () => {
+	return <MainPage />;
 };
 
 export default Main;

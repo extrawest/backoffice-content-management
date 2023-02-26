@@ -2,13 +2,11 @@ import { FC } from "react";
 import { Typography } from "@mui/material";
 import { Offers } from "./Offers";
 
-export const OffersPage:FC = () => {
+export const OffersPage: FC = () => {
 	return (
 		<>
-      <Typography variant="h2">
-        Offers
-      </Typography>
-      <Offers/>
+      <Typography variant="h2">Offers</Typography>
+      <Offers />
 		</>
 	);
 };

@@ -8,7 +8,7 @@ export const KEY = process.env["NX_CRYPTO_JS_KEY"] ?? "crypto";
  * @param authData
  * @return encrypted token
  */
-export const encryptUserInfo = (authData: any) => {
+export const encryptUserInfo = (authData: unknown) => {
 	if (authData) {
 		const authDataForLocalStorage = AES.encrypt(
 			JSON.stringify(authData),
@@ -26,7 +26,7 @@ export const encryptUserInfo = (authData: any) => {
  * @param authData
  * @returns decrypted auth data or null
  */
-export const decryptUserInfo = (authData: string): any | null => {
+export const decryptUserInfo = (authData: string): { access_token?: string } | null => {
 	if (authData) {
 		const decryptedAuthData = AES.decrypt(
 			authData,

@@ -1,7 +1,10 @@
 import { AxiosRequestConfig } from "axios";
 import { BaseQueryFn } from "@reduxjs/toolkit/dist/query/react";
 
-export type AxiosBaseQueryRequestConfig = Omit<AxiosRequestConfig, "url" | "method" | "data" | "headers"> & {
+export type AxiosBaseQueryRequestConfig = Omit<
+AxiosRequestConfig,
+"url" | "method" | "data" | "headers"
+> & {
 	url: string;
 	method: AxiosRequestConfig["method"];
 	data?: AxiosRequestConfig["data"];
@@ -10,4 +13,8 @@ export type AxiosBaseQueryRequestConfig = Omit<AxiosRequestConfig, "url" | "meth
 
 export type AuthAxiosBaseQueryRequestConfig = AxiosRequestConfig;
 
-export type AxiosBaseQueryFn = BaseQueryFn<AxiosBaseQueryRequestConfig, unknown, unknown>;
+export type AxiosBaseQueryFn = BaseQueryFn<
+AxiosBaseQueryRequestConfig,
+unknown,
+unknown
+>;

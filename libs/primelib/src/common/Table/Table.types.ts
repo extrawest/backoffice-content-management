@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 
 export type RowType = {
-	title: string,
-	id: string,
-	items: ReactNode[]
+	title: string;
+	id: string;
+	items: ReactNode[];
 };
 
 export interface TableProps {
-	rows: RowType[],
+	rows: RowType[];
 }

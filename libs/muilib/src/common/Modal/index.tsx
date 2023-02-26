@@ -1,21 +1,25 @@
 import {
-	Box, Dialog, DialogContent, DialogTitle, IconButton
+	Box,
+	Dialog,
+	DialogContent,
+	DialogTitle,
+	IconButton,
 } from "@mui/material";
 import { FC } from "react";
 import {
-	contentSx, headerSx, rootSx
+	contentSx, headerSx, rootSx 
 } from "./Modal.sx";
 import { ModalProps } from "./Modal.types";
 import { Close } from "@mui/icons-material";
 
-export const Modal:FC<ModalProps> = ({
+export const Modal: FC<ModalProps> = ({
 	handleClose,
 	open,
 	children,
 	title,
 	type,
 	fullWidth,
-	withoutPaddings = false
+	withoutPaddings = false,
 }) => {
 	return (
     <Dialog
@@ -25,21 +29,15 @@ export const Modal:FC<ModalProps> = ({
       maxWidth={type ?? "lg"}
       fullWidth={fullWidth ?? false}
     >
-      {title &&
+      {title && (
         <Box sx={headerSx}>
-          <DialogTitle>
-            {title}
-          </DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
           <IconButton onClick={handleClose}>
             <Close />
           </IconButton>
         </Box>
-      }
-      <DialogContent
-        sx={contentSx(withoutPaddings)}
-      >
-        {children}
-      </DialogContent>
+      )}
+      <DialogContent sx={contentSx(withoutPaddings)}>{children}</DialogContent>
     </Dialog>
 	);
 };

@@ -1,15 +1,10 @@
 import { FC } from "react";
-import { rootSx} from "./Modal.sx";
+import { rootSx } from "./Modal.sx";
 import {
-	Modal as AntModal, ModalProps, theme
+	Modal as AntModal, ModalProps, theme 
 } from "antd";
 
-export const Modal:FC<ModalProps> = ({
-	onCancel,
-	open,
-	children,
-	title
-}) => {
+export const Modal: FC<ModalProps> = ({ onCancel, open, children, title }) => {
 	const { useToken } = theme;
 	const { token } = useToken();
 
@@ -22,7 +17,7 @@ export const Modal:FC<ModalProps> = ({
       title={title}
       width={900}
     >
-        {children}
+      {children}
     </AntModal>
 	);
 };

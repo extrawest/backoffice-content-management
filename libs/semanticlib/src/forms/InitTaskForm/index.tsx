@@ -1,33 +1,35 @@
 import {
-	FC,
-	SyntheticEvent,
-	useState
+	FC, SyntheticEvent, useState
 } from "react";
 import {
 	Form, Formik, FormikHelpers, FormikProps
 } from "formik";
 import { setDoc, doc } from "firebase/firestore";
-import { db } from "@libs/shared/firebaseconfig";
+import { db } from "@lib/shared";
 import dayjs from "dayjs";
 import { FormType, InitTaskFormProps } from "./InitTaskForm.types";
 import { TaskTypeEnum } from "@lib/shared/types";
 import {
-	DropdownProps, Form as SemanticForm, Grid, Header, Select
+	DropdownProps,
+	Form as SemanticForm,
+	Grid,
+	Header,
+	Select,
 } from "semantic-ui-react";
 import { useAuth } from "@lib/shared";
 
-export const InitTaskForm:FC<InitTaskFormProps> = ({
+export const InitTaskForm: FC<InitTaskFormProps> = ({
 	backlog,
 	tasks,
 	getTasks,
 	getBacklog,
-	closeModal
+	closeModal,
 }) => {
 	const me = useAuth();
 	const [activeTask, setActiveTask] = useState("");
-	const handleSubmit = () =>
-		async (
-			values: FormType, formikHelpers:  FormikHelpers<FormType>
+	const onSubmit =
+		() => async (
+			values: FormType, formikHelpers: FormikHelpers<FormType>
 		) => {
 			try {
 				if (me.user?.uid) {
@@ -38,11 +40,14 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 							me.user?.uid
 						),
 						{
-							tasks: [...tasks, {
-								id: dayjs().valueOf().toString(),
-								name: backlog.find(task => task.id === activeTask)?.name,
-								type: values.type
-							}]
+							tasks: [
+								...tasks,
+								{
+									id: dayjs().valueOf().toString(),
+									name: backlog.find((task) => task.id === activeTask)?.name,
+									type: values.type,
+								},
+							],
 						}
 					);
 					await setDoc(
@@ -52,7 +57,7 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 							me.user?.uid
 						),
 						{
-							tasks: backlog.filter(task => task.id !== activeTask)
+							tasks: backlog.filter((task) => task.id !== activeTask),
 						}
 					);
 				}
@@ -66,96 +71,90 @@ export const InitTaskForm:FC<InitTaskFormProps> = ({
 			}
 		};
 
-	const processedTasks = backlog?.map(task => ({
+	const processedTasks = backlog?.map((task) => ({
 		key: task.id,
 		value: task.id,
-		text: task.name
+		text: task.name,
 	}));
 
-	const processedStatuses = Object.values(TaskTypeEnum).map(item => ({
+	const processedStatuses = Object.values(TaskTypeEnum).map((item) => ({
 		key: item,
 		text: item,
-		value: item
+		value: item,
 	}));
 
-	const handleChangeStatus = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
-		(
-			event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps
-		) => {
-			const value = data?.value as string ?? "";
-			setFieldValue(
-				"type",
-				value
-			);
-		};
+	const handleChangeStatus =
+		(setFieldValue: FormikProps<unknown>["setFieldValue"]) =>
+			(
+				event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps
+			) => {
+				const value = (data?.value as string) ?? "";
+				setFieldValue(
+					"type",
+					value
+				);
+			};
 
-	const handleChangeTask = (setFieldValue: FormikProps<any>["setFieldValue"]) =>
-		(
-			event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps
-		) => {
-			const value = data?.value as string ?? "";
-			setFieldValue(
-				"name",
-				value
-			);
-			setActiveTask(value);
-		};
+	const handleChangeTask =
+		(setFieldValue: FormikProps<unknown>["setFieldValue"]) =>
+			(
+				event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps
+			) => {
+				const value = (data?.value as string) ?? "";
+				setFieldValue(
+					"name",
+					value
+				);
+				setActiveTask(value);
+			};
 
 	return (
-    <Formik
-      initialValues={{ name: "", type: TaskTypeEnum.DEFAULT }}
-      onSubmit={handleSubmit()}
-    >
-      {({
-          isSubmitting,
-          values,
-          setFieldValue
-        }) => (
-        <Form>
-          <SemanticForm.Field width="16">
-            <label>
-              <Header as="h4">
-                Task
-              </Header>
-              <Select
-                fluid
-                name="name"
-                value={values["name"]}
-                options={processedTasks}
-                onChange={handleChangeTask(setFieldValue)}
-              />
-            </label>
-          </SemanticForm.Field>
-          <SemanticForm.Field width="16" >
-            <label>
-              <Header as="h4">
-                Status
-              </Header>
-              <Select
-                fluid
-                name="type"
-                value={values["type"]}
-                options={processedStatuses}
-                onChange={handleChangeStatus(setFieldValue)}
-              />
-            </label>
-          </SemanticForm.Field>
-          <Grid padded="vertically">
-            <Grid.Row>
-              <Grid.Column textAlign="right">
-                <SemanticForm.Button
-                  primary
-                  type="submit"
-                  size="large"
-                  disabled={isSubmitting}
-                >
-                  Submit
-                </SemanticForm.Button>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Form>
-      )}
-    </Formik>
+		<Formik
+			initialValues={{ name: "", type: TaskTypeEnum.DEFAULT }}
+			onSubmit={onSubmit()}
+		>
+			{({ isSubmitting, values, setFieldValue, handleSubmit }) => (
+				<Form>
+					<SemanticForm.Field width="16">
+						<label>
+							<Header as="h4">Task</Header>
+							<Select
+								fluid
+								name="name"
+								value={values["name"]}
+								options={processedTasks}
+								onChange={handleChangeTask(setFieldValue)}
+							/>
+						</label>
+					</SemanticForm.Field>
+					<SemanticForm.Field width="16">
+						<label>
+							<Header as="h4">Status</Header>
+							<Select
+								fluid
+								name="type"
+								value={values["type"]}
+								options={processedStatuses}
+								onChange={handleChangeStatus(setFieldValue)}
+							/>
+						</label>
+					</SemanticForm.Field>
+					<Grid padded="vertically">
+						<Grid.Row>
+							<Grid.Column textAlign="right">
+								<SemanticForm.Button
+									primary
+									type="submit"
+									size="large"
+									disabled={isSubmitting}
+								>
+									Submit
+								</SemanticForm.Button>
+							</Grid.Column>
+						</Grid.Row>
+					</Grid>
+				</Form>
+			)}
+		</Formik>
 	);
 };

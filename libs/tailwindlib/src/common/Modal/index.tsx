@@ -2,15 +2,17 @@ import { FC } from "react";
 import { ModalProps } from "./Modal.types";
 import { Close } from "@mui/icons-material";
 
-export const Modal:FC<ModalProps> = ({
+export const Modal: FC<ModalProps> = ({
 	handleClose,
 	open,
 	children,
-	title
+	title,
 }) => {
 	return (
     <div
-      className={`${open ? "fixed" : "hidden"} -top-1 -right-1 -bottom-1 -left-1 z-10`}
+      className={`${
+        open ? "fixed" : "hidden"
+      } -top-1 -right-1 -bottom-1 -left-1 z-10`}
       role="dialog"
       aria-modal="true"
     >
@@ -21,22 +23,16 @@ export const Modal:FC<ModalProps> = ({
         onClick={handleClose}
       >
       </div>
-      <div
-        className="fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex justify-center items-start overflow-y-auto"
-      >
-        <div
-          className="align-middle h-full my-auto bg-white rounded-1 text-left overflow-hidden shadow-xl p-4 min-w-modal"
-        >
+      <div className="fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex justify-center items-start overflow-y-auto">
+        <div className="align-middle h-full my-auto bg-white rounded-1 text-left overflow-hidden shadow-xl p-4 min-w-modal">
           <div className="flex justify-between">
-            <h3 className="task-title semi-bold">
-              {title}
-            </h3>
+            <h3 className="task-title semi-bold">{title}</h3>
             <div
               className="close-btn cursor-pointer"
               role="button"
               onClick={handleClose}
             >
-              <Close/>
+              <Close />
             </div>
           </div>
           <div className="mx-auto h-full">{children}</div>

@@ -1,18 +1,18 @@
 import {
-	FC, FormEvent, useState
+	FC, FormEvent, useState 
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
-  Alert,
-  Box,
-  Button,
-  Grid,
-  Link,
-  Snackbar,
-  TextField, Typography
+	Alert,
+	Box,
+	Grid,
+	Link,
+	Snackbar,
+	TextField,
+	Typography,
 } from "@mui/material";
-import { auth } from "../../../../shared/firebaseconfig";
+import { auth } from "@lib/shared";
 import { AppRoutesEnum } from "@lib/shared/types";
 import { wrapperSx } from "./RegisterPage.sx";
 import { titleSx } from "../LoginPage/LoginPage.sx";
@@ -31,13 +31,10 @@ export const RegistrationPage: FC = () => {
 		const values = {
 			email: data.get("email") as string,
 			password: data.get("password") as string,
-			confirm_password: data.get("confirm_password")
+			confirm_password: data.get("confirm_password"),
 		};
 
-		if (
-			values.password === values.confirm_password &&
-      values?.email?.length
-		) {
+		if (values.password === values.confirm_password && values?.email?.length) {
 			try {
 				await createUserWithEmailAndPassword(
 					auth,
@@ -45,12 +42,12 @@ export const RegistrationPage: FC = () => {
 					values.password
 				)
 					.then(async (res) => {
-						await	res.user.getIdToken().then((tokenRes) => {
-								localStorage.setItem(
-									"token",
-									tokenRes ?? ""
-								);
-							})
+						await res.user.getIdToken().then((tokenRes) => {
+							localStorage.setItem(
+								"token",
+								tokenRes ?? ""
+							);
+						});
 					})
 					.then(() => {
 						navigate("/");
@@ -71,24 +68,24 @@ export const RegistrationPage: FC = () => {
 	return (
 		<>
       <Box
-        component="form"
-        noValidate
-        onSubmit={handleSubmit}
-        sx={wrapperSx}
+component="form"
+noValidate
+onSubmit={handleSubmit}
+sx={wrapperSx}
       >
         <Typography
-          variant="h2"
-          sx={titleSx}
+variant="h2"
+sx={titleSx}
         >
           Registration
         </Typography>
         <Grid
-          container
-          spacing={2}
+container
+spacing={2}
         >
           <Grid
-            item
-            xs={12}
+item
+xs={12}
           >
             <TextField
               required
@@ -100,8 +97,8 @@ export const RegistrationPage: FC = () => {
             />
           </Grid>
           <Grid
-            item
-            xs={12}
+item
+xs={12}
           >
             <TextField
               required
@@ -113,8 +110,8 @@ export const RegistrationPage: FC = () => {
             />
           </Grid>
           <Grid
-            item
-            xs={12}
+item
+xs={12}
           >
             <TextField
               required
@@ -125,29 +122,27 @@ export const RegistrationPage: FC = () => {
               id="confirm_password"
               error={!passwordCorrect}
               helperText={
-                passwordCorrect
-                  ? ""
-                  : "Please make sure your passwords match"
+                passwordCorrect ? "" : "Please make sure your passwords match"
               }
             />
           </Grid>
         </Grid>
         <Box my={3}>
           <ButtonContained
-            type="submit"
-            fullWidth
+type="submit"
+fullWidth
           >
             Sign up
           </ButtonContained>
         </Box>
         <Grid
-          container
-          justifyContent="flex-end"
+container
+justifyContent="flex-end"
         >
           <Grid item>
             <Link
-              href={AppRoutesEnum.LOGIN}
-              variant="body2"
+href={AppRoutesEnum.LOGIN}
+variant="body2"
             >
               Already have an account? Sign in
             </Link>

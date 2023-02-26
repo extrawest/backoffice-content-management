@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { LoginPage } from "@semanticlib";
+import { LoginPage } from "@lib/semantic";
 
-const Login:FC = () => {
-	return <LoginPage/>;
+const Login: FC = () => {
+	return <LoginPage />;
 };
 
 export default Login;

@@ -6,9 +6,9 @@ export const contentSx: CSSProperties = {
 	padding: "1rem 2rem 1rem",
 };
 export const menuBoxSx: CSSProperties = {
-	width: pxToRem(462)
+	width: pxToRem(462),
 };
 export const pageBoxSx: CSSProperties = {
 	display: "flex",
-	width: "100%"
+	width: "100%",
 };

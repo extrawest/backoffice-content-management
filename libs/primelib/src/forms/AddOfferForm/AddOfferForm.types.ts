@@ -1,9 +1,9 @@
 export type AddOfferValues = {
-	title: string,
-	description: string
+	title: string;
+	description: string;
 };
 
 export type AddOfferFormProps = {
-	getOffers: () => void,
-	closeModal: () => void
+	getOffers: () => void;
+	closeModal: () => void;
 };

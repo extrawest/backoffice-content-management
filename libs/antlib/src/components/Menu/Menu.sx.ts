@@ -6,20 +6,20 @@ export const logoutSx: CSSProperties = {
 	display: "flex",
 	alignItems: "center",
 	gap: "1rem",
-	padding: "1rem"
+	padding: "1rem",
 };
 export const menuItemSx: CSSProperties = {
 	paddingLeft: 0,
-	paddingRight: 0
+	paddingRight: 0,
 };
 export const photoSx: CSSProperties = {
 	width: pxToRem(150),
 	height: pxToRem(150),
-	marginBottom: "1rem"
+	marginBottom: "1rem",
 };
 export const textSx: CSSProperties = {
 	textDecoration: "none",
-	color: "colorText"
+	color: "colorText",
 };
 export const menuStackSx: CSSProperties = {
 	justifyContent: "space-around",
@@ -40,5 +40,5 @@ export const wrapperSx: CSSProperties = {
 	margin: 0,
 	maxHeight: "100%",
 	height: "100%",
-	padding: "3rem"
+	padding: "3rem",
 };

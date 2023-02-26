@@ -5,9 +5,7 @@ import { getCookie } from "@mono-redux-starter/shared/utils";
 import messagesEn from "../../../../i18n/en.json";
 import { AppIntlProviderProps, MessagesProps } from "./AppIntlProvider.types";
 
-export const AppIntlProvider: FC<AppIntlProviderProps> = ({
-	children
-}) => {
+export const AppIntlProvider: FC<AppIntlProviderProps> = ({ children }) => {
 	// catch locale
 	const currentLocale = getCookie("locale") ?? "en-AU";
 
@@ -25,7 +23,7 @@ export const AppIntlProvider: FC<AppIntlProviderProps> = ({
 
 	const messages: MessagesProps = {
 		en: messagesEn,
-		"en-AU": messagesEn
+		"en-AU": messagesEn,
 	};
 
 	useEffect(

@@ -7,7 +7,7 @@ export const theme: Partial<AliasToken> = {
 	colorText: "#000000",
 	"yellow-6": "#FFD13D",
 	"green-4": "#27AE60",
-	"colorInfo": "#A3A3A3",
-	"colorBorder": "#bdbdbd",
-	"controlHeight": 48
+	colorInfo: "#A3A3A3",
+	colorBorder: "#bdbdbd",
+	controlHeight: 48,
 };

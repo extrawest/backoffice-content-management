@@ -1,8 +1,8 @@
 import { SxProps, Theme } from "@mui/material";
-import { maxAuthWidth } from "../../../../shared/utils/src/lib/consts";
+import { maxAuthWidth } from "@lib/shared/utils";
 
 export const wrapperSx: SxProps<Theme> = {
-  maxWidth: maxAuthWidth,
-  mx: "auto",
-  pt: 10
+	maxWidth: maxAuthWidth,
+	mx: "auto",
+	pt: 10,
 };

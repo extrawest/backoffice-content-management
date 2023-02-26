@@ -1,6 +1,6 @@
 import Cookies, { Cookie } from "universal-cookie";
 import {
-	getCookie, removeCookie, setCookie
+	getCookie, removeCookie, setCookie 
 } from "./cookie";
 
 jest.mock(
@@ -9,7 +9,7 @@ jest.mock(
 		const mCookie = {
 			get: jest.fn(),
 			set: jest.fn(),
-			remove: jest.fn()
+			remove: jest.fn(),
 		};
 		return jest.fn(() => mCookie);
 	}

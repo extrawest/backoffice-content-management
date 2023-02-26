@@ -5,7 +5,7 @@ export interface AuthResponse {
 }
 
 export type Role = {
-	name: RoleEnum
+	name: RoleEnum;
 };
 
 export interface User {
@@ -14,4 +14,4 @@ export interface User {
 	full_name: string;
 	is_active: boolean;
 	role: Array<Role>;
-};
+}

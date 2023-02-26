@@ -5,5 +5,5 @@ export const editTicketFormSchema = Yup.object().shape({
 	firstName: Yup.string().required("First name is required"),
 	lastName: Yup.string().required("Last name is required"),
 	image: Yup.string(),
-	status: Yup.string().required("Status is required")
+	status: Yup.string().required("Status is required"),
 });

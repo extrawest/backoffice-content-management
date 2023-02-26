@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { MainPage } from "@primelib";
+import { MainPage } from "@lib/prime";
 
-const Main:FC = () => {
-	return <MainPage/>;
+const Main: FC = () => {
+	return <MainPage />;
 };
 
 export default Main;

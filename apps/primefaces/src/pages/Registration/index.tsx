@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { RegistrationPage } from "@primelib";
+import { RegistrationPage } from "@lib/prime";
 
-const Registration:FC = () => {
-	return <RegistrationPage/>;
+const Registration: FC = () => {
+	return <RegistrationPage />;
 };
 
 export default Registration;

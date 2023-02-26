@@ -5,17 +5,17 @@ import {
 	Delete, Edit, MoreVert
 } from "@mui/icons-material";
 import {
-  Button, Container, Menu, Ref
+	Button, Container, Menu, Ref
 } from "semantic-ui-react";
 import { RowMenuProps } from "./RowMenu.types";
-import { Modal } from "@semanticlib";
-import { EditTicketForm } from "@semanticlib";
+import { Modal } from "../../../common";
+import { EditTicketForm } from "../../../forms";
 
-export const RowMenu:FC<RowMenuProps> = ({
+export const RowMenu: FC<RowMenuProps> = ({
 	onDelete,
 	tickets,
 	ticket,
-	getTickets
+	getTickets,
 }) => {
 	const [open, setOpen] = useState(false);
 	const [showModal, setShowModal] = useState(false);
@@ -29,7 +29,7 @@ export const RowMenu:FC<RowMenuProps> = ({
 		setOpen(status);
 	};
 
-	const handleClickOutside = (e: any) => {
+	const handleClickOutside = (e: Event) => {
 		if (node?.current?.contains(e.target as Node)) {
 			return;
 		}
@@ -65,49 +65,48 @@ export const RowMenu:FC<RowMenuProps> = ({
 
 	return (
 		<Container className="relative">
-    <Button
-      size="tiny"
-      icon
-      circular
-      basic
-      compact
-
-      onClick={handleShowMenu(true)}
-    >
-      <MoreVert/>
-    </Button>
-      {open && (
-        <Ref innerRef={node}>
-          <Menu
-            text
-            vertical
-            className="table-menu"
-          >
-            <Menu.Item onClick={onEdit}>
-              <Container textAlign="center">
-                <Edit/>
-              </Container>
-            </Menu.Item>
-            <Menu.Item onClick={handleDelete}>
-              <Container textAlign="center">
-                <Delete/>
-              </Container>
-            </Menu.Item>
-          </Menu>
-        </Ref>
-      )}
-      <Modal
-        handleClose={handleShowModal(false)}
-        open={showModal}
-        title="Update ticket"
-      >
-        <EditTicketForm
-          init={ticket}
-          tickets={tickets}
-          closeModal={handleShowModal(false)}
-          getTickets={getTickets}
-        />
-      </Modal>
+			<Button
+				size="tiny"
+				icon
+				circular
+				basic
+				compact
+				onClick={handleShowMenu(true)}
+			>
+				<MoreVert />
+			</Button>
+			{open && (
+				<Ref innerRef={node}>
+					<Menu
+						text
+						vertical
+						className="table-menu"
+					>
+						<Menu.Item onClick={onEdit}>
+							<Container textAlign="center">
+								<Edit />
+							</Container>
+						</Menu.Item>
+						<Menu.Item onClick={handleDelete}>
+							<Container textAlign="center">
+								<Delete />
+							</Container>
+						</Menu.Item>
+					</Menu>
+				</Ref>
+			)}
+			<Modal
+				handleClose={handleShowModal(false)}
+				open={showModal}
+				title="Update ticket"
+			>
+				<EditTicketForm
+					init={ticket}
+					tickets={tickets}
+					closeModal={handleShowModal(false)}
+					getTickets={getTickets}
+				/>
+			</Modal>
 		</Container>
 	);
 };

@@ -12,36 +12,36 @@ export interface TaskType {
 }
 
 export interface StatisticType {
-	date: any,
-	backlog: number,
-	tasks: number
+	date: string;
+	backlog: number;
+	tasks: number;
 }
 
 export type StatisticResponse = {
-	data: StatisticType[]
+	data: StatisticType[];
 };
 
 export interface TicketType {
-	id: string,
-	task: string,
-	firstName: string,
-	lastName: string,
-	status: TaskTypeEnum,
-	image?: string,
+	id: string;
+	task: string;
+	firstName: string;
+	lastName: string;
+	status: TaskTypeEnum;
+	image?: string;
 }
 
 export type OptionType = {
-	value: string,
-	label: string,
-	key: number
+	value: string;
+	label: string;
+	key: number;
 };
 
 export type OfferType = {
-	userId: string,
-	title: string,
-	description: string
+	userId: string;
+	title: string;
+	description: string;
 };
 
 export type OfferTypeResponse = {
-	data: OfferType[]
+	data: OfferType[];
 };

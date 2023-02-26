@@ -16,7 +16,7 @@ export const useShowSnackBarMessage = (
 					{
 						variant: type,
 						preventDuplicate: true,
-						autoHideDuration: 1500
+						autoHideDuration: 1500,
 					}
 				);
 			}

@@ -7,7 +7,7 @@ const initialState: User = {
 	full_name: "",
 	is_active: false,
 	email: "",
-	role: []
+	role: [],
 };
 
 export const userSlice = createSlice({

@@ -6,24 +6,24 @@ export const logoutSx: SxProps<Theme> = {
 export const menuListSx: SxProps<Theme> = {
 	pt: 5,
 	pb: 10,
-	border: "none"
+	border: "none",
 };
 export const menuItemSx: SxProps<Theme> = {
-	px: 0
+	px: 0,
 };
 export const photoSx: SxProps<Theme> = {
-	width: (theme: Theme) => theme.spacing(150/8),
-	height: (theme: Theme) => theme.spacing(150/8),
-	mb: 3
+	width: (theme: Theme) => theme.spacing(150 / 8),
+	height: (theme: Theme) => theme.spacing(150 / 8),
+	mb: 3,
 };
 export const textSx: SxProps<Theme> = {
 	textDecoration: "none",
-	color: (theme: Theme) => theme.palette.common.black
+	color: (theme: Theme) => theme.palette.common.black,
 };
 export const menuStackSx: SxProps<Theme> = {
 	justifyContent: "space-between",
 	height: "100%",
-	alignItems: "flex-start"
+	alignItems: "flex-start",
 };
 export const wrapperSx: SxProps<Theme> = {
 	position: "fixed",
@@ -32,13 +32,14 @@ export const wrapperSx: SxProps<Theme> = {
 	bottom: 0,
 	display: "flex",
 	flexDirection: "column",
-	width: (theme: Theme) => theme.spacing(320/8),
-	boxShadow: (theme: Theme) => `${theme.spacing(4/8)} 0 ${theme.spacing(36/8)} ${theme.spacing(36/8)} rgba(96,94,94,0.08)`,
+	width: (theme: Theme) => theme.spacing(320 / 8),
+	boxShadow: (theme: Theme) =>
+		`${theme.spacing(4 / 8)} 0 ${theme.spacing(36 / 8)} ${theme.spacing(36 / 8)} rgba(96,94,94,0.08)`,
 	m: 0,
 	maxHeight: "100vh",
 	height: "100%",
 	boxSizing: "border-box",
 	py: 10,
 	pl: 10,
-	pr: 5
+	pr: 5,
 };

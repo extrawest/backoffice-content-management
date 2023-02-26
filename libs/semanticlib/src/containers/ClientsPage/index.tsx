@@ -8,7 +8,7 @@ import { TaskType, TicketType } from "@lib/shared/types";
 import {
 	doc, getDoc, setDoc
 } from "firebase/firestore";
-import { db } from "@libs/shared/firebaseconfig";
+import { db } from "@lib/shared";
 import { StatusTag } from "../../components/StatusTag";
 import { RowMenu } from "./RowMenu";
 import { RowType } from "../../common/Table/Table.types";
@@ -17,7 +17,7 @@ import {
 } from "semantic-ui-react";
 import { useAuth } from "@lib/shared";
 
-export const ClientsPage:FC = () => {
+export const ClientsPage: FC = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [tasks, setTasks] = useState<TaskType[]>([]);
 	const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -67,7 +67,7 @@ export const ClientsPage:FC = () => {
 						me.user?.uid
 					),
 					{
-						data: tickets.filter(ticket => ticket.id !== taskId)
+						data: tickets.filter((ticket) => ticket.id !== taskId),
 					}
 				);
 			}
@@ -89,93 +89,92 @@ export const ClientsPage:FC = () => {
 	const handleShowModal = (status: boolean) => () => {
 		setShowModal(status);
 	};
-	const tableCells:RowType[] = tickets?.map(ticket => ({
+	const tableCells: RowType[] = tickets?.map((ticket) => ({
 		task: {
 			title: "Task",
-			component: ticket.task
+			component: ticket.task,
 		},
 		name: {
 			title: "Name",
-			component:
-        <Grid>
-          <Grid.Row verticalAlign="middle">
-              <Image
-                src={ticket.image}
-                circular
-                avatar
-              />
-              <span style={{marginLeft: "0.5rem"}}>{`${ticket.firstName} ${ticket.lastName}`}</span>
-          </Grid.Row>
-        </Grid>
+			component: (
+				<Grid>
+					<Grid.Row verticalAlign="middle">
+						<Image
+							src={ticket.image}
+							circular
+							avatar
+						/>
+						<span
+							style={{ marginLeft: "0.5rem" }}
+						>{`${ticket.firstName} ${ticket.lastName}`}
+						</span>
+					</Grid.Row>
+				</Grid>
+			),
 		},
 		date: {
 			title: "Date",
-			component: dayjs(ticket.id).format("DD/MM/YY")
+			component: dayjs(ticket.id).format("DD/MM/YY"),
 		},
 		status: {
 			title: "Status",
-			component: <StatusTag type={ticket.status}/>
+			component: <StatusTag type={ticket.status} />,
 		},
 		actions: {
 			title: "",
-			component:
-        <RowMenu
-          onDelete={deleteTicket(ticket.id)}
-          tickets={tickets}
-          ticket={ticket}
-          getTickets={getTicketsData}
-        />
-		}
+			component: (
+				<RowMenu
+					onDelete={deleteTicket(ticket.id)}
+					tickets={tickets}
+					ticket={ticket}
+					getTickets={getTicketsData}
+				/>
+			),
+		},
 	}));
 
 	return (
 		<>
-      <Header as="h1">
-        Clients
-      </Header>
-      <Grid>
-        <Grid.Row verticalAlign="middle">
-          <Grid.Column width={12}>
-            <Header as="h3">
-              All tickets
-            </Header>
-          </Grid.Column>
-          <Grid.Column
-            textAlign="right"
-            width={1}
-          >
-            <Button
-              size="small"
-              icon
-              onClick={handleShowModal(true)}
-            >
-              +
-            </Button>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column width={13}>
-              <Table
-                rows={tableCells}
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Modal
-          handleClose={handleShowModal(false)}
-          open={showModal}
-          title="Create ticket"
-        >
-          <CreateTicketForm
-            tasks={tasks}
-            tickets={tickets}
-            getTasks={getTasksData}
-            getTickets={getTicketsData}
-            closeModal={handleShowModal(false)}
-          />
-        </Modal>
+			<Header as="h1">Clients</Header>
+			<Grid>
+				<Grid.Row verticalAlign="middle">
+					<Grid.Column width={12}>
+						<Header as="h3">All tickets</Header>
+					</Grid.Column>
+					<Grid.Column
+						textAlign="right"
+						width={1}
+					>
+						<Button
+							size="small"
+							icon
+							onClick={handleShowModal(true)}
+						>
+							+
+						</Button>
+					</Grid.Column>
+				</Grid.Row>
+			</Grid>
+			<Grid>
+				<Grid.Row>
+					<Grid.Column width={13}>
+						<Table rows={tableCells} />
+					</Grid.Column>
+				</Grid.Row>
+			</Grid>
+			<Modal
+				handleClose={handleShowModal(false)}
+				open={showModal}
+				title="Create ticket"
+			>
+				<CreateTicketForm
+					tasks={tasks}
+					tickets={tickets}
+					getTasks={getTasksData}
+					getTickets={getTicketsData}
+					closeModal={handleShowModal(false)}
+				/>
+			</Modal>
 		</>
 	);
 };

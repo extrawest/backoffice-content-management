@@ -5,13 +5,13 @@ import { pxToRem } from "@lib/shared/utils";
 export const boxSx = (theme: GlobalToken): CSSProperties => ({
 	padding: theme.paddingSM,
 	border: `${pxToRem(1)} solid ${theme.colorBorder}`,
-	borderRadius: theme.borderRadius
+	borderRadius: theme.borderRadius,
 });
 
-export const subTextSx= (theme: GlobalToken): CSSProperties => ({
+export const subTextSx = (theme: GlobalToken): CSSProperties => ({
 	fontSize: theme.fontSize,
 	fontWeight: 600,
-	color: theme.colorInfo
+	color: theme.colorInfo,
 });
 
 export const addSx = (theme: GlobalToken): CSSProperties => ({
@@ -21,25 +21,24 @@ export const addSx = (theme: GlobalToken): CSSProperties => ({
 	width: pxToRem(30),
 	minWidth: pxToRem(30),
 	height: pxToRem(30),
-	minHeight: pxToRem(30)
+	minHeight: pxToRem(30),
 });
 
 export const taskRowSx = (
-	notLast: boolean, theme: GlobalToken
-):CSSProperties => ({
+	notLast: boolean,
+	theme: GlobalToken
+): CSSProperties => ({
 	display: "flex",
 	justifyContent: "space-between",
 	alignItems: "center",
-	borderBottom: notLast ?
-		`${pxToRem(1)} solid ${theme.colorBorder}` :
-		"none",
+	borderBottom: notLast ? `${pxToRem(1)} solid ${theme.colorBorder}` : "none",
 	width: "100%",
-	padding: "1rem 0"
+	padding: "1rem 0",
 });
 
-export const headerStackSx:CSSProperties = {
+export const headerStackSx: CSSProperties = {
 	display: "flex",
 	flexDirection: "row",
 	alignItems: "center",
-	justifyContent: "space-between"
+	justifyContent: "space-between",
 };

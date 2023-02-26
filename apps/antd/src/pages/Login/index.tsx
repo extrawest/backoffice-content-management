@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { LoginPage } from "@antlib";
+import { LoginPage } from "@lib/ant";
 
-const Login:FC = () => {
-  return <LoginPage/>
-}
+const Login: FC = () => {
+	return <LoginPage />;
+};
 
-export default Login
+export default Login;
